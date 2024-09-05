@@ -1,0 +1,53 @@
+
+/*부천 서브페이지*/
+
+.subpage-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+  
+.title-box {
+    width: 100%;
+    background-color: #b4fff9;
+    text-align: center;
+    height: 300px;
+}
+
+.title-box h1 {
+    font-size: 42pt;
+    margin-top: 80px;
+    font-weight: 800;
+}
+  
+.title-box p {
+    font-size: 20pt;
+    margin-top: 30px;
+}
+
+.contents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 980px;
+    margin: 100px 0;
+}
+
+.text-box {
+    margin-left: 50px;
+}
+
+.text-box h2 {
+    font-size: 30pt;
+    font-weight: 800;
+}
+
+.text-box p {
+    margin: 30px 0;
+    font-size: 14pt;
+}
+
+
+/*고양 서브페이지*/

@@ -1,0 +1,271 @@
+section {
+	padding: 100px 0;
+}
+
+section p {
+	text-align: center;
+}
+
+.nanodc-info-section {
+	width: 1100px;
+	margin: 0 auto;
+}
+.nanodc-info-section h1 {
+	margin-bottom: 80px;
+}
+.nanodc-info-section p {
+	font-size: 24px;
+	
+}
+.nanodc-status-wrapper {
+	width: 900px;
+	display: flex;
+	flex-direction: row;
+	justify-content:space-around;	
+	margin: 0 auto;
+}
+
+.nanodc-status-wrapper p {
+	font-size: 14px;
+	color: #69CAD1 ;
+	margin-bottom: 10px;
+}
+
+.nanodc-status-wrapper h2 {
+	font-weight: 700;
+	margin-bottom: 10px;
+	color: #69CAD1 ;
+	font-size: 40px;
+	padding-top:0;
+}
+
+/*only nanodc section*/
+
+.advantage-wrapper {	
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+	flex-wrap: wrap;
+	gap: 42px;	
+}
+
+.advantage {
+	display: flex;
+	width: 45%;
+	height: 140px;
+	border-radius: 20px;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 42px;	
+}
+
+.advantage-txt {	
+	display: flex;
+	width: 60%;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 18px;
+	flex-shrink: 0;
+}
+
+.advantage-txt h3 {	
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 700;
+	text-align: left;
+}
+
+.advantage-txt p {	
+	font-style: normal;
+	font-weight: 400;
+	text-align: left;
+	margin-bottom: 0;
+	font-size: 16px;
+}
+
+/* sp 상품 section */
+
+.sp-product-wrapper {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.sp-product {
+	display: flex;
+	width: 291px;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
+	flex-shrink: 0;
+	position: relative;
+}
+
+
+.sp-product span {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.sp-product-img01 {
+	height: 385px;
+	align-self: stretch;
+	background: url('../../img/thumb/nanodc_yb.png') lightgray 50% / cover no-repeat;
+}
+
+.sp-product-img02 {
+	height: 385px;
+	align-self: stretch;
+	background: url('../../img/thumb/nanodc_og.png') lightgray 50% / cover no-repeat;
+}
+
+.sp-product-img03 {
+	height: 385px;
+	align-self: stretch;
+	background: url('../../img/thumb/nanodc_wb.png') lightgray 50% / cover no-repeat;
+}
+
+.sp-product-info {
+	display: flex;
+	height: 60px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.sp-product-info p{
+	margin-bottom: 0;
+	font-size: 16px;
+}
+
+.label {
+	display: flex;
+	width: 65px;
+	height: 65px;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	border-radius: 62px;
+	background: #69CAD1;
+}
+
+.label p {
+	font-size: 16px;
+	margin: 0;
+}
+
+ /* 구매문의 */
+ 
+.application-section {
+	background: #69CAD1;
+	color: #ffffff;
+	width: 100%;
+	padding: 30px 0;
+}
+
+.application-wrapper {
+	display: flex;
+	width: 1100px;
+	height: 50px;
+	justify-content: space-between;
+	align-items: center;
+	flex-shrink: 0;
+	margin: 0 auto;
+}
+
+.application-wrapper h2{
+	font-size: 36px;
+	font-weight: 800;
+	padding : 0;
+}
+
+.application-wrapper h3 {
+	font-size: 24px;
+	font-weight: 800;
+}
+
+.application-wrapper p {
+	font-size: 16px;
+	margin-bottom: 0;
+}
+
+.application-wrapper button {
+	display: flex;
+	width: 196px;
+	height: 50px;
+	padding: 15px;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	flex-shrink: 0;
+	background-color: #ffffff;
+	border-radius: 4px;
+	border: 2px solid #000;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+/* 설치된 sp 부분 */
+
+.sp-wrapper {
+	display: inline-flex;
+	align-items: center;
+	gap: 21px;
+	width: 1100px;
+}
+
+.sp {
+	display: flex;
+	width: 270px;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+}
+
+.sp-img01 {
+	height: 516px;
+	align-self: stretch;
+	background: url('../../img/thumb/bucheon01.jpg') lightgray 50% / cover no-repeat;
+}
+
+.sp-img02 {
+	height: 516px;
+	align-self: stretch;
+	background: url('../../img/thumb/gwangju01.jpg') lightgray 50% / cover no-repeat;
+}
+
+.sp-img03 {
+	height: 516px;
+	align-self: stretch;
+	background: url('../../img/thumb/goyang01.jpg') lightgray 50% / cover no-repeat;
+}
+
+.sp-img04 {
+	height: 516px;
+	align-self: stretch;
+	background: url('../../img/thumb/bucheon02.jpg') lightgray 50% / cover no-repeat;
+}
+
+.sp h3 {
+	font-size: 24px;
+	font-weight: 800;
+	margin: 20px 0;
+}
+
+.sp .label span {	
+	font-size: 24px;
+	font-weight: 700;
+}
+
+
+
+
+
+
+

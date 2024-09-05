@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.kakao-cert .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.kakao-cert .header img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.kakao-cert .header span {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #3c1e1e;
+}
+
+.kakao-cert form {
+    display: flex;
+    flex-direction: column;
+}
+
+.kakao-cert input {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.cert-button {
+    background-color: #fee500;
+    color: #3c1e1e;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+}
+
+.cert-button:hover {
+    background-color: #fddc00;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.login-button {
+    background-color: #fee500;
+    color: #3c1e1e;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    flex: 1;
+    margin: 5px;
+}
+
+.login-button:hover {
+    background-color: #fddc00;
+}
+
+.login-button.full {
+    flex: 2;
+}

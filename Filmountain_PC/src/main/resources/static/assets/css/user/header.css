@@ -1,0 +1,112 @@
+/* Header.css */
+
+body {
+	margin:0 auto;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #000;
+    color: #69CAD1;
+    padding: 10px 36px;  
+    border-bottom: 1px solid #69CAD1;
+
+ 
+}
+
+.logo-nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 83px;
+    height: 41.184px;
+    flex-shrink: 0;
+}
+
+.nav-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 75px;
+    margin-left: 80px;
+}
+
+.nav-links a {
+    text-decoration: none;    
+    color: #69CAD1;
+    text-align: center;
+    font-family: "Noto Sans KR";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.auth-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-options a {
+    text-decoration: none;
+    color: #69CAD1;
+}
+
+.google-play img {
+    height: 40px;
+}
+
+
+.sign-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap:    28px;
+    margin-right: 26px;
+}
+
+.login-options {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.login-button {
+    background: none;
+    border: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.profile-dropdown-menu img {
+    border-radius: 50%;
+    display: block;
+    margin: 10px auto;
+}
+.profile-dropdown-menu a {
+    display: block;
+    padding: 10px;
+    text-align: center;
+    color: #333;
+    text-decoration: none;
+}
+.profile-dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-item {
+	color:#000;
+	text-align: center;
+}

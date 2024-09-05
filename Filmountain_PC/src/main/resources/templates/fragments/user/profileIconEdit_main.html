@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+<main class="profile-card-content" th:fragment="MainContent">
+    <div class="modal fade" tabindex="-1" role="dialog" id="completionModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white">프로파일 아이콘 변경완료!</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        x
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-card-container">
+		<h1>프로필 아이콘 변경</h1>
+        <div class="card-body-top">
+            <img class="current-profile-img" id="currentProfileImg" src="/assets/img/filmountain/profiles/0.png" alt="현재 프로필 이미지" />
+        </div>
+        <div class="profile-img-container">
+            <img src="/assets/img/filmountain/profiles/0.png" alt="프로필 이미지 0" data-id="0" />
+            <img src="/assets/img/filmountain/profiles/1.png" alt="프로필 이미지 1" data-id="1" />
+            <img src="/assets/img/filmountain/profiles/2.png" alt="프로필 이미지 2" data-id="2" />
+            <img src="/assets/img/filmountain/profiles/3.png" alt="프로필 이미지 3" data-id="3" />
+            <img src="/assets/img/filmountain/profiles/4.png" alt="프로필 이미지 4" data-id="4" />
+            <img src="/assets/img/filmountain/profiles/5.png" alt="프로필 이미지 5" data-id="5" />
+            <img src="/assets/img/filmountain/profiles/6.png" alt="프로필 이미지 6" data-id="6" />
+            <img src="/assets/img/filmountain/profiles/7.png" alt="프로필 이미지 7" data-id="7" />
+            <img src="/assets/img/filmountain/profiles/8.png" alt="프로필 이미지 8" data-id="8" />
+        </div>
+        <div class="card-body-bottom">
+        	<button type="button" id="update_user_icon_confirm" class="update-icon-btn">변경</button>
+        </div>
+    </div>
+</main>
+</html>

@@ -1,0 +1,41 @@
+.spmd-wrapper {
+    padding: 100px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.spmd-wrapper p {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.spmd-btn {
+    width: 190px;
+    height: 22px;
+    background-color: #E36BA1;
+    border-radius: 50px;
+    margin: 0 auto;
+    padding: 12px;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 50px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16pt;
+    justify-content: center;
+}
+
+.spmd-wrapper img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* 반응형 미디어 쿼리 */
+@media screen and (max-width: 500px) {
+    .spmd-btn {
+        width: 150px;
+        height: 20px;
+    }
+
+}

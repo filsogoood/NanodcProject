@@ -1,0 +1,51 @@
+.user-login-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.user-login-section h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.user-login form {
+    display: flex;
+    flex-direction: column;
+}
+.user-login form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.user-login form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.sign-in-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #69CAD1;
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFF;
+    cursor: pointer;
+}
+.sign-in-btn:hover {
+    background-color: #5bb0c1;
+}
+.links {
+    text-align: center;
+    margin-top: 15px;
+}
+.links a {
+    color: #69CAD1;
+    text-decoration: none;
+}
+.links a:hover {
+    text-decoration: underline;
+}

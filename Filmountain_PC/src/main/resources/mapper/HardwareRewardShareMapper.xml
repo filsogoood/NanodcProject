@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanoDc.erp.mapper.HardwareRewardSharingMapper">
+	<resultMap id="hardwareProductMap" type="com.nanoDc.erp.vo.HardwareProductVO">
+	    <id property="hw_product_id" column="hw_product_id"/>
+	    <result property="hw_product_id" column="hw_product_id"/>
+	    <result property="hw_product_name" column="hw_product_name"/>
+	    <result property="hw_product_status" column="hw_product_status"/>
+	    <result property="recruitment_start_date" column="recruitment_start_date"/>
+	    <result property="service_start_date" column="service_start_date"/>
+	    <result property="service_end_date" column="service_end_date"/>
+	    <result property="total_budget_fil" column="total_budget_fil"/>
+	</resultMap>
+	
+	<resultMap id="hardwareRewardSharingMap" type="com.nanoDc.erp.vo.HardwareRewardSharingVO">
+	    <id property="reward_sharing_id" column="reward_sharing_id"/>
+	    <result property="hw_product_id" column="hw_product_id"/>
+	    <result property="regdate" column="regdate"  javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	    <result property="fil_paid_per_tb" column="fil_paid_per_tb"/>
+		<result property="total_fil" column="total_fil"/>
+	    <result property="status" column="status"/>
+	    <association property="hardwareProductVO" resultMap="hardwareProductMap"/>
+	</resultMap>
+	
+	<resultMap id="userInfoMap" type="com.nanoDc.erp.vo.UserInfoVO">
+		<id property="user_id" column="user_id"/>
+	    <result property="user_name" column="user_name"/>
+	    <result property="user_email" column="user_email"/>
+	    <result property="level" column="level"/>
+	    <result property="user_status" column="user_status"/>
+	    <result property="phone_number" column="phone_number"/>
+	</resultMap>
+	
+	<resultMap id="HardwareRewardSharingDetailMap" type="com.nanoDc.erp.vo.HardwareRewardSharingDetailVO">
+	    <id property="reward_sharing_detail_id" column="reward_sharing_detail_id"/>
+	    <result property="hw_reward_sharing_id" column="hw_reward_sharing_id"/>
+	    <result property="user_id" column="user_id"/>
+	    <result property="reward_fil" column="reward_fil"/>
+	    <association property="userInfoVO" resultMap="userInfoMap"/>
+	    <association property="hardwareRewardSharingVO" resultMap="hardwareRewardSharingMap"/>
+	</resultMap>	
+	<select id="getRewardSharingList" resultMap="hardwareRewardSharingMap">
+		SELECT
+		    r.reward_sharing_id,
+		    r.hw_product_id,
+		    r.regdate,
+		    r.fil_paid_per_tb,
+		    r.total_fil,
+		    r.status,
+		    p.hw_product_name,
+		    p.hw_product_status,
+		    p.recruitment_start_date,
+		    p.service_start_date,
+		    p.service_end_date,
+		    p.total_budget_fil
+		FROM filmountain_test.hw_reward_sharing r
+		INNER JOIN filmountain_test.hw_product p ON r.hw_product_id = p.hw_product_id
+		WHERE r.status = 'active'
+		ORDER BY r.regdate DESC
+		</select>
+		<select id="selectRewardSharingDetailListById" parameterType = "integer" resultMap="HardwareRewardSharingDetailMap">
+		SELECT
+		    d.reward_sharing_detail_id,
+		    d.hw_reward_sharing_id,
+		    d.user_id,
+		    d.reward_fil,
+		    u.user_name,
+		    u.user_status,
+		    u.level,
+		    u.user_email,
+		    u.phone_number,
+		    p.service_end_date,
+		    p.total_budget_fil,
+		    fil_paid_per_tb,
+		    status,
+		    p.hw_product_name,
+		    p.hw_product_status,
+		    p.recruitment_start_date,
+		    p.service_start_date,
+		    p.service_end_date,
+		    p.total_budget_fil,
+		    r.regdate
+		FROM hw_reward_sharing_detail d
+		INNER JOIN user_info u ON d.user_id = u.user_id
+		INNER JOIN hw_reward_sharing r ON r.reward_sharing_id = d.hw_reward_sharing_id
+		INNER JOIN hw_product p ON r.hw_product_id = p.hw_product_id
+		WHERE r.status = 'active' AND d.hw_reward_sharing_id= #{hw_reward_sharing_id}
+		ORDER BY r.regdate DESC
+		</select>
+		<select id="selectRewardSharingDetailListByUser" parameterType = "integer" resultType="com.nanoDc.erp.vo.HardwareRewardSharingDetailVO">
+		SELECT
+			r.hw_product_id,
+		    r.regdate,
+		    d.reward_sharing_detail_id,
+		    d.hw_reward_sharing_id,
+		    d.reward_fil,
+		    p.hw_product_name,
+		    p.hw_product_status
+		FROM
+		    hw_reward_sharing_detail d
+		INNER JOIN
+		    hw_reward_sharing r ON d.hw_reward_sharing_id = r.reward_sharing_id
+		INNER JOIN
+		    hw_product p ON r.hw_product_id = p.hw_product_id
+		WHERE
+		    d.user_id = #{user_id}
+		    AND p.hw_product_status = '운영중'
+		ORDER BY
+		    r.regdate DESC
+		</select>
+		<insert id="insertHardwareRewardSharing" parameterType = "com.nanoDc.erp.vo.HardwareRewardSharingVO">
+			INSERT INTO filmountain_test.hw_reward_sharing
+			(hw_product_id, regdate, status, total_fil)
+			VALUES(#{hw_product_id}, NOW(), #{status}, #{total_fil})
+		</insert>
+		<insert id="insertHardwareRewardSharingDetail" parameterType = "com.nanoDc.erp.vo.HardwareRewardSharingDetailVO">
+			INSERT INTO filmountain_test.hw_reward_sharing_detail
+				(hw_reward_sharing_id, user_id, reward_fil)
+				VALUES(#{hw_reward_sharing_id}, #{user_id}, #{reward_fil})
+		</insert>
+		
+			<select id="selectLastShareId" resultType="integer">
+				SELECT reward_sharing_id
+				FROM hw_reward_sharing
+				ORDER BY reward_sharing_id DESC
+				LIMIT 1
+			</select>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+</mapper>

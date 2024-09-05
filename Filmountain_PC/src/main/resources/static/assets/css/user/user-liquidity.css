@@ -1,0 +1,122 @@
+
+.fil-overview-section h1 {
+	margin-bottom: 80px;
+}
+
+.fil-overview-info {
+	width: 1100px;
+	margin: 0 auto;
+}
+
+.fil-overview-info p {
+	margin-bottom: 10px;
+}
+
+.fil-overview-info hr {
+	width: 100px;
+}
+.fil-status-wrapper, .loaned-sp-status-wrapper {	
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+	align-items: center;
+	padding: 80px 0;
+}
+
+.fil-count, .sp-total-power, .sp-total-sector {
+	font-size: 40px;
+	font-weight: 800;
+}
+
+.lp-advantages-section {
+	height: 300px;
+	background: linear-gradient(180deg,#000000 0%, rgb(23, 98, 125) 100%);
+}
+
+.lp-advantages-wrapper {
+	display: flex;
+	width: 1100px;
+	justify-content: space-around;
+	align-items: center;
+	padding-bottom: 150px;
+	margin: 0 auto;
+	
+}
+
+.lp-advantage {
+	width: 240px;
+	height: 240px;
+	border-radius: 20px;
+	background-color: aliceblue;
+	padding: 30px;
+}
+
+.lp-advantage h3, .lp-advantage p {
+	color: #2A3E46;
+	text-align: center;
+	margin-bottom: 20px;
+
+}
+
+.lp-advantage h3 {
+	font-size: 24px;
+	font-weight: 800;
+}
+
+.lp-advantage hr {
+	width: 50px;
+	background-color: #2A3E46;
+	margin-bottom: 50px;
+}
+
+/* nanodc liquidity pool */
+
+.pool-intro-wrapper {
+	text-align: center;
+}
+
+.pool-intro-wrapper h3 {
+	font-weight: 800;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.pool-intro-wrapper h1 {
+	margin: 80px 0;
+}
+
+.pool-intro-wrapper hr {
+	width: 100px;
+}
+
+.pool-status-wrapper {
+	width: 900px;
+	display: flex;
+	flex-direction: row;
+	justify-content:space-around;	
+	margin: 0 auto;
+}
+
+.pool-status-wrapper p {
+	font-size: 14px;
+	color: #69CAD1 ;
+	margin-bottom: 10px;
+	font-weight: 400;
+}
+
+.pool-intro-wrapper h2 {
+	font-weight: 700;
+	margin-bottom: 10px;
+	color: #69CAD1 ;
+	font-size: 40px;
+	padding: 150px 0 20px 0;
+}
+
+.pool-status-wrapper h2 {
+	padding: 0;
+}
+
+.pool-intro-wrapper img {
+	padding: 100px 0;
+}
+

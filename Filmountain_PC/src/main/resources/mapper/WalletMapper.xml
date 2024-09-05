@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanoDc.erp.mapper.WalletMapper">
+	<update id="addspWallet" parameterType="com.nanoDc.erp.vo.WalletVO">
+	    UPDATE filmountain_test.wallet
+	    SET sp_address = #{sp_address}, 
+	        status = 'active', 
+	        reg_date = now()
+	    WHERE user_id = #{user_id};
+	</update>
+	
+	
+	
+	<select id="getWalletListByUser" parameterType="integer" resultType="com.nanoDc.erp.vo.WalletVO">
+		SELECT wallet_id, sp_address, lp_address, user_id, status, reg_date, f4_address
+			FROM filmountain_test.wallet
+			WHERE user_id=#{user_id} AND status='active';
+	</select>
+	
+	
+	
+	<update id="deleteWalletByWalletId" parameterType="long">
+		UPDATE filmountain_test.wallet
+			SET status='deleted'
+			WHERE wallet_id=#{wallet_id};
+	</update>
+	
+</mapper>

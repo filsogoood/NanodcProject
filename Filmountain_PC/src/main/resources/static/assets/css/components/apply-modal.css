@@ -1,0 +1,117 @@
+/* 플로팅 버튼 스타일 */
+.apply-floating-button {
+    /* position: fixed;
+    bottom: 20px;
+    right: 20px; */
+    width: 500px;
+    height: 60px;
+    background-color: #D04F17;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24pt;
+    font-weight: 700;
+    cursor: pointer;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
+    /* z-index: 1000;*/
+    margin: auto;
+    margin-top: 10px;
+    padding: 20px;
+}
+
+.apply-floating-button i {
+    margin-left: 10px;
+}
+
+/* 모달 배경 스타일 */
+.apply-modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* 모달 콘텐츠 스타일 */
+.apply-modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.apply-modal-content h2 {
+    font-size: 24pt;
+    font-weight: 800;
+    margin: 20px 0 30px 0;
+    text-align: center;
+}
+
+/* 폼 스타일 */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0;
+    font-weight: bold;    
+    text-align: left;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #D04F17;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.apply-close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.apply-close-button:hover,
+.apply-close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.radio-group {
+    margin-bottom: 20px;
+    text-align: left;
+}

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanoDc.erp.mapper.HardwareInvestmentMapper">
+	<!-- select -->
+		<select id="getInvestmentList" resultType="com.nanoDc.erp.vo.HardwareInvestmentVO">
+			SELECT investment.hw_id, 
+		   		   investment.hw_status, 
+		   		   investment.hw_reg_date, 
+		  		   product.hw_product_name,
+		  		   product.hw_product_status, 
+		  		   product.picture_url,
+		  		   product.total_budget_fil,  
+		   		   user.user_name, 
+		   		   user.user_email,
+		   		   investment.hw_invest_fil,
+		   		   investment.user_id,
+		   		   investment.hw_product_id	   
+			FROM filmountain_test.hw_investment AS investment
+			INNER JOIN filmountain_test.hw_product AS product ON investment.hw_product_id = product.hw_product_id
+			INNER JOIN filmountain_test.user_info AS user ON investment.user_id = user.user_id
+			WHERE investment.hw_status='active' AND user.user_status='active'
+			ORDER BY 
+        	investment.hw_reg_date DESC;
+		</select>
+		
+		<select id="selectInvestmentListForUser" parameterType="integer" resultType="com.nanoDc.erp.vo.HardwareInvestmentVO">
+			SELECT investment.hw_id, 
+		   		   investment.hw_status, 
+		   		   investment.hw_reg_date, 
+		  		   product.hw_product_name, 
+		  		   product.hw_product_status,
+		  		   product.picture_url,
+		  		   product.total_budget_fil, 
+		   		   user.user_name, 
+		   		   user.user_email,
+		   		   investment.hw_invest_fil,
+		   		   investment.user_id,
+		   		   investment.hw_product_id	   
+			FROM filmountain_test.hw_investment AS investment
+			INNER JOIN filmountain_test.hw_product AS product ON investment.hw_product_id = product.hw_product_id
+			INNER JOIN filmountain_test.user_info AS user ON investment.user_id = user.user_id
+			WHERE investment.hw_status='active' AND user.user_status='active' AND user.user_id = #{user_id}
+			<if test="hw_product_id != 0">
+        	AND product.hw_product_id = #{hw_product_id}
+    		</if>
+	</select>
+	<select id="selectInvestmentListForProduct" parameterType="integer" resultType="com.nanoDc.erp.vo.HardwareInvestmentVO">
+			SELECT investment.hw_id, 
+		   		   investment.hw_status, 
+		   		   investment.hw_reg_date,
+		   		   investment.user_id,
+		   		   investment.hw_invest_fil
+			FROM filmountain_test.hw_investment AS investment
+			INNER JOIN filmountain_test.hw_product AS product ON investment.hw_product_id = product.hw_product_id
+			INNER JOIN filmountain_test.user_info AS user ON investment.user_id = user.user_id
+			WHERE investment.hw_status='active' AND user.user_status='active'
+        	AND product.hw_product_id = #{hw_product_id}
+	</select>
+	
+	
+	<select id="selectUserDefaultProductId" parameterType="integer" resultType="integer">
+			SELECT investment.hw_product_id	   
+				FROM filmountain_test.hw_investment AS investment
+				INNER JOIN filmountain_test.hw_product AS product ON investment.hw_product_id = product.hw_product_id
+				INNER JOIN filmountain_test.user_info AS user ON investment.user_id = user.user_id
+				WHERE investment.hw_status='active' AND user.user_status='active' AND user.user_id = #{user_id}
+				GROUP BY investment.hw_product_id
+				ORDER BY MIN(investment.hw_reg_date)
+			LIMIT 1;
+	</select>
+	
+	<!-- insert -->
+	<insert id="addNewinvestmentUser" parameterType="com.nanoDc.erp.vo.HardwareInvestmentVO">
+		INSERT INTO filmountain_test.hw_investment
+		(hw_reg_date,
+		 hw_status,
+		 hw_product_id,
+		 user_id,
+		 hw_invest_fil)
+		VALUES
+		(#{hw_reg_date}, 
+		#{hw_status},
+		#{hw_product_id}, 
+		#{user_id}, 
+		#{hw_invest_fil})
+	</insert>
+	
+	<!-- update -->
+	
+	<update id="updateinvestmentUser" parameterType="com.nanoDc.erp.vo.HardwareInvestmentVO">
+ 	  
+ 	    UPDATE filmountain_test.hw_investment
+ 	    SET
+	        hw_reg_date = #{hw_reg_date},
+	        hw_status = #{hw_status},
+	        hw_product_id = #{hw_product_id},
+	        hw_invest_fil = #{hw_invest_fil}
+ 	    WHERE
+
+	        hw_id = #{hw_id}
+ 	</update>
+	
+</mapper>

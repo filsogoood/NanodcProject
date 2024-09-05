@@ -1,0 +1,39 @@
+
+.nav-main-flex {
+    display: flex;
+}
+
+.nav-main-flex > div {
+    flex: 1;
+}
+
+.nav-main-flex > div:first-child {
+    max-width: 250px; /* 네비게이션 바의 최대 너비를 설정 */
+}
+
+.nav-main-flex > div:last-child {
+    flex-grow: 1; /* 메인 콘텐츠가 나머지 공간을 차지하도록 설정 */
+    margin-left: 280px; /* 좌측 여백을 추가하여 네비게이션 바와의 간격 설정 */
+    padding-top: 100px;
+}
+
+
+/*stake 화면*/
+
+.current-staked-amount {
+	margin: 20px 0;
+}
+
+.unstake-btn {
+	font-size: 12pt;
+}
+
+@media (max-width: 992px) {
+	.nav-main-flex > div:last-child {
+		margin-left: 3%;
+	}
+	
+	.side-nav {
+		display: block;
+	}
+}

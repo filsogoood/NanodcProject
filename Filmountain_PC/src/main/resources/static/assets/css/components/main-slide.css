@@ -1,0 +1,163 @@
+.slider-wrapper01 {
+  
+    height: 600px;
+  
+  }
+
+.slide-contents-wrapper {
+  width: 980px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+  
+.slide01 {
+  min-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 변경: 수평 중앙 정렬 */
+  background-color: #2C348D;
+  height: 600px;
+  position: relative; /* 부모 요소 기준으로 정렬 */
+ }
+  
+.circle01 {
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    overflow: hidden;
+
+  }
+  
+.circle01 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+.text-wrapper01 {
+    text-align: start;
+    width: 50%;
+    margin-right: 20px;
+  }
+  
+.text-wrapper01 p {
+    font-size: 18pt;
+    font-weight: 700;
+    margin-bottom: 40px;
+  }
+  
+.text-wrapper01 h2 {
+    font-size: 34pt;
+    font-weight: 900;
+  }
+  
+  
+  /* SlideBanner.css */
+.slider-wrapper01 {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: auto;
+    
+    background-color: #61dafb;
+  }
+  
+.slider01 {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 357px;
+    width: 100%;
+  }
+  
+.dots01 {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+  }
+  
+.dot01 {
+    cursor: pointer;
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+.dot01.active {
+    background-color: #717171;
+  }
+  
+.arrows01 {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+.arrow01 {
+    cursor: pointer;
+    font-size: 30px;
+    color: #000;
+  }
+
+.main-slide-bnr {
+  padding: 0;
+}
+
+
+/* 반응형 미디어 쿼리 */
+@media screen and (max-width: 500px) {
+  .slider-wrapper01 {
+    height: 600px;
+  }
+  
+  .slide-contents-wrapper {
+    width: 96%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 수평 가운데 정렬 */
+    flex-direction: column;
+    text-align: center; /* 텍스트 가운데 정렬 */
+  }
+
+  .slide01 {
+    height: 600px;
+    flex-direction: column;
+    justify-content: center; /* 수직 가운데 정렬 */
+    align-items: center; /* 수평 가운데 정렬 */
+ }
+  
+  .circle01 {
+    width: 80%;
+    height: 70%;    
+    margin-right: 0; /* 오른쪽 마진 제거 */
+    margin-bottom: 20px; /* 아래 마진 추가 */
+  }
+  
+  .circle01 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .text-wrapper01 {
+    width: 80%;
+    margin-left: 0; /* 왼쪽 마진 제거 */
+    margin-right: 0; /* 오른쪽 마진 제거 */
+    margin-top: 20px; /* 위쪽 마진 추가 */
+  }
+  
+  .text-wrapper01 p {
+    font-size: 14pt;
+  }
+  
+  .text-wrapper01 h2 {
+    font-size: 20pt;
+  }
+}

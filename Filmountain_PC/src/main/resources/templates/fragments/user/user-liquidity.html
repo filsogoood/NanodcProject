@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   <main class="user-liquidity" th:fragment="UserLiquidity">
+         <div class="modal fade" id="success_alert" tabindex="-1" role="dialog">
+           <div class="modal-dialog">
+             <div class="modal-content">
+               <div class="modal-header bg-success">
+                 <h5 class="modal-title text-white dark__text-gray-1100" id="success_alert_title">신청완료</h5>
+                 <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span></button>
+               </div>
+               <div class="modal-footer">
+                 <button class="btn btn-outline-success" id="success_alert_confirm" type="button" data-bs-dismiss="modal">확인</button>
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="modal fade" id="fail_alert" tabindex="-1" role="dialog">
+           <div class="modal-dialog">
+             <div class="modal-content">
+               <div class="modal-header bg-danger">
+                 <h5 class="modal-title text-white dark__text-gray-1100" id="fail_alert_title">실패</h5>
+                 <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span></button>
+               </div>
+               <div class="modal-footer">
+                 <button class="btn btn-outline-danger" type="button" data-bs-dismiss="modal">확인</button>
+               </div>
+             </div>
+           </div>
+         </div>   
+            
+    <div class="modal fade" id="liquidity_modal" tabindex="-1" aria-labelledby="liquidity_modal_label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title dark__text-gray-1100" id="liquidity_modal_label">Deposit</h5>
+        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+          <span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-2">
+          <label class="form-label fs-9" for="new_transaction_fil_amount">Liquidity Fil Amount</label>
+          <input class="form-control" id="new_transaction_fil_amount" type="number" />
+        </div>
+        <div class="mb-2">
+          <label class="form-label fs-9" for="wallet_input">입금자 지갑주소</label>
+          <input type="text" class="form-control mb-1" id="outside_address_input" />
+        </div>
+        <div class="mb-2">
+			  <label class="form-label fs-9" for="wallet">입금 주소</label>
+			  <!-- 아래 코드는 첫 번째 입금 주소를 단일 텍스트 필드로 표시하는 방식입니다 -->
+			  <input class="form-control mb-1" id="wallet_address" type="text" 
+			         th:value="${walletList[0].f4_address}" readonly />
+			</div>
+        <p style="color: red; margin-top: 5px; font-size: 0.9em;">
+          입금 신청 시, 블록체인 네트워크의 가스비로 인해 실제 입금 금액이 신청하신 금액과 다를 수 있습니다.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button id="liquidity_modal_confirm" class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">신청</button>
+        <button class="btn btn-outline-danger" type="button" data-bs-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+          <!-- 카카오써트 본인 인증 모달 추가 -->
+        
+	        <!-- 본인 인증 요청 모달 -->
+			<div class="modal fade" id="identityVerificationRequestModal" tabindex="-1" role="dialog">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title dark__text-gray-1100">본인 인증 요청</h5>
+			        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+			          <span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p>본인 인증 요청이 접수되었습니다. 인증을 완료 후 확인 버튼을 클릭하세요.</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button id="identityVerificationRequestConfirm" class="btn btn-primary" type="button" data-bs-dismiss="modal">확인</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<!-- 본인 인증 성공 모달 -->
+			<div class="modal fade" id="identityVerificationSuccessModal" tabindex="-1" role="dialog">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title dark__text-white-1100">본인 인증 성공</h5>
+			        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+			          <span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p>본인 인증이 성공하였습니다.</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button id="identityVerificationSuccessConfirm" class="btn btn-primary" type="button" data-bs-dismiss="modal">확인</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<!-- 본인 인증 실패 모달 -->
+			<div class="modal fade" id="identityVerificationFailModal" tabindex="-1" role="dialog">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title dark__text-white-1100">본인 인증 실패</h5>
+			        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+			          <span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p id="identityVerificationFailMessage">본인 인증이 완료되지 않았습니다. 다시 시도해주세요.</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button id="identityVerificationFailConfirm" class="btn btn-primary" type="button" data-bs-dismiss="modal">확인</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+        <!--Withdraw 본인인증 모달-->
+        <div class="modal fade" id="identityVerificationModal" tabindex="-1" aria-labelledby="identityVerificationModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title dark__text-white-1100" id="identityVerificationModalLabel">본인인증</h5>
+		        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+		          <span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <div class="mb-2">
+		          <label class="form-label fs-9" for="verify_name">이름</label>
+		          <input class="form-control" id="verify_name" type="text" readonly />
+		        </div>
+
+		        <div class="mb-2">
+		          <label class="form-label fs-9" for="verify_birthdate">생년월일</label>
+		          <input class="form-control" id="verify_birthdate" type="text" />
+		        </div>
+		        <div class="mb-2">
+		          <label class="form-label fs-9" for="verify_phone">핸드폰 번호</label>
+		          <input class="form-control" id="verify_phone" type="text" readonly/>
+		        </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button id="startIdentityVerification" class="btn btn-outline-primary" type="button">본인인증</button>
+		        <button class="btn btn-outline-danger" type="button" data-bs-dismiss="modal">닫기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+        
+        <div class="modal fade" id="Withdraw_modal" tabindex="-1" aria-labelledby="liquidity_modal_label" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title dark__text-white-1100" id="liquidity_modal_label">Withdraw</h5>
+                <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                  <span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="mb-2">
+                  <label class="form-label fs-9" for="withdraw_transaction_fil_amount">Withdraw Fil Amount</label>
+                  <input class="form-control" id="withraw_filamount" type="number" />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label fs-9" for="withdraw_wallet_input">입금받으실 지갑주소</label>
+                  <input type="text" class="form-control mb-1" id="withdraw_wallet_input" />
+                </div>
+                <div class="mb-2" style="display: none;">
+                   <select class="form-select mb-1" id="wallet_link_transaction_option">
+                       <option th:each="wallet, iterStat : ${walletList}" 
+                               th:value="${wallet.wallet_id}" 
+                               th:text="${wallet.f4_address}" 
+                               th:selected="${iterStat.index == 0}"></option>
+                   </select>
+               </div>
+               <p style="color: red; margin-top: 5px; font-size: 0.9em;">
+          출금 신청 시, 블록체인 네트워크의 가스비로 인해 실제 출금 금액이 신청하신 금액과 다를 수 있습니다.
+        </p>
+              </div>
+              <div class="modal-footer">
+                
+                <button 
+				    id="withdraw_modal_confirm" 
+				    class="btn btn-outline-primary" 
+				    type="button" 
+				    data-bs-dismiss="modal"
+				    th:data-user-name="${userInfoVO.user_name}" 
+    				th:data-phone-number="${userInfoVO.phone_number}">
+				    신청
+				</button>
+                <button class="btn btn-outline-danger" type="button" data-bs-dismiss="modal">닫기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+   <section class="liquidity-status-container section-light container-small mt-0" style="padding:0;" th:each="LiquidityInfotxByUser : ${LiquidityInfotxByUser}">
+        <h1 class="mb-5 mt-15">LIQUIDITY POOL</h1>
+        <h4 class="mb-5">제타큐브가 직접 운영하는 나노디씨 노드의 유동성 풀에 참여하여, 안정적이고 높은 리워드를 받으세요.</h4>
+        <div class="liquidity-info row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 justify-content-between">
+            <div style="width: 40%;">
+                <p>교환비율</p>
+                <h2 class="liquidity-value fs-4 d-flex align-items-center gap-1 mb-3" style="color:#69CAD1;">zFIL : FIL = 1 : 1</h2>
+            </div>
+           <div style="width: 30%;">
+    <p>Pool 기여도</p>
+    <h2 class="liquidity-value fs-4 d-flex align-items-center gap-1 mb-3" style="color:#69CAD1;">
+        <span th:text="${#numbers.formatDecimal(findUserContributionByUserId[0].contributionPercentage, 1, 1)}">100</span>%
+    </h2>
+</div>
+
+
+            <div style="width: 30%;">
+                <p>보유 zFIL</p>
+                <h2 class="liquidity-value fs-4 d-flex align-items-center gap-1 mb-3" style="color:#69CAD1;" id="zfil_amount" th:text="${LiquidityInfotxByUser.liquidity_amount}">5,000</h2>
+            </div>
+        </div>
+    </section>
+    <section class="liquidity-status-container section-light container-small mt-15" style="padding:0;">
+        <h1 class="mb-5">수익 현황</h1>
+        <div class="row gx-6 gy-3 mb-4 align-items-center">
+           <div class="col-auto">
+            <button class="btn btn-subtle-info me-1 mb-1"  th:data-user-id="${loginVO.userInfoVO.user_id}" th:data-wallet-id="${walletList[0].wallet_id}" id="deposit-btn">Deposit</button>
+           </div>
+           <div class="col-auto">
+                <button class="btn btn-subtle-info me-1 mb-1" th:data-user-id="${loginVO.userInfoVO.user_id}" th:data-wallet-id="${walletList[0].wallet_id}" id="withdraw-btn">Withdraw</button>
+           </div>
+            <div class="col-auto">
+                <button class="btn btn-subtle-info me-1 mb-1" th:data-user-id="${loginVO.userInfoVO.user_id}" id="call-wallet-btn">입금주소 발급</button>
+           </div>
+        </div>
+        <div class="income-info liquidity-info row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 justify-content-between" style="gap:30px;" th:each="LiquidityInfotxByUser : ${LiquidityInfotxByUser}">
+            
+            <div style="width: 30%;">
+                <p>FIL 현재가격</p>
+                <h2 class="liquidity-value fs-4 d-flex align-items-center gap-1 mb-3" style="color:#69CAD1;" id="fil_price" th:text="${filprice}">6,155</h2>
+            </div>
+            
+            <div th:if="${LiquiditytxByUser.size() > 0}">
+                <p>Liquidity 평균단가</p>
+                <h2 class="liquidity-value fs-4 d-flex align-items-center gap-1 mb-3" 
+                    style="color:#69CAD1;" 
+                    id="deposit_price" 
+                    th:text="${LiquiditytxByUser[0].deposit_price}">
+                    5,495
+                </h2>
+            </div>
+            
+            <div style="width: 30%;">
+                <p>Total liquidity FIL</p>
+                <h2 class="liquidity-value fs-4 d-flex align-items-center gap-1 mb-3" style="color:#69CAD1;" id="staking-amount" th:text="${LiquidityInfotxByUser.liquidity_amount}">5,000</h2>
+            </div>
+            <div style="width: 30%;">
+                <p>Total liquidity Cash</p>
+                <h2 class="liquidity-value fs-4 d-flex align-items-center gap-1 mb-3" style="color:#69CAD1;" id="total-cash" th:text="${LiquidityInfotxByUser.total_reward}">27,475,000</h2>
+            </div>
+            <div style="width: 30%;">
+                <p>수익</p>
+                <h2 class="liquidity-value fs-4 d-flex align-items-center gap-1 mb-3" style="color:#69CAD1;" id="reward" th:text="${LiquidityInfotxByUser.total_reward }">0</h2>
+            </div>
+            <div style="width: 30%;">
+                <p>인출 가능 금액</p>
+                <h2 class="liquidity-value fs-4 d-flex align-items-center gap-1 mb-3" style="color:#69CAD1;" id="unstake-amount" th:text="${LiquidityInfotxByUser.total_reward } ">0</h2>
+            </div>
+            <div style="width: 30%; display: none;">
+                <p>총 자산</p>
+                <h2 class="liquidity-value fs-4 d-flex align-items-center gap-1 mb-3" style="color:#69CAD1;" id="total_cash_amount" th:text="${LiquidityInfotxByUser.liquidity_amount}">27,475,000</h2>
+            </div>
+            <div style="width: 30%; display: none;">
+                <p>총 수익 비율</p>
+                <h2 class="liquidity-value fs-4 d-flex align-items-center gap-1 mb-3" style="color:#69CAD1;" id="total_reward_ratio" th:text="${LiquidityInfotxByUser.total_reward}">100.00</h2>
+            </div>
+            <div class="col-sm-5 col-md-4 col-xxl-4 my-3 my-sm-0" style="width: 100%;">
+                <div class="position-relative d-flex flex-center mb-sm-4 mb-xl-0 echart-contact-by-source-container mt-sm-7 mt-lg-4 mt-xl-0">
+                  <div class="echart-contact-by-source" style="min-height:245px; width:100%"></div>
+                  <div class="position-absolute rounded-circle bg-primary-subtle top-50 start-50 translate-middle d-flex flex-center" style="height:100px; width:100px;">
+                    <h3 class="mb-0 text-primary-dark fw-bolder" data-label="data-label">455</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </section>
+   <section class="liquidity-status-container section-light container-small" style="padding-top: 0;">
+  <div class="liquidity-dashboard row gx-6 gy-3 mb-4 align-items-center justify-content-between">
+    <div class="col row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 p-0">
+      <h3 class="mb-7">- 거래내역</h3>
+      <div id="transaction-list" class="row" style="padding: 0; width: 100%; margin-left: 0; margin-bottom: 16px;">
+        <div th:each="LiquiditytxByUser : ${LiquiditytxByUser}" class="card">
+          <div class="card-body row">
+            <span class="badge text-bg-success" style="width: 7%;" 
+              th:class="${LiquiditytxByUser.status == '입금완료' ? 'badge badge-phoenix fs-10 mb-4 badge-phoenix-success' :
+                      (LiquiditytxByUser.status == '입금신청' ? 'badge badge-phoenix fs-10 mb-4 badge-phoenix-warning' :
+                      (LiquiditytxByUser.status == '입금실패' ? 'badge badge-phoenix fs-10 mb-4 badge-phoenix-danger' :
+                      (LiquiditytxByUser.status == '입금진행중' ? 'badge badge-phoenix fs-10 mb-4 badge-phoenix-primary' :
+                      (LiquiditytxByUser.status == '출금완료' ? 'badge badge-phoenix fs-10 mb-4 badge-phoenix-success' :
+                      (LiquiditytxByUser.status == '출금신청' ? 'badge badge-phoenix fs-10 mb-4 badge-phoenix-warning' :
+                      (LiquiditytxByUser.status == '출금진행중' ? 'badge badge-phoenix fs-10 mb-4 badge-phoenix-primary' :
+                      (LiquiditytxByUser.status == '출금실패' ? 'badge badge-phoenix fs-10 mb-4 badge-phoenix-danger' : '')))))))}"
+              th:text="${LiquiditytxByUser.status}">
+              >입금완료</span>
+            <h4 class="pe-sm-5 lh-lg" style="width: 25%;">
+              <span th:text="${#strings.equals(LiquiditytxByUser.status, '입금신청') || #strings.equals(LiquiditytxByUser.status, '입금진행중') || #strings.equals(LiquiditytxByUser.status, '입금실패') || #strings.equals(LiquiditytxByUser.status, '입금완료') ? '입금 : ' + LiquiditytxByUser.fil_amount + ' FIL' : '출금 : ' + LiquiditytxByUser.fil_amount + ' FIL'}">
+    출금 : 2000.000 FIL
+</span>
+
+            </h4>
+            <p style="width: 30%;">
+				  Tx : 
+				  <a th:href="'https://calibration.filscan.io/en/message/' + ${LiquiditytxByUser.tx_message}" 
+				     th:text="${#strings.abbreviate(LiquiditytxByUser.tx_message, 20)}">bafy2bzaced5lbcbfcly6f...</a>
+				</p>
+            <p class="fw-bold fs-9" style="width: 30%;">신청일 :<span class="fw-semibold text-body-tertiary text-opactity-85 ms-1" th:text="${#dates.format(LiquiditytxByUser.reg_date, 'yyyy년 MM월 dd일 HH:mm:ss')}">2024/07/09 07:57</span></p>
+          </div>
+        </div>
+      </div>  
+    </div>   
+  </div>   
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var transactionList = document.getElementById('transaction-list');
+    var cards = Array.from(transactionList.getElementsByClassName('card'));
+
+    cards.sort(function(a, b) {
+        var dateA = new Date(a.querySelector('.fw-semibold').innerText.trim());
+        var dateB = new Date(b.querySelector('.fw-semibold').innerText.trim());
+        return dateB - dateA; // 최신 날짜 순으로 정렬
+    });
+
+    cards.forEach(function(card) {
+        transactionList.appendChild(card); // 정렬된 순서로 다시 추가
+    });
+});
+</script>
+
+
+    
+    
+    
+</main>
+</html>

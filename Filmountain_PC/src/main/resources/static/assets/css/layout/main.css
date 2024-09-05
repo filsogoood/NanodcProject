@@ -1,0 +1,16 @@
+
+
+
+h3 {
+    font-size: 40pt;
+    font-weight: 800;
+    text-align: center;
+    color: #D04F17;
+}
+
+/* 반응형 미디어 쿼리 */
+@media screen and (max-width: 500px) {
+    h3{
+        font-size: 28pt;
+    }
+}

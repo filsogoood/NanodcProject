@@ -1,0 +1,81 @@
+.nanodc-map-wrapper {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    text-align: center;
+}
+
+.map-wrapper {
+    width: 980px;
+    display: inline-block;
+    text-align: center; /* 부모 요소에 text-align: center 추가 */
+    position: relative;
+}
+
+.nanodc-map-btn01,
+.nanodc-map-btn02,
+.nanodc-map-btn03 {
+    position: absolute;
+    width: 150px;
+    height: 30px;
+    background-color: #fff;
+    border: 1px solid #D04F17;
+    border-radius: 20px;
+    padding: 3px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 12pt;
+    color: #D04F17;
+}
+
+.nanodc-map-btn01 {
+    top: 190px;
+    left: 10%;
+}
+
+.nanodc-map-btn02 {
+    top: 247px; /* 조정 필요 */
+    left: 10%;
+}
+
+.nanodc-map-btn03 {
+    top: 660px; /* 조정 필요 */
+    left: 10%;
+}
+
+.map-wrapper img {
+    display: block;
+    margin: 0 auto; /* 이미지 가운데 정렬 */
+    width: 680px;
+}
+
+/* 반응형 미디어 쿼리 */
+@media screen and (max-width: 500px) {
+    .map-wrapper {
+        width: 100%; /* 부모 요소의 너비를 100%로 설정 */
+    }
+
+    .map-wrapper img {
+        width: 80%;
+        margin: 0 auto; /* 이미지 가운데 정렬 */
+    }
+
+    .nanodc-map-btn01,
+    .nanodc-map-btn02,
+    .nanodc-map-btn03 {
+        width: 100px;
+        height: 28px;
+        left: 4%;
+    }
+
+    .nanodc-map-btn01 {
+        top: 90px;
+    }
+
+    .nanodc-map-btn02 {
+        top: 120px; /* 조정 필요 */
+    }
+
+    .nanodc-map-btn03 {
+        top: 356px; /* 조정 필요 */
+    }
+}

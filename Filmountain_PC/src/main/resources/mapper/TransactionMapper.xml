@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanoDc.erp.mapper.TransactionMapper">
+	<insert id="addNewTransaction" parameterType="com.nanoDc.erp.vo.TransactionVO">
+		  INSERT INTO transaction (
+		    fil_amount,
+		    reg_date,
+		    status,
+		   	type,
+		    user_id,
+		    wallet_id,
+		    message,
+		    hw_product_id
+		  )
+		  VALUES (
+		    #{fil_amount},
+		    NOW(),
+		    #{status},
+		    #{type},
+		    #{user_id},
+		    #{wallet_id},
+		    #{message},
+		    #{hw_product_id}
+		  )
+	</insert>
+	
+	<select id="getTransactionList" resultType="com.nanoDc.erp.vo.TransactionVO">
+		SELECT 
+	    user.user_name,
+	    user.user_email,
+	    transaction.transaction_id,
+	    transaction.status,
+	    transaction.reg_date,
+	    transaction.fil_amount,
+	    transaction.message,
+	    wallet.sp_address,
+	    transaction.hw_product_id
+	FROM 
+	    filmountain_test.transaction AS transaction
+	INNER JOIN 
+	    filmountain_test.wallet AS wallet ON transaction.wallet_id = wallet.wallet_id
+	INNER JOIN 
+	    filmountain_test.user_info AS user ON transaction.user_id = user.user_id
+	WHERE 
+	    user.user_status = 'active'
+	ORDER BY 
+        transaction.reg_date DESC;
+	</select>
+	
+	<select id="selectTransactionsByUser" parameterType="integer" resultType="com.nanoDc.erp.vo.TransactionVO">
+		  	SELECT transaction.transaction_id, transaction.fil_amount, transaction.user_id, transaction.status, transaction.wallet_id, transaction.type, transaction.reg_date, transaction.message,transaction.hw_product_id,wallet.sp_address
+			FROM transaction transaction
+			inner join wallet wallet on wallet.wallet_id = transaction.wallet_id
+			WHERE transaction.user_id =#{user_id}
+	</select>
+	
+	 <update id="updateStatus" parameterType="com.nanoDc.erp.vo.TransactionVO">
+		 update transaction
+		 SET status = #{status},message = #{message}
+		 Where transaction_id = #{transaction_id}
+	 </update>
+
+</mapper>

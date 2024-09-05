@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanoDc.erp.mapper.LiquidityMapper">
+	
+	
+	<select id="getLiquidityList" resultType="com.nanoDc.erp.vo.LiquidityVO">
+		SELECT 
+		    user.user_name,
+		    user.user_email,
+		    Liquidity_tx.liquid_id,
+		    Liquidity_tx.status,
+		    Liquidity_tx.reg_date,
+		    Liquidity_tx.fil_amount,
+		    Liquidity_tx.type,
+		    Liquidity_tx.deposit_price,
+		    Liquidity_tx.outside_address,
+		    Liquidity_tx.tx_message,
+		    wallet.f4_address,
+		    wallet.key_id,
+		    wallet.lp_address
+		FROM 
+		    filmountain_test.Liquidity_tx AS Liquidity_tx
+		INNER JOIN 
+		    filmountain_test.wallet AS wallet ON Liquidity_tx.wallet_id = wallet.wallet_id
+		INNER JOIN 
+		    filmountain_test.user_info AS user ON Liquidity_tx.user_id = user.user_id
+		WHERE 
+		    user.user_status = 'active'
+		ORDER BY 
+		    Liquidity_tx.reg_date DESC;
+
+	</select>
+
+	<select id="getLiquidityrewardList" resultType="com.nanoDc.erp.vo.LiquidityVO">
+		SELECT 
+		    user.user_name,
+		    user.user_email,
+		    Liquidity_reward.lq_reward_id,
+		    Liquidity_reward.wallet_id,
+		    Liquidity_reward.reg_date,
+		    Liquidity_reward.reward_amount,
+		    wallet.lp_address
+		FROM 
+		    filmountain_test.Liquidity_reward AS Liquidity_reward
+		INNER JOIN 
+		    filmountain_test.wallet AS wallet ON Liquidity_reward.wallet_id = wallet.wallet_id
+		INNER JOIN 
+		    filmountain_test.user_info AS user ON Liquidity_reward.user_id = user.user_id
+		WHERE 
+		    user.user_status = 'active'
+		ORDER BY 
+		    Liquidity_reward.reg_date DESC;
+
+	</select>
+	
+	<select id="selectLiquiditytxByUser" parameterType="integer" resultType="com.nanoDc.erp.vo.LiquidityVO">
+    SELECT Liquidity_tx.liquid_id,
+           Liquidity_tx.tx_message,
+           Liquidity_tx.fil_amount,
+           Liquidity_tx.user_id,
+           Liquidity_tx.status,
+           Liquidity_tx.wallet_id,
+           Liquidity_tx.type,
+           Liquidity_tx.reg_date,
+           Liquidity_tx.outside_address,
+           Liquidity_tx.deposit_price,
+           wallet.f4_address
+    FROM Liquidity_tx Liquidity_tx
+    INNER JOIN wallet wallet ON wallet.wallet_id = Liquidity_tx.wallet_id
+    WHERE Liquidity_tx.user_id = #{user_id}
+    ORDER BY Liquidity_tx.reg_date DESC
+</select>
+
+	
+	<select id="selectLiquidityRewardByUser" parameterType="integer" resultType="com.nanoDc.erp.vo.LiquidityVO">
+		  	SELECT Liquidity_reward.lq_reward_id, Liquidity_reward.reward_amount, Liquidity_reward.user_id, Liquidity_reward.memo, Liquidity_reward.wallet_id, Liquidity_reward.reg_date,wallet.f4_address
+			FROM Liquidity_reward Liquidity_reward
+			inner join wallet wallet on wallet.wallet_id = Liquidity_reward.wallet_id
+			WHERE Liquidity_reward.user_id =#{user_id}
+	</select>
+	
+	<select id="selectLiquidityInfotxByUser" parameterType="integer" resultType="com.nanoDc.erp.vo.LiquidityVO">
+		  	SELECT Liquidity_info.lq_info_id, Liquidity_info.liquidity_amount, Liquidity_info.user_id, Liquidity_info.withdraw_amount, Liquidity_info.wallet_id, Liquidity_info.reg_date, Liquidity_info.total_reward,wallet.f4_address
+			FROM Liquidity_info Liquidity_info
+			inner join wallet wallet on wallet.wallet_id = Liquidity_info.wallet_id
+			WHERE Liquidity_info.user_id =#{user_id}
+	</select>
+	
+	<select id="findUserContributionByUserId" parameterType="integer" resultType="com.nanoDc.erp.vo.LiquidityVO">
+    SELECT 
+        user_id as userId, 
+        COALESCE(liquidity_amount, 0) as liquidity_amount, 
+        COALESCE((liquidity_amount / (SELECT SUM(liquidity_amount) FROM Liquidity_info)), 0) * 100 AS contributionPercentage
+    FROM 
+        Liquidity_info
+    WHERE 
+        user_id = #{user_id};
+</select>
+
+<select id="getTotalPoolInfo" parameterType="integer" resultType="com.nanoDc.erp.vo.LiquidityVO">
+    SELECT 
+    SUM(liquidity_amount) AS total_liquidity_amount,
+    SUM(locked_fil) AS total_locked_fil
+	FROM Liquidity_info;
+
+</select>
+	
+	<insert id="addNewLPTransaction" parameterType="com.nanoDc.erp.vo.LiquidityVO">
+		  INSERT INTO Liquidity_tx (
+		    fil_amount,
+		    reg_date,
+		    status,
+		    type,
+		    user_id,
+		    wallet_id,
+		    outside_address,
+		    deposit_price
+		)
+		VALUES (
+		    #{fil_amount},
+		    NOW(),
+		    #{status},
+		    #{type},
+		    #{user_id},
+		    #{wallet_id},
+		    #{outside_address},
+		    (SELECT fil_last FROM fil_price ORDER BY fil_price_id DESC LIMIT 1)
+		);
+
+	</insert>
+	<update id="updateLPStatus"  parameterType="com.nanoDc.erp.vo.LiquidityVO">
+		 update Liquidity_tx
+		 SET status = #{status},tx_message = #{tx_message}
+		 Where liquid_id = #{liquid_id}
+	 </update>
+
+</mapper>

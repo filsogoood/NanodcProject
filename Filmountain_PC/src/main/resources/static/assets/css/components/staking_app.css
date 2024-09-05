@@ -1,0 +1,342 @@
+.staking {
+    text-align: center;
+    background-color: rgb(39, 39, 39);
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 세로 가운데 정렬을 원할 경우 추가 */
+    flex-direction: column;
+}
+
+.staking h3 {	
+	color: #fff;
+}
+.staking-wrapper {
+	
+    width: 980px;
+    padding: 100px 0;
+}
+
+.staking-wrapper img, .best-filecoin img {
+	margin: 130px 0 30px 0;
+}
+.staking p {
+	margin-top: 30px;
+	font-size: 16pt;
+	color: #fff;
+}
+
+.staking-button {
+	width: 200px;
+	height: 50px;
+	color: #fff;
+	margin:auto;
+	text-align: center;
+	background-color: #D04F17;
+	border-radius: 10px;
+	margin-top: 80px;
+    cursor: pointer;
+}
+
+.staking-button p {
+	padding-top: 14px;
+	justify-content: center;
+	font-size: 16pt;
+	font-weight: 700;
+}
+
+.staking-status, .staking-status2 {
+	display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-content: space-around;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 60%;
+    margin:  auto;
+}
+
+
+.staking-status strong, span, .staking-status2 strong, span {
+	font-size: 28pt;
+	font-weight: 700;
+    color: #fff;
+}
+
+.strong-apy, .span-apy {
+    color: #D04F17; /* 원하는 색상으로 변경 */
+}
+
+.staking-status small {
+	font-size: 8pt;
+    color: #fff;
+}
+
+.stake-wrapper {
+	padding: 100px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 세로 가운데 정렬을 원할 경우 추가 */
+    flex-direction:column;
+    background-color: #f4f4f4;
+}
+.stake-wrapper h3 {
+	margin-bottom: 30px;
+}
+
+.you-stake-view {
+    width: 500px;
+    height: auto;
+    border-radius: 20px;
+    border: 1px solid #D04F17;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 세로 가운데 정렬을 원할 경우 추가 */
+    flex-direction:column;
+    margin-top: 30px;
+}
+
+.you-stake, .you-receive {
+	width: 96%;
+	padding: 20px 10px 10px 10px;
+}
+
+.stake-wrapper small {
+	font-size: 8pt;
+	margin-left: 20px;
+}
+
+.you-stake-status {
+	height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 세로 가운데 정렬을 원할 경우 추가 */
+    flex-direction:row;
+    padding: 5px 20px;    
+	background-color: #D04F17;
+	border-radius: 40px;
+	color: #fff;
+	font-size: 24pt;
+	margin-top: 10px;
+}
+
+.stake-btn {	
+	width: 96%;
+	height: 40px;
+    border-radius: 20px;
+    border: 1px solid #D04F17;
+	margin: 10px auto;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	cursor: pointer;
+	margin-top: 10px;
+	flex-direction: column;
+	color: #D04F17;
+	font-weight: 700;
+    
+}
+
+.how-staking {
+	width: 100%;
+    padding: 100px 0;
+    background-color: #000;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+    
+}
+
+.best-filecoin {
+	width: 100%;
+    padding: 100px 0;
+    background-color: #000;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	
+}
+
+.staking-works {
+	width: 980px;
+	display: flex;
+    justify-content: space-between;
+    align-items: center;	
+    margin: 80px 0;
+}
+
+.staking-work {
+	width: 28%;
+}
+
+.staking-work h4, .staking-work  h5{
+	font-size: 22pt;
+	font-weight: 700;
+	color: #fff;
+	margin: 10px 0;
+}
+
+.staking-work h4 {
+	color: #D04F17;
+}
+
+.staking-work p {
+	font-size: 12pt;
+	
+}
+
+.what-filecoin {	
+	width: 980px;
+    padding: 100px 0;
+	display: flex;
+	text-align: center;
+	justify-content: space-around;
+	flex-direction: row;
+	align-items: center;
+}
+
+.fil-info-box {
+	width: 400px;
+	height: 300px;
+	border: 1px solid #fff;
+	padding: 20px;
+}
+
+ 
+.what-filecoin h3 {
+	margin: 50px 0;
+	font-size: 24pt;
+}
+
+.btn-main {
+
+    background-image: url('/assets/img/bg/btn-bg.jpg');
+    
+    background-repeat: no-repeat; /* 배경 이미지 반복 여부 */
+    background-size: cover; /* 배경 이미지 크기 조정 */
+    background-position: center; /* 배경 이미지 위치 설정 */
+    
+    
+    overflow: hidden;
+    margin-top: 0;
+}
+
+.st-btn-wrapper hr {
+	width: 10%;
+    margin: 20px auto;
+    border: 2px solid #000;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* 반응형 미디어 쿼리 */
+@media screen and (max-width: 980px) {
+	
+    .staking-wrapper {
+
+    width: 90%;
+    margin: 50px 0 10px 0;
+	}
+}
+
+
+@media screen and (max-width: 500px) {
+	.staking-status, .staking-status2 {
+		width: 100%;
+		padding: 3.5% 0;;
+	}
+	
+	.staking-status strong, span, .staking-status2 strong, span {
+		font-size: 14pt;
+		font-weight: 700;
+	    color: #fff;
+	}
+	
+	.staking-status small, .staking-status2 small{
+		font-size: 8pt;
+	    color: #fff;
+		line-height: 9pt;
+	}
+	
+	.staking h3 {	
+		color: #fff;
+		font-size: 16pt;
+	}	
+	.staking p {
+		margin-top: 30px;
+		font-size: 10pt;
+		color: #fff;
+		line-height: 15pt;
+	}
+	
+	.staking-button {
+		width: 200px;
+		height: 50px;
+		color: #fff;
+		margin:auto;
+		text-align: center;
+		background-color: #D04F17;
+		border-radius: 10px;
+		margin-top: 80px;
+	    cursor: pointer;
+	}
+	
+	.staking-button p {
+		padding-top: 14px;
+		justify-content: center;
+		font-size: 16pt;
+		font-weight: 700;
+	}
+	
+	.st-btn-wrapper p {
+		margin-top: 15px;
+		font-size: 10pt;
+		font-weight: 700;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

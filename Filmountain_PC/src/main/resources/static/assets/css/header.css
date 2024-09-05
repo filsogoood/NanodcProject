@@ -1,0 +1,77 @@
+header {    
+    width: 100%;
+    height: 100px;
+    background-color: #FFFEF8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logobarTop-wrapper {
+    width: 980px;    
+    position: relative;
+}
+
+.logo {
+    width: 182px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.logo img {
+    width: 100%;
+}
+
+.googleplaystore {
+    width: 195px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.login {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* 반응형 미디어 쿼리 */
+@media screen and (max-width: 500px) {
+    header {
+        height: 75px;
+    }
+
+    .logobarTop-wrapper {
+        width: 100%;
+    }
+
+    .logo {
+        position: static;
+        transform: none;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .logo img {
+        width: 100px;
+    }
+
+    .googleplaystore {
+        width: 100px;
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .login {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanoDc.erp.mapper.HardwareProductMapper">
+	<select id="getProductList" resultType="com.nanoDc.erp.vo.HardwareProductVO">
+		SELECT hw_product_id, 
+			   hw_product_name, 
+			   hw_product_status, 
+			   recruitment_start_date, 
+			   service_start_date, 
+			   service_end_date, 
+			   total_budget_fil,
+			   city,
+			   details,
+			   picture_url
+		FROM filmountain_test.hw_product
+		ORDER BY
+    	recruitment_start_date DESC;
+	</select>
+	<select id="getProductListByUserId" parameterType="integer" resultType="com.nanoDc.erp.vo.HardwareProductVO">
+				SELECT product.hw_product_id, 
+			   product.hw_product_name, 
+			   product.hw_product_status, 
+			   product.recruitment_start_date, 
+			   product.service_start_date, 
+			   product.service_end_date, 
+			   product.total_budget_fil,
+			   product.city,
+			   product.details,
+			   product.picture_url,
+			   product.miner_id
+		FROM filmountain_test.hw_product product
+		INNER JOIN hw_investment investment ON investment.hw_product_id = product.hw_product_id
+		where investment.user_id = #{user_id}
+		GROUP BY product.hw_product_id
+	</select>
+	<update id="updateProduct" parameterType="com.nanoDc.erp.vo.HardwareProductVO">
+		  UPDATE hw_product
+		  <set>
+		    <if test="hw_product_name != null">hw_product_name = #{hw_product_name},</if>
+		    <if test="hw_product_status != null">hw_product_status = #{hw_product_status},</if>
+  			<if test="total_budget_fil != null">total_budget_fil = #{total_budget_fil},</if>
+  			<if test="city != null">city = #{city},</if>
+  			<if test="details != null">details = #{details},</if>
+		    <if test="picture_url != 'no_change'">
+		      picture_url = #{picture_url},
+		    </if>
+		    recruitment_start_date = #{recruitment_start_date},
+			service_start_date = #{service_start_date},
+			service_end_date = #{service_end_date}
+		  </set>
+		  WHERE hw_product_id = #{hw_product_id}
+
+	</update>
+	
+	<insert id="addProduct" parameterType="com.nanoDc.erp.vo.HardwareProductVO">
+		  INSERT INTO hw_product (
+		    hw_product_name,
+		    hw_product_status,
+		    total_budget_fil,
+		    city,
+		    details,
+		    picture_url,
+		    recruitment_start_date,
+		    service_start_date,
+		    service_end_date
+		  )
+		  VALUES (
+		    #{hw_product_name},
+		    #{hw_product_status},
+		    #{total_budget_fil},
+		    #{city},
+		    #{details},
+		    #{picture_url},
+		    NOW(),
+		    #{service_start_date},
+		    #{service_end_date}
+		  )
+	</insert>
+	<select id="getProductById" parameterType="integer" resultType="com.nanoDc.erp.vo.HardwareProductVO">
+				SELECT product.hw_product_id, 
+			   product.hw_product_name, 
+			   product.hw_product_status, 
+			   product.recruitment_start_date, 
+			   product.service_start_date, 
+			   product.service_end_date, 
+			   product.total_budget_fil,
+			   product.city,
+			   product.details,
+			   product.picture_url,
+			   product.miner_id
+		FROM filmountain_test.hw_product product
+		where product.hw_product_id = #{hw_product_id}
+	</select>
+	
+	
+	
+	
+	
+</mapper>

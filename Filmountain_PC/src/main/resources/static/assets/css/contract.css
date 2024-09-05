@@ -1,0 +1,311 @@
+/* reset.css */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+
+body {
+    line-height: 1;
+     margin: 0;
+            padding: 0;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 테이블 스타일 초기화 */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* a 태그 스타일 초기화 */
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+
+
+
+/* Contract View CSS STRAT */
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+}
+
+section {
+    background-color: #fff;
+    width: 21cm;
+    height: 29.7cm;
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+.content-wrapper {    
+    margin: 0 2cm 0 2cm;
+    height: 100%;
+    position: relative;
+}
+
+img {
+    width: 200px;
+}
+
+.contract-number {
+    margin : 130px 0 160px 0;
+    font-size: 10pt;
+}
+
+.title {
+    text-align: center;
+}
+
+.title span img {
+    width: 110px;
+}
+
+.title span {
+    margin-left: 10px;
+}
+
+.title-txt {
+    font-size: 22pt;
+    font-weight: 900;
+    line-height: 300%;
+}
+
+.date{
+    margin-top: 320px;
+    font-size: 16pt;
+    font-weight: 900;
+    text-align: center;
+}
+
+.contractor {
+    margin-top: 100px;
+    font-size: 16pt;
+    font-weight: 900;
+    text-align: center;
+
+}
+
+.contractor p {
+    line-height: 200%;
+}
+
+
+/* section 공통 */
+
+.header-line {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer-line {
+    text-align: center;
+    position:fixed;
+    bottom: 0;
+}
+
+.header-line img {
+    width : 150px;
+}
+
+.footer-line img {
+    width: 100px;
+}
+
+.footer-line {
+    position: absolute;
+    bottom: 70px;
+    width: 100%;
+}
+
+.footer-line p{
+    text-align: right;
+    font-size: 10pt;
+}
+
+/* section02 */
+
+
+.table-container {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 30px;
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 11.5pt;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 10px;
+    vertical-align: middle;
+    line-height: 180%;
+}
+
+th {
+    text-align: center;
+}
+
+td[colspan="2"] {
+    text-align: center;
+}
+
+.contract-footer {
+    border-top: 1px solid #000;
+    padding-top: 10px;
+    position: relative;
+}
+
+.contract-footer p {
+    margin: 5px 0;
+    text-align: left;
+}
+
+.contract-footer .contract-date, .contract-footer .signatory {
+    margin: 5px 0 20px 0;
+    text-align: center;
+    font-weight: 600;
+}
+
+.contract-footer img {
+    width: 50px;
+    position: absolute;
+    bottom: 80px;
+    right: 150px;
+    opacity: 0.7;
+}
+
+
+/* section03 - 07 */
+
+.contract-content-wrapper {
+    margin-top: 30px;
+    font-size: 11.5pt;
+    line-height: 180%;
+}
+
+.contract-content-wrapper .title {
+    margin-bottom : 20px;
+}
+
+.content {
+    margin : 30px 0 30px 0;
+}
+
+.contract-terms {
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* section08 */
+
+.small-date {
+    text-align: center;
+    margin: 80px 0 50px 0;
+}
+
+.signature {
+    display: flex;
+    justify-content: space-between; /* or 'center' if you prefer center alignment */
+    gap: 20px; /* Optional: to add space between the two divs */
+    
+    line-height: 180%;
+    font-size: 11.5pt;
+}
+
+.signature div {
+    flex-grow: 1; /* 모든 div의 너비를 동일하게 설정 */
+    flex-basis: 0; /* 기본 너비를 0으로 설정 */
+}
+
+.administrator {
+    position: relative;
+}
+
+.administrator img {    
+    width: 50px;
+    position: absolute;
+    bottom: -16px;
+    right: 130px;
+    opacity: 0.7;
+}
+.form-control {
+            border: none;
+            outline: none;
+            background-color: transparent;
+            box-shadow: none;
+            display: inline-block; 
+            /* 인라인 블록으로 설정하여 너비 조절 */
+        }
+.form-control::placeholder {
+            color: rgb(255, 0, 0); /* 형광색 */
+             text-decoration: underline; /* 밑줄 추가 */
+            text-decoration-color: rgb(255, 0, 0); /* 밑줄 색상 */
+        }        

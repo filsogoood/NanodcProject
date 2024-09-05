@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanoDc.erp.mapper.UserInfoMapper">
+	<!-- SELECT -->
+	<select id="selectUserInfoList"  resultType="com.nanoDc.erp.vo.UserInfoVO">
+		SELECT
+		    user.user_id,
+		    user.phone_number,
+		    user.user_status,
+		    user.user_reg_date,
+		    user.user_name,
+		    user.user_email,
+		    user.level,
+		    user.profileIcon_id,
+		    COUNT(invest.hw_id) AS investment_count,
+		    COALESCE(SUM(invest.hw_invest_fil), 0) AS total_investment_fil,
+		    (SELECT SUM(hrsd.reward_fil) from hw_reward_sharing_detail hrsd WHERE hrsd.user_id=user.user_id GROUP BY hrsd.user_id) as total_reward_fil
+		FROM
+		    user_info user
+		LEFT JOIN
+		    hw_investment invest ON user.user_id = invest.user_id
+		WHERE
+		    user.user_status != 'inactive'
+		GROUP BY
+		    user.user_email
+		ORDER BY
+    	user.user_reg_date DESC;
+		  
+
+	</select>
+	
+	<select id="get_last_useriId"  resultType="integer">
+		SELECT MAX(user_id) AS user_id
+		FROM user_info;
+
+	</select>
+	
+	<select id="verifyUserInfoVO" parameterType="com.nanoDc.erp.vo.UserInfoVO" resultType="com.nanoDc.erp.vo.UserInfoVO">
+		select 
+			user_id,
+			phone_number,
+			user_status,
+			user_reg_date,
+			user_name,
+			user_email,
+			level,
+			profileIcon_id
+		 from user_info
+		where user_email=#{user_email}
+	</select>
+	
+	<select id="getUserPassword" parameterType="com.nanoDc.erp.vo.LoginVO" resultType="string">
+		select 
+			password
+		 from user_info
+		where user_id=#{user_id}
+	</select>
+	
+	<select id="selectDetailUserInfoByUserId"  parameterType="integer" resultType="com.nanoDc.erp.vo.UserInfoVO">
+		SELECT
+		    user.user_id,
+		    user.phone_number,
+		    user.user_status,
+		    user.user_reg_date,
+		    user.user_name,
+		    user.user_email,
+		    user.level,
+		    user.profileIcon_id,
+		    COUNT(invest.hw_id) AS investment_count,
+		    COALESCE(SUM(invest.hw_invest_fil), 0) AS total_investment_fil,
+		    (SELECT SUM(hrsd.reward_fil) from hw_reward_sharing_detail hrsd WHERE hrsd.user_id=user.user_id GROUP BY hrsd.user_id) as total_reward_fil,
+		    (SELECT SUM(transaction.fil_amount) from transaction transaction WHERE transaction.status='출금신청' AND transaction.user_id=user.user_id GROUP BY transaction.user_id) as processed_fil,
+		    (SELECT SUM(transaction.fil_amount) from transaction transaction WHERE transaction.status='출금완료' AND transaction.user_id=user.user_id GROUP BY transaction.user_id) as paid_fil
+		FROM
+		    user_info user
+		LEFT JOIN
+		    hw_investment invest ON user.user_id = invest.user_id
+		WHERE
+			user.user_id=#{user_id}
+	</select>
+	
+<select id="selectInvestDetailInfoByUserIdAndProductId"  parameterType="com.nanoDc.erp.vo.UserInfoVO" resultType="com.nanoDc.erp.vo.UserInfoVO">
+		SELECT
+		    COALESCE(SUM(invest.hw_invest_fil), 0) AS total_investment_fil,
+		    (SELECT SUM(hrsd.reward_fil) from hw_reward_sharing_detail hrsd INNER JOIN hw_reward_sharing hrs ON hrsd.hw_reward_sharing_id = hrs.reward_sharing_id WHERE hrsd.user_id=user.user_id AND hrs.hw_product_id=#{hw_product_id} GROUP BY hrsd.user_id) as total_reward_fil,
+		    (SELECT SUM(transaction.fil_amount) from transaction transaction WHERE transaction.status='출금신청' AND transaction.user_id=user.user_id  GROUP BY transaction.user_id) as processed_fil,
+		    (SELECT SUM(transaction.fil_amount) from transaction transaction WHERE transaction.status='출금완료' AND transaction.user_id=user.user_id GROUP BY transaction.user_id) as paid_fil
+		FROM
+		    user_info user
+		LEFT JOIN
+		    hw_investment invest ON user.user_id = invest.user_id
+		WHERE
+			user.user_id=#{user_id}
+	</select>
+	
+	<!-- Update -->
+	
+	<update id="updateUser" parameterType="com.nanoDc.erp.vo.UserInfoVO">
+		  UPDATE user_info
+		  <set>
+		    <if test="phone_number != null">phone_number = #{phone_number},</if>
+		    <if test="user_status != null">
+		      user_status = #{user_status},
+		      <if test="user_status eq 'inactive'">user_email = '',</if>
+		    </if>
+		    <if test="user_name != null">user_name = #{user_name},</if>
+		    <if test="user_email != null">
+		      <if test="user_status neq 'inactive'">user_email = #{user_email},</if>
+		    </if>
+		   
+		    <if test="level != null">level = #{level}</if>
+		  
+		  </set>
+		  WHERE user_id = #{user_id}
+
+	</update>
+	<update id="userPwReset" parameterType="com.nanoDc.erp.vo.UserInfoVO">
+		  UPDATE user_info
+		  set password=#{password}
+		  WHERE user_id = #{user_id}
+
+	</update>
+	
+	<update id="update_Password" parameterType="com.nanoDc.erp.vo.UserInfoVO">
+		  UPDATE user_info
+		  set password=#{new_password}
+		  WHERE user_id = #{user_id}
+
+	</update>
+	<update id="update_user_icon" parameterType="com.nanoDc.erp.vo.UserInfoVO">
+		  UPDATE user_info
+		  set profileIcon_id=#{profileIcon_id}
+		  WHERE user_id = #{user_id}
+
+	</update>
+	
+	<!-- INSERT -->
+	
+	<insert id="addNewUser" parameterType="com.nanoDc.erp.vo.UserInfoVO">
+		INSERT INTO filmountain_test.user_info
+		(phone_number,
+		 user_status, 
+		 user_reg_date, 
+		 user_name, 
+		 user_email, 
+		 profileIcon_id,
+		 level,
+		 password
+		)
+		VALUES
+		(#{phone_number}, 
+		#{user_status}, 
+		NOW(), 
+		#{user_name}, 
+		#{user_email}, 
+		0,
+		#{level},
+		#{password})
+		
+	</insert>
+	
+	<select id="checkUser_email" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+			FROM user_info
+			WHERE user_email =#{user_email}
+	</select>
+	
+	<select id="checkPhonenumberName" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+			FROM user_info
+			WHERE user_name = #{user_name}
+			AND phone_number = #{phone_number};
+
+	</select>
+	
+
+	
+	
+	
+</mapper>
+	

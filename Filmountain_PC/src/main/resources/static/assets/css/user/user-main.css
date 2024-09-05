@@ -1,0 +1,107 @@
+main {
+	width: 100%;
+	background-color: black;
+	color: #ffffff;
+	margin: 0 auto;
+}
+
+main h1, main h2{
+	font-size : 60px;
+	margin: 0;
+	text-align: center;
+	font-weight: 800;
+	
+}
+
+main h2 {
+	font-size: 30px;	
+	font-weight: 400;
+	padding-top:50px;
+}
+
+
+.main-container {
+	width: 100%;
+}
+.main-bnr {
+	height: 700px;
+	background: url('../../img/bg/main-bg.png') no-repeat center center;
+	background-size: 50% auto;
+	align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* 텍스트도 중앙 정렬 */
+}
+
+.main-arrow-icon {
+	text-align: center;
+	width: 50px;
+	margin-top: 100px;
+}
+
+.sp-lp-bnr {
+	width: 100%;
+	height: 600px;
+	padding: 100px 0;
+}
+
+.sp-lp-bnr-wrapper {
+	width: 1100px;
+	display: flex;
+	flex-direction: row;
+	justify-content:space-between;
+	margin: 0 auto;
+}
+
+.sp-bnr, .lp-bnr {
+	width: 450px;
+	height: 550px;
+	display: flex;
+	flex-direction: column;
+	justify-content:space-between;
+	border-radius: 20px 20px;
+	padding: 30px;
+}
+
+.sp-bnr h2, .lp-bnr h2 {
+	text-align: left;
+	font-size: 40px;
+	font-weight: 700;
+	padding-top: 20px;
+}
+
+.sp-bnr p, .lp-bnr p {
+	text-align: right;
+	font-size: 24px;
+	line-height: 1.4;
+}
+
+.lp-bnr {
+	background: linear-gradient(180deg, #1B577A 0%, #296281 100%);
+}
+
+.sp-bnr {
+	background: linear-gradient(180deg, #3B7895 0%, #5E8CA0 100%);
+}
+
+.sp-lp-icon {
+	width: 300px;
+}
+.img-align {
+    text-align: right; /* 이미지 오른쪽 정렬 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

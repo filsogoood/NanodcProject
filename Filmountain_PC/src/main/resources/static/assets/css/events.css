@@ -1,0 +1,154 @@
+.events-slide {
+    background-color: beige;
+    padding: 10px 0;
+}
+
+.flickity-wrapper2 {
+    width: 980px;
+    text-align: center;
+    margin: 100px auto;
+}
+
+.flickity-wrapper2 h3 {
+    margin-bottom: 70px;
+}
+
+.carousel2 {
+    margin-bottom: 100px;
+    color: #000;
+}
+
+.carousel-cell2 {
+    width: 66%;
+    margin-right: 10px;
+    height: 550px;
+    background: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer; /* Add cursor pointer to indicate clickability */
+}
+
+/* 이미지 스타일 */
+.carousel-cell2 img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+/* 제목 스타일 */
+.carousel-cell2 h4 {
+    margin: 20px 10px;
+    font-size: 16pt;
+    color: #000;
+    font-weight: 800;
+}
+
+/* 설명 텍스트 스타일 */
+.carousel-cell2 p {
+    margin: 10px 10px;
+    font-size: 16px;
+    color: #000;
+}
+
+/* Remove cell number */
+.carousel-cell2:before {
+    display: none;
+}
+
+/* Modal styles */
+.modal2 {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.modal-content2 {
+    background-color: #fff;
+    padding: 20px;
+    width: 80%;
+    height: 90%;
+    text-align: center;
+    position: relative;
+    display: flex;    
+    justify-content: space-around;
+    flex-direction: row;
+    
+    align-items: center;
+    vertical-align: middle;
+}
+
+.close-button2 {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 50pt;
+    cursor: pointer;
+    font-weight: 200;
+}
+
+.modal-text-wrapper {
+    width: 50%;
+}
+
+.modal-content2 img {
+    max-width:50%;
+    margin-bottom: 20px;
+    height: auto;
+}
+
+.modal-content2 h4 {
+    margin: 20px 0;
+    font-size: 32pt;
+    color: #000;
+    font-weight: 800;
+}
+
+.modal-content2 p {
+    font-size: 16pt;
+    color: #000;
+}
+
+
+/* 반응형 미디어 쿼리 */
+@media screen and (max-width: 500px) {
+    .flickity-wrapper2 {
+        width: 96%;
+    }
+
+    .flickity-viewport {
+        height: 330px !important; /* !important를 사용하여 기본 스타일을 덮어씁니다 */
+    }
+
+    .carousel-cell2 {
+        height: 300px;
+    }
+
+    /* 이미지 스타일 */
+    .carousel-cell2 img {
+        width: 100%;
+        height: 75%;
+        object-fit: cover;
+    }
+
+    /* 제목 스타일 */
+    .carousel-cell2 h4 {
+        margin: 20px 10px;
+        font-size: 12pt;
+    }
+
+    /* 설명 텍스트 스타일 */
+    .carousel-cell2 p {
+        display: none;
+    }
+
+
+}

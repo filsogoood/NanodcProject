@@ -1,0 +1,178 @@
+.mypage-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.mypage-section h1, .profile-card-content h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-img-email {
+	display: flex;
+	flex-direction: column;	
+	align-items: center;
+	margin: 50px 0;
+}
+
+.profile-img-email img {
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+}
+
+.mypage form {
+    display: flex;
+    flex-direction: column;
+}
+.mypage form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.mypage form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.mypage form .button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+.mypage form .button-group button {
+    width: 40%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #69CAD1;
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFF;
+    cursor: pointer;
+}
+.mypage form .button-group button:hover {
+    background-color: #5bb0c1;
+}
+.mypage .btn-submit {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #69CAD1;
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFF;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.mypage .btn-submit:hover {
+    background-color: #5bb0c1;
+}
+.links {
+    text-align: center;
+    margin-top: 15px;
+}
+.links a {
+    color: #69CAD1;
+    text-decoration: none;
+}
+.links a:hover {
+    text-decoration: underline;
+}
+.terms-container {
+    margin-bottom: 20px;
+}
+.terms-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.terms-content {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.terms-content p {
+    margin: 0 0 10px 0;
+    line-height: 1.5;
+}
+.terms-checkbox {
+    display: flex;
+    align-items: center;
+}
+.terms-checkbox input {
+    margin-right: 5px;
+}
+
+
+/* 프로필 아이콘 변경 부분 */
+
+.profile-card-content {
+	background-color: #000;
+	height: 100%;
+	padding: 100px 0;
+}
+
+.profile-card-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.profile-img-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.profile-img-container img {
+    cursor: pointer;
+    margin: 10px;
+    width: 120px;
+    height: 100px;
+    border: 2px solid transparent; /* 기본적으로 투명한 테두리 */
+}
+.current-profile-img {
+    display: block;
+    margin-bottom: 20px;
+    width: 300px;
+    height: 250px;
+}
+.selected {
+    border: 2px solid rgb(255, 128, 192); /* 선택된 이미지에 적용될 테두리 스타일 */
+}
+
+.card-body {	
+    display: flex;
+    align-items: center;
+    flex-direction:row;
+    width: 1100px;
+}
+.card-body-top {	
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card-body-bottom {
+	width: 300px;
+	margin-top : 50px;
+}
+
+.update-icon-btn {
+	display: inline-block;
+    padding: 10px 20px;
+    background-color: #69CAD1;
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+    border-radius: 5px;
+}

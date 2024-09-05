@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanoDc.erp.mapper.ApplicationMapper">
+    <insert id="insertApplication" parameterType="com.nanoDc.erp.vo.ApplicationVO">
+        INSERT INTO applications (name, dob, tel, email, level, sp_product, message)
+        VALUES (#{name}, #{dob}, #{tel}, #{email}, #{level}, #{sp_product}, #{message})
+    </insert>
+    <select id="selectApplication" resultType="com.nanoDc.erp.vo.ApplicationVO">
+	     SELECT 
+            application_id,
+            name,
+            created_at,
+            tel,
+            email,
+            level,
+            sp_product,
+            message,
+            status
+        FROM 
+            applications
+        WHERE 
+            status != 'receipt' OR status IS NULL OR status = ''
+        ORDER BY 
+            created_at DESC;
+	  
+	</select>
+	
+	<update id="updateApplicationStatus">
+        UPDATE applications
+        SET status = #{status}
+        WHERE application_id = #{application_id}
+    </update>
+</mapper>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+		<div class="content" th:fragment="MainContent">
+			<!--modal -->
+			<!-- 승인 모달 -->
+<div class="modal fade" id="confirm_modal" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header bg-primary" id="alert_header_user_update">
+				        <h5 class="modal-title text-white " id="alert_title_user_update">승인 하시겠습니까?</h5>
+				        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <svg class="svg-inline--fa fa-xmark fs-9 text-white dark__text-gray-1100" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                        <path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>
+                    </svg>
+                </button>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirm_approve">확인</button>
+				      <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="cancel_approve">취소</button>
+				      </div>
+				    </div>
+				  </div>
+			</div>
+<!--승인 확인 모달 -->
+<div class="modal fade" id="alert_modal_user" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header bg-success" id="alert_header_user">
+				        <h5 class="modal-title text-white " id="alert_title_user">Liquidity 성공</h5>
+				        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <svg class="svg-inline--fa fa-xmark fs-9 text-white dark__text-gray-1100" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                        <path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>
+                    </svg>
+                </button>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="receipt_update">확인</button>
+				      </div>
+				    </div>
+				  </div>
+			</div>
+    <div class="modal fade" id="loadingModal_fund" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h5 class="modal-title text-dark" id="loadingModalLabel">송금 진행중</h5>
+			            </div>
+			            <div class="modal-body text-center">
+			                <div class="spinner-border text-primary" role="status">
+			                    <span class="sr-only">송금 진행중</span>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+    
+    
+   	 <div class="modal fade" id="confirmSuccessModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success" id="success_header_fundRequest">
+                    <h5 class="modal-title text-white" id="success_title_fundRequest">승인 완료</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-dark" id="success_body_fundRequest"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="check_approve">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" id="declineModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger" id="decline_modal_header">
+                <h5 class="modal-title text-white" id="decline_title_user">거절 사유 입력</h5>
+                        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="declineReason" rows="4" cols="50" placeholder="거절 사유를 입력하세요..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="declineConfirmBtn">확인</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="cancel_approve">취소</button>
+            </div>
+        </div>
+    </div>
+	</div>
+	<div class="modal fade" id="declineSuccessModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success" id="declineSuccess_header_fundRequest">
+                    <h5 class="modal-title text-white" id="declineSuccess_title_fundRequest">거절 완료</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">확인</button>
+                </div>
+            </div>
+        </div>        
+    </div>
+		<!-- 신청 리스트 -->
+        <div class="mb-9">
+          <div class="row g-3 mb-4">
+            <div class="col-auto">
+              <h2 class="mb-0">Liquidity 신청 목록</h2>
+            </div>
+          </div>
+          <div id="orderTable" data-list="{&quot;valueNames&quot;:[&quot;date&quot;,&quot;name&quot;,&quot;customer&quot;,&quot;payment_status&quot;,&quot;fulfilment_status&quot;,&quot;delivery_type&quot;,&quot;date&quot;],&quot;page&quot;:10,&quot;pagination&quot;:true}">
+            <div class="mb-4">
+              <div class="row g-3">
+                <div class="col-auto">
+                  <div class="search-box">
+                    <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                      <input class="form-control search-input search" type="search" placeholder="Search orders" aria-label="Search">
+                      <svg class="svg-inline--fa fa-magnifying-glass search-box-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"></path></svg><!-- <span class="fas fa-search search-box-icon"></span> Font Awesome fontawesome.com -->
+
+                    </form>
+                  </div>
+                </div>
+                <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
+                </div>
+              </div>
+            </div>
+            <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
+              <div class="table-responsive scrollbar mx-n1 px-1">
+                <table class="table table-sm fs-9 mb-0">
+    <thead>
+        <tr>
+            <th class="fs-9 align-middle py-3 order align-middle white-space-nowrap py-0" scope="col" data-sort="date" style="width:10%;">신청일</th>
+            <th class="sort align-middle" scope="col" data-sort="name" style="width:10%;">회원명</th>
+            <th class="sort align-middle ps-5" scope="col" data-sort="customer" style="width:10%; min-width: 250px;">종류</th>
+            <th class="sort align-middle " scope="col" data-sort="payment_status" style="width:15%;">Liquidity FIL</th>
+            <th class="sort align-middle text-end pe-10" scope="col" data-sort="fulfilment_status" style="width:20%; min-width: 200px;">유저 f4 지갑주소</th>
+            <th class="sort align-middle text-end pe-12" scope="col" data-sort="fulfilment_status" style="width:20%; min-width: 200px;">외부 지갑주소</th>
+            <th class="sort align-middle text-end pe-3" scope="col" data-sort="fulfilment_status" style="width:10%; min-width: 200px;">상태</th>
+            <th class="sort align-middle text-end pe-0" scope="col"  style="width:25%;"></th>
+        </tr>
+    </thead>
+    <tbody class="list" id="order-table-body">
+    <tr th:each="LiquidityList : ${LiquidityList}" class="hover-actions-trigger btn-reveal-trigger position-static">
+        <td th:text="${#dates.format(LiquidityList.reg_date, 'yyyy-MM-dd HH:mm:ss')}" class="fs-9 align-middle py-3 order align-middle white-space-nowrap py-0"></td>
+        <td th:text="${LiquidityList.user_name}" class="total align-middle fw-semibold text-body-highlight "></td>
+        <td th:text="${LiquidityList.type}" class="total align-middle fw-semibold text-body-highlight ps-5" th:data-lp-address="${LiquidityList.lp_address}">
+</td>
+
+
+        <td th:text="${LiquidityList.fil_amount}" class="total align-middle fw-semibold text-body-highlight " id="fil_amount"></td>
+       <td class="total align-middle fw-semibold text-body-highlight text-end" id="wallet_address">
+			  <a th:href="'https://calibration.filscan.io/en/address/' + ${LiquidityList.f4_address}" th:text="${LiquidityList.f4_address}"></a>
+			</td>
+			<td class="total align-middle fw-semibold text-body-highlight text-end" id="outside_address">
+			  <a th:href="'https://calibration.filscan.io/en/address/' + ${LiquidityList.outside_address}" th:text="${LiquidityList.outside_address}"></a>
+			</td>
+        <td th:text="${LiquidityList.status}" class="total align-middle fw-semibold text-body-highlight text-end" th:style="${LiquidityList.status == '확인불가' ? 'color: red;' : ''}" id="status"></td>
+        <td>
+            <span style="color: red;" th:text="${LiquidityList.memo}"></span>
+        </td>
+           <td>
+            <div th:if="${LiquidityList.status == '입금신청' or LiquidityList.status == '출금신청'}" style="display: flex; gap: 10px;">
+          	   <button type="button" class="approve_button btn btn-info" style="white-space: nowrap;"th:data-tx-id="${LiquidityList.liquid_id}" th:data-key-id="${LiquidityList.key_id}">승인</button>
+                <button type="button" class="decline_button btn btn-danger" style="white-space: nowrap;" th:data-tx-id="${LiquidityList.liquid_id}">거절</button>
+            </div>
+        </td>
+        
+    </tr>
+</tbody>
+
+</table>
+
+              </div>
+              <div class="row align-items-center justify-content-between py-2 pe-0 fs-9">
+                <div class="col-auto d-flex">
+                  <p class="mb-0 d-none d-sm-block me-3 fw-semibold text-body" data-list-info="data-list-info">1 to 10 <span class="text-body-tertiary"> Items of </span>15</p><a class="fw-semibold" href="#!" data-list-view="*">View all<svg class="svg-inline--fa fa-angle-right ms-1" data-fa-transform="down-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="" style="transform-origin: 0.25em 0.5625em;"><g transform="translate(128 256)"><g transform="translate(0, 32)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z" transform="translate(-128 -256)"></path></g></g></svg><!-- <span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span> Font Awesome fontawesome.com --></a><a class="fw-semibold d-none" href="#!" data-list-view="less">View Less<svg class="svg-inline--fa fa-angle-right ms-1" data-fa-transform="down-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="" style="transform-origin: 0.25em 0.5625em;"><g transform="translate(128 256)"><g transform="translate(0, 32)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z" transform="translate(-128 -256)"></path></g></g></svg><!-- <span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span> Font Awesome fontawesome.com --></a>
+                </div>
+                <div class="col-auto d-flex">
+                  <button class="page-link disabled" data-list-pagination="prev" disabled=""><svg class="svg-inline--fa fa-chevron-left" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M224 480c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25l192-192c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l169.4 169.4c12.5 12.5 12.5 32.75 0 45.25C240.4 476.9 232.2 480 224 480z"></path></svg><!-- <span class="fas fa-chevron-left"></span> Font Awesome fontawesome.com --></button>
+                  <ul class="mb-0 pagination"><li class="active"><button class="page" type="button" data-i="1" data-page="10">1</button></li><li><button class="page" type="button" data-i="2" data-page="10">2</button></li></ul>
+                  <button class="page-link pe-0" data-list-pagination="next"><svg class="svg-inline--fa fa-chevron-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path></svg><!-- <span class="fas fa-chevron-right"></span> Font Awesome fontawesome.com --></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        </html>

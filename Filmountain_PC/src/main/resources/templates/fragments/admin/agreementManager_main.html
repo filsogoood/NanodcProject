@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<!-- 업데이트 모달 -->
+<div class="content" th:fragment="MainContent">
+		<!-- 업데이트 모달 -->
+<div class="modal fade" id="detail_agreement_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-white dark__text-gray-1100">계약 관리</h5>
+                <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span>
+                </button>
+            </div>
+            <div class="modal-body" style="max-height: 800px; overflow-y: auto;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-underline mb-3" id="myTab" role="tablist">
+                            <li class="nav-item" id="member_tab_li">
+                                <a class="nav-link active" id="member_tab_link" data-bs-toggle="tab" href="#member_tab" role="tab" aria-controls="member_tab" aria-selected="true">계약 현황</a>
+ 								
+ 	                           </li>
+ 	                           <li class="nav-item" id="contract_properties">
+                                <a class="nav-link " id="member_tab_link" data-bs-toggle="tab" href="#properties_tab" role="tab" aria-controls="properties_tab" aria-selected="true">계약 구성</a>
+ 								
+ 	                           </li>
+                            
+                            
+                        </ul>
+
+                        <div class="tab-content p-3">
+                            <div class="tab-pane fade show active" id="member_tab" role="tabpanel" aria-expanded="true">
+                               <div class="mb-3">
+								    
+								    <button id="downloadContractButton" class="btn btn-primary" >계약서 다운로드</button>
+								</div>
+								                                
+                                <div class="form-group mb-3">
+                                    <label for="process" class="form-label fs-8">진행현황</label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                
+                                                <tr>
+                                                    <td class="step" data-step="1">
+                                                        <input type="checkbox" class="process-checkbox" id="step1" name="process" value="전자서명 진행중"> 
+                                                        <span class="step-label">전자서명 진행중<i data-feather="check" class="check-icon"></i></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="step" data-step="2">
+                                                        <input type="checkbox" class="process-checkbox" id="step2" name="process" value="계약서 검토중"> 
+                                                        <span class="step-label">계약서 검토중<i data-feather="check" class="check-icon"></i></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="step" data-step="3">
+                                                        <input type="checkbox" class="process-checkbox" id="step3" name="process" value="계약금 입금 확인중"> 
+                                                        <span class="step-label">계약금 입금 확인중<i data-feather="check" class="check-icon"></i></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="step" data-step="4">
+                                                        <input type="checkbox" class="process-checkbox" id="step4" name="process" value="중도금 입금 확인중"> 
+                                                        <span class="step-label">중도금 입금 확인중<i data-feather="check" class="check-icon"></i></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="step" data-step="5">
+                                                        <input type="checkbox" class="process-checkbox" id="step5" name="process" value="잔금 입금 확인중"> 
+                                                        <span class="step-label">잔금 입금 확인중<i data-feather="check" class="check-icon"></i></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="step" data-step="6">
+                                                        <input type="checkbox" class="process-checkbox" id="step6" name="process" value="계약완료"> 
+                                                        <span class="step-label">계약완료<i data-feather="check" class="check-icon"></i></span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary" id="update_agreement_confirm">업데이트</button>
+                            </div>
+                            <div class="tab-pane fade" id="properties_tab" role="tabpanel" aria-labelledby="properties_tab_link">
+							
+							        <form id="agreements_form" >
+							            <div class="mb-3">
+							                <label for="system_location" class="form-label">주소</label>
+							                <input type="text"   class="form-control" id="system_location" name="system_location">
+							            </div>
+							            <div class="mb-3">
+							                <label for="supply_price" class="form-label">가격</label>
+							                <input type="text" class="form-control" id="supply_price" name="supply_price">
+							            </div>
+							            
+							           	<div class="mb-3">
+										    <label for="supply_discount_price" class="form-label">할인율</label>
+										    <div class="input-group input-group-sm" style="max-width: 200px;">
+										        <input type="text" class="form-control" id="supply_discount_price" name="supply_discount_price" step="1" aria-label="Discount Price">
+										        <div class="input-group-append">
+										            <span class="input-group-text">%</span>
+										        </div>
+										        <button class="btn btn-primary btn-sm" type="button" id="calculate_button">계산하기</button>
+										    </div>
+										</div>
+
+							            <div class="mb-3">
+							                <label for="final_payment" class="form-label">최종 가격</label>
+							                <input type="text" class="form-control" id="final_payment" name="final_payment">
+							            </div>
+							            <div class="mb-3">
+							                <label for="first_payment" class="form-label">계약금</label>
+							                <input type="text" class="form-control" id="first_payment" name="first_payment">
+							            </div>
+							            <div class="mb-3">
+							                <label for="second_payment" class="form-label">중도금</label>
+							                <input type="text" class="form-control" id="second_payment" name="second_payment">
+							            </div>
+							            <div class="mb-3">
+							                <label for="last_payment" class="form-label">잔금</label>
+							                <input type="text" class="form-control" id="last_payment" name="last_payment">
+							            </div>
+							            <button type="button" class="btn btn-primary" id="update_properties">업데이트</button>
+							        </form>
+							    </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+<!-- 성공 모달 실패 모달 -->
+<div class="modal fade" id="success_alert" tabindex="-1" role="dialog">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header bg-success">
+			        <h5 class="modal-title text-white dark__text-gray-1100" id="success_alert_title">업데이트완료</h5>
+			        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span></button>
+			      </div>
+			      <div class="modal-footer">
+			        <button class="btn btn-outline-success" type="button" id = "receipt_update" data-bs-dismiss="modal">확인</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<div class="modal fade" id="fail_alert" tabindex="-1" role="dialog">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header bg-danger">
+			        <h5 class="modal-title text-white dark__text-gray-1100" id="fail_alert_title">업데이트실패</h5>
+			        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span></button>
+			      </div>
+			      <div class="modal-footer">
+			        <button class="btn btn-outline-danger" type="button" data-bs-dismiss="modal">확인</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+
+        <div class="mb-9">
+            <div class="row g-3 mb-4">
+                <div class="col-auto">
+                    <h2 class="mb-0">계약현황</h2>
+                </div>
+            </div>
+            <div id="orderTable" data-list='{"valueNames":["user_reg_date","user_name","level","contract_status","product","process"],"page":10,"pagination":true}'>
+                <div class="mb-4">
+                    <div class="row g-3">
+                        <div class="col-auto">
+                            <div class="search-box">
+                                <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                                    <input class="form-control search-input search" type="search" placeholder="Search orders" aria-label="Search">
+                                    <svg class="svg-inline--fa fa-magnifying-glass search-box-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                                        <path fill="currentColor" d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"></path>
+                                    </svg>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-auto scrollbar overflow-hidden-y flex-grow-1"></div>
+                    </div>
+                </div>
+                <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
+                    <div class="table-responsive scrollbar mx-n1 px-1">
+                        <table class="table table-sm fs-9 mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="fs-9 align-middle py-3 order align-middle white-space-nowrap py-0" scope="col" data-sort="user_reg_date" style="width:20%;">가입일시</th>
+                                    <th class="sort align-middle ps-0" scope="col" data-sort="user_name" style="width:10%;">사용자 이름</th>
+                                    <th class="sort align-middle pe-3" scope="col" data-sort="level" style="width:10%;">레벨</th>
+                                    <th class="sort align-middle text-start pe-3" scope="col" data-sort="contract_status" style="width:10%; min-width: 200px;">상태</th>
+                
+                                    <th class="sort align-middle text-start pe-18 " scope="col" data-sort="product" style="width:10%;">상품</th>
+                                    <th class="sort align-middle text-end pe-12 " scope="col" data-sort="process" style="width:10%;">진행현황</th>
+                                    <th class="text-end pe-4" scope="col" style="width:10%;">상세</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list" id="order-table-body">
+                                <tr th:each="item : ${mergedList}">
+                                    <td th:text="${#dates.format(item['user'].user_reg_date, 'yyyy-MM-dd HH:mm:ss')}" class="fs-9 align-middle py-3 user_reg_date align-middle white-space-nowrap py-0"></td>
+                                    <td th:text="${item['user'].user_name}" class="user_name align-middle fw-semibold text-body-highlight ps-2"></td>
+                                    <td th:text="${item['user'].level}" class="level align-middle fw-semibold text-body-highlight"></td>
+                                    <td th:text="${item['user'].contract_status}" class="contract_status align-middle fw-semibold text-body-highlight"></td>
+                                    <td th:text="${item['user'].product}" class="product align-middle fw-semibold text-body-highlight"></td>
+                                    <td class="process align-middle fw-semibold text-body-highlight">
+                                        <ul>
+                                            <li th:each="agreement : ${item['agreements']}" th:text="${agreement.process}"></li>
+                                        </ul>
+                                    </td>
+                                    <td class="text-end pe-0">
+                                        <button class="btn btn-secondary detail-agreement-button"
+                                        type="button" 
+                                        th:data-user-id="${item['user'].user_id}" 
+                                        th:data-process="${item['agreements'][0].process}"
+                                        th:data-system-location="${item['agreements'][0].system_location}"
+                                        th:data-final-payment="${item['agreements'][0].final_payment}"
+                                        th:data-supply-discount-price="${item['agreements'][0].supply_discount_price}"
+                                        th:data-supply-price="${item['agreements'][0].supply_price}"
+                                        th:data-first-payment="${item['agreements'][0].first_payment}"
+                                        th:data-second-payment="${item['agreements'][0].second_payment}"
+                                        th:data-last-payment="${item['agreements'][0].last_payment}"
+                                        >상세</button>
+                                    </td>
+                                </tr>
+                                <!-- 기본 템플릿 -->
+                                <tr th:if="${mergedList.size() == 0}">
+                                    <td colspan="6" class="text-center">데이터가 없습니다.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row align-items-center justify-content-between py-2 pe-0 fs-9">
+                        <div class="col-auto d-flex">
+                            <p class="mb-0 d-none d-sm-block me-3 fw-semibold text-body" data-list-info="data-list-info">1 to 10 <span class="text-body-tertiary"> Items of </span>15</p>
+                            <a class="fw-semibold" href="#!" data-list-view="*">View all<svg class="svg-inline--fa fa-angle-right ms-1" data-fa-transform="down-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><g transform="translate(128 256)"><g transform="translate(0, 32) scale(1, 1) rotate(0 0 0)"><path fill="currentColor" d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path></svg></a>
+                            <a class="fw-semibold d-none" href="#!" data-list-view="less">View Less<svg class="svg-inline--fa fa-angle-right ms-1" data-fa-transform="down-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><g transform="translate(128 256)"><g transform="translate(0, 32) scale(1, 1) rotate(0 0 0)"><path fill="currentColor" d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path></svg></a>
+                        </div>
+                        <div class="col-auto d-flex">
+                            <button class="page-link disabled" data-list-pagination="prev" disabled=""><svg class="svg-inline--fa fa-chevron-left" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M224 480c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25l192-192c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l169.4 169.4c12.5 12.5 12.5 32.75 0 45.25C240.4 476.9 232.2 480 224 480z"></path></svg></button>
+                            <ul class="mb-0 pagination">
+                                <li class="active"><button class="page" type="button" data-i="1" data-page="10">1</button></li>
+                                <li><button class="page" type="button" data-i="2" data-page="10">2</button></li>
+                            </ul>
+                            <button class="page-link pe-0" data-list-pagination="next"><svg class="svg-inline--fa fa-chevron-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path></svg></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<style>
+    .strike-through {
+        text-decoration: line-through;
+    }
+</style>
+
+</html>

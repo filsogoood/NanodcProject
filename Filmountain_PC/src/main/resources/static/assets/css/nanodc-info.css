@@ -1,0 +1,88 @@
+.nanodc-info-wrapper {
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 수평 중앙 정렬 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    background-size: cover; /* 이미지가 컨테이너를 완전히 덮도록 설정 */
+    background-position: center; /* 이미지를 중앙에 배치 */
+    background-color: #476043;
+}
+
+
+.nanodc-info-wrapper h3 {
+    color: #ffffff;
+}
+
+.info-wrapper {  
+    width: 980px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 70px;
+}
+  
+.nanodc-strength-wrapper {
+    width: 419px;
+    height: 177px;
+    background-color: antiquewhite;  
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 20px 0;
+    padding: 10px;
+}
+  
+.nanodc-strength-wrapper img {
+    margin-left: 20px;
+}
+  
+.title-text {
+    text-align: left;
+    width: 240px;
+    font-size: 13pt;
+}
+
+.title-text h4 {
+    font-size: 16pt;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+
+
+/* 반응형 미디어 쿼리 */
+@media screen and (max-width: 500px) {
+    .info-wrapper {  
+        width: 96%;
+        margin: 70px;
+    }
+
+    .nanodc-strength-wrapper {
+        width: 45%;
+        height: auto;
+        margin: 5px 0;
+        padding: 2%;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .nanodc-strength-wrapper img {
+        width: 40px;
+        margin: 10px 0;
+    }
+
+    .title-text {
+        text-align: center;
+        width: 100%;
+        font-size: 10pt;
+        margin: 10px 0;
+    }
+
+    .title-text h4 {
+        font-size: 14pt;
+    }
+
+
+
+}

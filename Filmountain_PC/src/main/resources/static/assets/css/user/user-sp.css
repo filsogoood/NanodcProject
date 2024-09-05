@@ -1,0 +1,180 @@
+
+section h1 {
+	margin-bottom : 80px ;
+}
+
+.investment-status-section h3, .sp-withdrawal-card-wrapper h3 {
+	font-size : 24px;
+	font-weight: 700;
+	margin: 5px 0;
+}
+
+.investment-status-section p, .sp-withdrawal-card-wrapper p {
+	text-align: left;
+	line-height: 20px;
+}
+
+.investment-status-wrapper, .sp-withdrawal-wrapper, .sp-withdrawal-card-wrapper {
+	width: 1100px;
+	margin: 0 auto;
+}
+
+.investment-status-wrapper {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-shrink: 0;
+	gap: 15px;
+	flex-direction: row;
+}
+
+.investment-status {
+	display: flex;
+	width: 350px;
+	height: 0 auto;	
+	padding: 15px;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-shrink: 0;
+	flex-direction: column;
+	border-radius: 10px;
+	border: 1px solid #69CAD1;	
+	gap: 15px;
+}
+
+.investment-status-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-direction: row;
+	gap: 15px;
+}
+
+.nanodc-img {
+	width: 350px;
+	height: 350px;
+	overflow: hidden;
+}
+
+.nanodc-img img {
+	width: 100%;
+}
+
+.sp-withdrawal-card {
+	display: flex;
+	width: 100%;
+	height: 0 auto;
+	padding: 15px;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-shrink: 0;
+	flex-direction: row;
+	border-radius: 10px;
+	border: 1px solid #69CAD1;	 
+}
+
+.my-investment-status, .sp-withdrawal-card-status {
+	display: flex;
+	width: 70px;
+	height: 70px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1px;
+	flex-shrink: 0;
+	border-radius: 79px;
+	border: 1px #299097;
+	background: #69CAD1;	
+}
+
+.my-investment-status p, .sp-withdrawal-card-status p {
+	color: #FFF;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 700;
+}
+ .sp-withdrawal-buttons {
+	 text-align: center;
+ }
+.sp-withdrawal-buttons button {	
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #69CAD1;
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+    width: 48%;
+    border-radius: 5px;
+	
+}
+
+.sp-withdrawal-card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px 0;
+}
+
+.sp-withdrawal-status {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0;
+    margin: 50px 0;
+    text-align: left;
+}
+
+.sp-withdrawal-status div {
+    width: 25%;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.sp-withdrawal-graph {
+    width: 100%;
+    height: 350px;
+}
+
+.sp-withdrawal-status-data {
+	font-size: 36px;
+	font-weight: bold;
+	margin: 5px 0;
+}
+
+.success-circle {
+	display: flex;
+	width: 70px;
+	height: 70px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1px;
+	flex-shrink: 0;
+	border-radius: 79px;
+	border: 1px #299097;
+	background: #69CAD1;	
+}
+
+.failed-circle {
+	display: flex;
+	width: 70px;
+	height: 70px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1px;
+	flex-shrink: 0;
+	border-radius: 79px;
+	border: 1px #A53A47;
+	background: #D16975;	
+}
+
+.failure-reason {
+	color: #D16975;
+	
+}
+
+
+	
+	

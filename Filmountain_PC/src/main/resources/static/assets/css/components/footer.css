@@ -1,0 +1,101 @@
+footer{
+    width: 100%;    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #ffffff;
+    padding: 50px 0;
+
+}
+
+.footer {
+    width: 980px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.footer-info {
+    width: 50%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: left;
+}
+
+.footer-info h4 {
+    font-size: 18pt;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: #D04F17;
+}
+
+.footer-info-contact {
+    margin-bottom: 40px;
+}
+
+.footer-info-contact p, .footer-info-wrapper{
+    line-height: 150%;
+}
+
+.footer-info-wrapper p {
+    margin-bottom: 10px;
+    font-size: 12pt;
+}
+
+.footer-info-address {
+    margin-bottom: 40px;
+}
+
+.footer-info-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.footer-info-address-title {
+    font-weight: 700;
+}
+
+.footer-info-address-text {
+    margin-left: 30px;
+    width: 70%;
+}
+
+.footer-logo {
+    width: 150px;
+}
+
+/* 반응형 미디어 쿼리 */
+@media screen and (max-width: 500px) {
+    
+    .footer {
+        width: 96%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .footer-logo {
+        width: 60%;
+        height: auto;
+    }
+    
+    .footer-info {
+        width: 90%;
+    }
+
+
+}
+

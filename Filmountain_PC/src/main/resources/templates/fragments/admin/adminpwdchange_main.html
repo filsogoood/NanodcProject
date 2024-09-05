@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+      <div class="content" th:fragment="MainContent">
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group row">
+						<div class="form-group row hidden" th:classappend="${loginVO != null}">
+                        <input id="userId" th:value="${loginVO.userInfoVO.user_id}" type="hidden">
+                    </div>
+                        <label class="col-md-4 form-control-label" style="margin-top:5px;"><b>기존 비밀번호</b></label>
+                        <div class="col-md-8">
+                            <input id="original_password" class="form-control" type="password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" style="margin-top:5px;"><b>새 비밀번호</b></label>
+                        <div class="col-md-8">
+                            <input id="user_password" class="form-control" type="password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" style="margin-top:5px;"><b>새 비밀번호 확인</b></label>
+                        <div class="col-md-8">
+                            <input id="user_password_repeat" class="form-control" type="password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-8">
+                           <span id="alert_span" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" id="update_user_password_confirm" class="btn btn-info">변경</button>
+                    </div>
+                    <div class="modal" tabindex="-1" role="dialog" id="completionModal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header bg-success">
+                                    <h5 class="modal-title text-white">비밀번호 변경 완료</h5>
+                                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <svg class="svg-inline--fa fa-xmark fs-9 text-white dark__text-gray-1100" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                        <path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>
+                    </svg>
+                </button>
+                                </div>
+                                <div class="modal-body">
+									<p>다시 로그인 해주세요</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- 닫기 버튼을 확인 버튼으로 변경했습니다. -->
+                                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">확인</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+   
+                </div>
+            </div>
+        </div>
+    </div>
+</html>
