@@ -10,8 +10,8 @@
         
         
         <!--<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-9" style="gap: 10px;">-->
-        <div class="row g-3 mb-9" style="gap: 2%;">
-			<div class="card" style="max-width:48%;" th:each="investment, iterStat : ${investmentList}">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-2 g-3 mb-9" style="gap: 2%;">
+			<div class="card" th:each="investment, iterStat : ${investmentList}">
 		  <div class="row g-0">
 		    <div class="col-md-4">
 		      <img class="img-fluid h-100 rounded-start" th:if="${iterStat.index == 0}" th:src="'/uploads/'+${investment.picture_url}" alt="..." />
@@ -297,7 +297,7 @@
 			</div>
 		</div>
 		<div class="row justify-content-md-between mt-10 mb-10">
-              <div class="row-sm-7 col-md-8 col-xxl-8 mb-lg-0" style="width: 20%; align-content: center;">
+              <div class="col-sm-5 col-md-4 col-xxl-4 my-3 my-sm-0" style="align-content: center;">
                 <div class="row g-0">
                   <div class="col-4 col-xl-4" style="width: 100%;">
                     <div class="d-flex flex-column flex-center align-items-sm-start flex-md-row justify-content-md-between flex-xxl-column p-3 ps-sm-3 ps-md-4 p-md-3 h-100">
