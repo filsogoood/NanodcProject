@@ -3,7 +3,7 @@
 	<div class="content mt-7 container-small" th:fragment="MainContent">
         <div class="row gx-6 gy-3 mb-4 align-items-center">
           <div class="col-auto">
-            <h1 style="color: white;">제품현황</h1>
+            <h1>제품현황</h1>
           </div>
 		<input type="hidden" id="hidden_user_id" th:value="${loginVO.userInfoVO.user_id}">
         </div> 
@@ -55,7 +55,7 @@
         </nav>
         <div class="row gx-6 gy-3 mb-4 align-items-center">
           <div class="col-auto">
-            <h1 style="color: white;">Reward 현황</h1>
+            <h1>Reward 현황</h1>
           </div>
 
         </div>               
@@ -293,7 +293,7 @@
 
 		<div class="row gx-6 gy-3 mb-4 align-items-center">
 			<div class="col-auto">
-				 <h1 style="color: white;">출금내역</h1>
+				 <h1>출금내역</h1>
 			</div>
 		</div>
 		<div class="row justify-content-md-between mt-10 mb-10">
@@ -321,7 +321,7 @@
               </div>
               <div class="col gx-6 gy-3 mb-4 align-items-center col-sm-5 col-md-4 col-xxl-4 my-3 my-sm-0" style="width: 20%; align-content: center;">
 				  <div class="col-auto">
-				    <button class="btn btn-outline-info m-1" id="addNewTransactionPayout" th:data-user-id="${loginVO.userInfoVO.user_id}"th:data-user-name="${userInfoVO.user_name}" 
+				    <button class="btn btn-outline-warning m-1" id="addNewTransactionPayout" th:data-user-id="${loginVO.userInfoVO.user_id}"th:data-user-name="${userInfoVO.user_name}" 
     				th:data-phone-number="${userInfoVO.phone_number}" style="width: 100%;">
 				      <svg class="svg-inline--fa fa-plus me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
 				        <path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z">
@@ -329,7 +329,7 @@
 				      </svg>출금신청</button>
 				  </div>
 				  <div class="col-auto">
-				    <button class="btn btn-outline-info m-1" id="walletManager" th:data-user-id="${loginVO.userInfoVO.user_id}" style="width: 100%;">
+				    <button class="btn btn-outline-warning m-1" id="walletManager" th:data-user-id="${loginVO.userInfoVO.user_id}" style="width: 100%;">
 				      <svg class="svg-inline--fa fa-plus me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
 				        <path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z">
 				        </path>
@@ -338,10 +338,6 @@
 				</div>
             </div>
             
-            
-       
-        
-        
         
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xxl-3 g-3">
           <div class="col"  th:each="transaction : ${transactionList}">
