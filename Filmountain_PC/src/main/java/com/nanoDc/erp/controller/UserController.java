@@ -298,6 +298,7 @@ public class UserController {
 		    HttpSession session = request.getSession();
 			    
 		        LoginVO loginVO = (LoginVO)session.getAttribute("user");  
+		        List<LiquidityVO> totalpoolInfo = this.userService.getTotalPoolInfo();
 		        if (loginVO != null) {
 		        	UserInfoVO userInfoVO = loginVO.getUserInfoVO();
 		        	 try {
@@ -312,6 +313,7 @@ public class UserController {
 		        } else {
 		            mav.addObject("withLoginOptions", false);
 		        }
+		    mav.addObject("totalpoolInfo", totalpoolInfo);
 	        mav.setViewName("views/user/nanodcMain");
 	        return mav;
 	    }
