@@ -230,13 +230,13 @@
         <h3 class="mb-7">수익 현황</h3>
         <div class="row gx-6 gy-3 mb-9 align-items-center">
            <div class="col-auto">
-            <button class="btn btn-subtle-info me-1 mb-1"  th:data-user-id="${loginVO.userInfoVO.user_id}" th:data-wallet-id="${walletList[0].wallet_id}" id="deposit-btn">Deposit</button>
+            <button class="btn btn-subtle-warning me-1 mb-1"  th:data-user-id="${loginVO.userInfoVO.user_id}" th:data-wallet-id="${walletList[0].wallet_id}" id="deposit-btn">Deposit</button>
            </div>
            <div class="col-auto">
-                <button class="btn btn-subtle-info me-1 mb-1" th:data-user-id="${loginVO.userInfoVO.user_id}" th:data-wallet-id="${walletList[0].wallet_id}" id="withdraw-btn">Withdraw</button>
+                <button class="btn btn-subtle-warning me-1 mb-1" th:data-user-id="${loginVO.userInfoVO.user_id}" th:data-wallet-id="${walletList[0].wallet_id}" id="withdraw-btn">Withdraw</button>
            </div>
             <div class="col-auto">
-                <button class="btn btn-subtle-info me-1 mb-1" th:data-user-id="${loginVO.userInfoVO.user_id}" id="call-wallet-btn">입금주소 발급</button>
+                <button class="btn btn-subtle-warning me-1 mb-1" th:data-user-id="${loginVO.userInfoVO.user_id}" id="call-wallet-btn">입금주소 발급</button>
            </div>
         </div>
         <div class="row gy-10 gx-10 mb-14" style="gap:30px;" th:each="LiquidityInfotxByUser : ${LiquidityInfotxByUser}">
