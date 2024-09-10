@@ -326,9 +326,7 @@ public class UserController {
 		        }
 		        
 		        List<LiquidityVO> totalpoolInfo = this.userService.getTotalPoolInfo();
-		        if (totalpoolInfo == null || totalpoolInfo.isEmpty()) {
-		            totalpoolInfo = new ArrayList<>(); // 빈 리스트로 처리
-		        }
+		        
 		        
 		        mav.addObject("totalpoolInfo", totalpoolInfo);
 		        mav.setViewName("views/user/userMain");
@@ -752,7 +750,7 @@ public class UserController {
 	 public String deleteWalletByWalletId(@RequestBody WalletVO walletVO, HttpServletRequest request) {
 	    return userService.deleteWalletByWalletId(walletVO.getWallet_id());
 	    }  
-	 
+	 /* 신청서 제출 */
 	 @ResponseBody
 	 @PostMapping(value={"/insertApplication"})
 	 public String insertApplication(@RequestBody ApplicationVO applicationVO, HttpServletRequest request) {
