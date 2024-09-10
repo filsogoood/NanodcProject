@@ -651,7 +651,7 @@ public class AdminController {
 		 /* -----------applicationManager 기능 ----------*/
 		 /* --------------------------------------------*/
 	    
-	  //**>>>>>   계약현황업데이트   <<<<<**//
+	  //**>>>>>   신청 완료   <<<<<**//
 	    @ResponseBody
 	    @PostMapping("/updateApplicationStatus")
 	    public String updateApplicationStatus(@RequestBody ApplicationVO applicationVO,
@@ -662,6 +662,19 @@ public class AdminController {
 	        }
 	        
 	        return adminService.updateApplicationStatus(applicationVO, request);
+	    }
+	    
+	  //**>>>>>   신청완료시 계약현황으로 넘기기   <<<<<**//
+	    @ResponseBody
+	    @PostMapping("/insertAgreement")
+	    public String insertAgreement(@RequestBody AgreementVO agreementVO,
+	                                  HttpServletRequest request) {
+	        
+	        if(!adminService.checkSession(request)) {
+	            return "failed:session_closed";
+	        }
+	        
+	        return adminService.insertAgreement(agreementVO, request);
 	    }
 }
 

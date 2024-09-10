@@ -1,31 +1,28 @@
 $(document).ready(function() {
-    var name;
-    var tel;
-    var email;
-    var level;
+    var user_id;
     var application_id;
     var sp_product;
-    
+    $('#success_alert').on('hidden.bs.modal', function (e) {
+								 location.reload(true);
+					    });
      $(document).on('click', '.agree_button', function() {
 		application_id = $(this).data('application-id');
-        name = $(this).data('name');
+        user_id = $(this).data('id');
         tel = $(this).data('tel');
         email = $(this).data('email');
         level = $(this).data('level');
         sp_product = $(this).data('sp-product');
         console.log(application_id);
+        console.log(user_id);
+		
 		    $.ajax({
                 type: "POST",
-                url: "/admin/addNewUser",
+                url: "/admin/insertAgreement",
                 contentType: "application/json",
                 data: JSON.stringify({
-                    user_name: name,
-                    user_email: email,
-                    phone_number: tel,
-                    level : level,
-                    user_status: "active",
-                    password: '123123',
+                    user_id: user_id,
                     contract_status: "신규계약",
+                    process:"전자서명 진행중",
                     product: sp_product
                 }),
                 success: function (data) {
@@ -35,13 +32,12 @@ $(document).ready(function() {
 		                url: "/admin/updateApplicationStatus",
 		                contentType: "application/json",
 		                data: JSON.stringify({
-		                    status: 'receipt',
+		                    status: '처리완료',
 		                    application_id: application_id
 		                }),
 		                success: function(data) {	 
 									if(data=='success'){
 										$('#success_alert').modal('show');
-										location.reload();
 			                        }
 			                        else if(data='failed:session_closed'){
 										$('#fail_alert').text('로그인을 다시해 주십시오.');

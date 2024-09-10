@@ -321,37 +321,13 @@ public class AdminService {
 				 	applicationMapper.updateApplicationStatus(applicationVO);
 			    	return "success";
 			    }
-	  //**>>>>>  로터스 코인 전송 기능 사용안함  <<<<<**//
-	    /*
-	    
-	    public String lotusSend(String user_address, BigDecimal fil_amount) {
-	    	    String cmd = "lotus send --from " +  admin_walletAddress +  " " + user_address + " " + fil_amount.toPlainString();
-	    	    System.out.println(cmd);
-	    	    
-	    	    String[] command = {"/bin/sh", "-c", cmd};
-	    	    String result = "";
-
-	    	    try {
-	    	        ProcessBuilder processBuilder = new ProcessBuilder(command);
-	    	        Process process = processBuilder.start();
-	    	        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-	    	        String line;
-
-	    	        while ((line = reader.readLine()) != null) {
-	    	            result += line + "\n";
-	    	        }
-
-	    	        int exitCode = process.waitFor();
-	    	        if (exitCode != 0) {
-	    	            result = "Command failed";
-	    	        }
-	    	    } catch (Exception e) {
-	    	        result = "ERROR";
-	    	    }
-
-	    	    return result.trim();
-	    	}	
-	    	*/
+			    
+			  //**>>>>>  새로운 계약 삽입 <<<<<**//
+			    public String insertAgreement(AgreementVO agreementVO, HttpServletRequest request) {
+				 	agreementMapper.insertAgreementProcess(agreementVO);
+			    	return "success";
+			    }
+	 
 	    
 	 
 }
