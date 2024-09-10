@@ -2,137 +2,133 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <main class="liquidity-info" th:fragment="LiquidityInfo">
 	<div class="liquidity-info-container">		
-		
-		<section class="overflow-hidden rotating-earth-container pb-5 pb-md-0">
+		<section class="liquidity-info-section fil-overview-section text-center text-white">
+			<h1>FIL 보유 및 대여 현황</h1>
+			<div class="fil-overview-info">
+				<div class="hr" style="width: 200px; height: 1px; background-color: #ffffff; margin:0 auto;"></div>
+				<div class="fil-status-wrapper">
+			    <div class="fil-status">
+			        <p>전체 유동성</p>
+			        <p class="total-fil fil-count" id="totalLiquidityAmount" 
+			            th:data-amount="${totalpoolInfo[0].total_liquidity_amount}">0 FIL</p>
+			    </div>
+			    <div class="fil-status">
+			        <p>가용중인 유동성</p>
+			        <p class="total-fil fil-count" id="totalLodckedFil" 
+			            th:data-amount="${totalpoolInfo[0].total_locked_fil}">0 FIL</p>
+			    </div>
+			    <div class="fil-status">
+			        <p>가용가능한 유동성</p>
+			        <p class="total-fil fil-count" id="availableFil" 
+			            th:data-amount="${totalpoolInfo[0].total_liquidity_amount - totalpoolInfo[0].total_locked_fil}">0 FIL</p>
+			    </div>
+			</div>
 
-        <div class="container-small px-lg-7 px-xxl-3">
-          <div class="row">
-            <div class="col-lg-20 text-center" style="margin: 0 auto;">
-			  <h1 class="text-center mb-6">FIL 보유 및 대출 현황</h1>
-              <hr style="width: 20%; margin:50px auto;"/>
-              <div class="row gy-10 gx-10">
-                <div class="col-sm-4 text-center">					
-                  <p>회사가 보유한 전체 FIL</p>
-                  <h4 class="mb-2 fs-4" style="font-weight: 800;">5685 FIL</h4>
-                </div>
-                <div class="col-sm-4 text-center">					
-                  <p>전체 대출중인 FIL</p>
-                  <h4 class="mb-2 fs-4" style="font-weight: 800;">5685 FIL</h4>
-                </div>
-                <div class="col-sm-4 text-center">					
-                  <p>전체 대출 가능한 FIL</p>
-                  <h4 class="mb-2 fs-4" style="font-weight: 800;">5685 FIL</h4>
-                </div>   
-              </div>
-              <hr style="width: 20%; margin:50px auto;"/>
-              <div class="row gy-10 gx-10">
-                <div class="col-sm-6 text-center">					
-                  <p>대출 중인 SP들의 전체 power</p>
-                  <h4 class="mb-2 fs-4" style="font-weight: 800;">15666</h4>
-                </div>
-                <div class="col-sm-6 text-center">					
-                  <p>대출 중인 SP들의 전체 sector 크기</p>
-                  <h4 class="mb-2 fs-4" style="font-weight: 800;">15615</h4>
-                </div>   
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- end of .container-->
-
-      </section>
-
-		<section class="position-static pt-15 pt-md-5 pt-lg-2">
-
-        <div class="container-small px-lg-7 px-xxl-3">
-          <div class="row g-3 mb-7 mb-lg-11">
-            <div class="col-lg-4">
-              <div class="pricing-card">
-                <div class="card bg-transparent border border-2 border-info rounded-4">
-                  <div class="card-body p-7">
-                    <h3 class="mb-5">01</h3>
-                    <h3 class="d-flex align-items-center gap-1 mb-3" style="margin: 0 auto;">합법적인 수익창출</h3>                    
-                    <p class="mb-4" style="line-height: 130%;">비즈니스 안정성을 강화와 해킹으로부터
-						보호받을 수 있도록 ISMS 인증, ​
-						투명 경영을 위한
+				<div class="hr" style="width: 200px; height: 1px; background-color: #ffffff; margin:0 auto;"></div>
+				<div class="loaned-sp-status-wrapper" style="display: none;">
+					<div class="loaned-sp-status">
+						<p>대출 중인 SP들의 전체 power</p>
+						<p class="sp-total-power">15666</p>
+					</div>
+					<div class="loaned-sp-status">
+						<p>대출 중인 SP들의 전체 sector 크기</p>
+						<p class="sp-total-sector">15615</p>
+					</div>
+				</div>
+			</div>
+		</section>
+			
+		<section class="liquidity-info-section lp-advantages-section" style="height: 500px;">
+			<div class="lp-advantages-wrapper mt-6">
+				<div class="lp-advantage" style="width: 28%; height: 300px;">
+					<h3>01</h3>					
+					<div class="hr mb-5" style="width: 50px; height: 1px; background-color: #2A3E46; margin:0 auto;"></div>
+					<h3 class="lp-advantage-title">합법적인 수익창출</h3>
+					<p>비즈니스 안정성을 강화하고<br />
+						수많은 데이터가 해킹으로부터<br />
+						보호받을 수 있도록 ISMS 인증<br />​
+						투명 경영을 위한<br />
 						정보 보호 법적 준거성 확보
 					</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="pricing-card">
-                <div class="card bg-transparent border border-2 border-info rounded-4">
-                  <div class="card-body p-7">
-                    <h3 class="mb-5">02</h3>
-                    <h3 class="d-flex align-items-center gap-1 mb-3" style="margin: 0 auto;">신속 대응 관리</h3>                    
-                    <p class="mb-4" style="line-height: 130%;">숙련된 하드웨어 전문가의<br />
+				</div>	
+				<div class="lp-advantage" style="width: 28%; height: 300px;">
+					<h3>02</h3>
+					<div class="hr mb-5" style="width: 50px; height: 1px; background-color: #2A3E46; margin:0 auto;"></div>
+					<h3 class="lp-advantage-title">신속 대응 관리</h3>
+					<p>숙련된 하드웨어 전문가의<br />
 						최적화 세팅과<br />
 						신속한 대응 관리 
-
 					</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="pricing-card">
-                <div class="card bg-transparent border border-2 border-info rounded-4">
-                  <div class="card-body p-7">
-                    <h3 class="mb-5">03</h3>
-                    <h3 class="d-flex align-items-center gap-1 mb-3" style="margin: 0 auto;">쉬운 LIQUIDITY 참여</h3>                    
-                    <p class="mb-4" style="line-height: 130%;">간편한 접근성으로<br />
+				</div>	
+				<div class="lp-advantage" style="width: 28%; height: 300px;">
+					<h3>03</h3>
+					<div class="hr mb-5" style="width: 50px; height: 1px; background-color: #2A3E46; margin:0 auto;"></div>
+					<h3 class="lp-advantage-title">쉬운 LIQUIDITY 참여</h3>
+					<p>간편한 접근성으로<br />
 						FIL MOUNTAIN LIQUIDITY에<br />
 						쉽게 참여해보세요.
-
 					</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- end of .container-->
-
-      </section>
+				</div>	
+			</div>			
+		</section>
 		
-		
-		<section class="overflow-hidden pb-5 pb-md-0">
-			<div class="container-small px-lg-7 px-xxl-3 text-center">
-				<h3 class="mb-7">NANODC LIQUIDITY POOL</h3>
-				<h1 class="text-center mb-9" style="line-height: 130%;">제타큐브가 직접 운영하는<br />
+		<section class="liquidity-info-section pool-intro-section">
+			<div class="pool-intro-wrapper mt-8 mb-0">
+				<h3>NANODC LIQUIDITY POOL</h3>
+				<hr />
+				<h1>제타큐브가 직접 운영하는<br />
 					나노디씨 노드의 유동성 풀에 참여하여<br />
 					안정적이고 높은 리워드를 받으세요.
 				</h1>
-				<div class="row gy-10 gx-10 mb-14">
-                	<div class="col-sm-4 text-center">					
-						<h4 class="mb-2 fs-4" style="font-weight: 800;">12.11%</h4>
+				<div class="pool-status-wrapper" style="display: none;">
+					<div class="expected-apy">
+						<h2 class="pool-status">12.11%</h2>
 						<p>EXPECTED APY</p>
 					</div>
-                	<div class="col-sm-4 text-center">	
-						<h4 class="mb-2 fs-4" style="font-weight: 800;">8000 FIL</h4>
+					<div class="protocol-tvl">
+						<h2 class="pool-status">8000 FIL</h2>
 						<p>PROTOCOL TVL</p>
 					</div>
-                	<div class="col-sm-4 text-center">	
-						<h4 class="mb-2 fs-4" style="font-weight: 800;">12PiB</h4>
+					<div class="qap-storage-added">
+						<h2 class="pool-status">12PiB</h2>
 						<p>QAP STORAGE ADDED</p>
 					</div>
 				</div>
-				<h2  class="mb-7">복리방식의 수익구조</h2>
+				<h2>복리방식의 수익구조</h2>
 				<p>NanoDC Liquidity Pool에 들어간 리워드는<br />
 					다시 NanoDC 온보딩 담보로 들어가 많은 리워드를 받게 됩니다.
 				</p>
-    			<img class="mt-9 mb-9 img-fluid ms-auto d-light-none" src="../assets/img/thumb/liquiditypool-img.png" alt="리퀴디티 풀 수익구조" />
-    			<h3 class="mt-3 mb-9">zFIL(Zetacube Filecoin)?</h3>
-    			<p class="mb-14">FIL을 NanoDC Liquidity Pool에 전송하면 받게 되는 유동성 토큰입니다.<br />
-    				NanoDC에 데이터를 저장하며 받은 리워드가 Pool에 더해져 zFIL의 가치가 상승하며,<br />
+    			<img src="../assets/img/thumb/liquiditypool-img.png" alt="리퀴디티 풀 수익구조" />
+    			<h3>zFIL(Zetacube Filecoin)?</h3>
+    			<p>FIL을 NanoDC Liquidity Pool에 전송하면 받게 되는 유동성 토큰입니다.<br />
+    				NanoDC에 데이터를 저장ㅎ라며 받은 리워드가 Pool에 더해져 zFIL의 가치가 상승하며,<br />
     				투자자는 더 많은 FIL을 받을 수 있습니다.
     			</p>
     			<h2>The Best Time to Buy Filecoin</h2>
-    			<img class="mt-9 mb-9 img-fluid ms-auto d-light-none" src="../assets/img/thumb/filprice-img.png" alt="파일코인 수익창출 가치 그림" />
+    			<img src="../assets/img/thumb/filprice-img.png" alt="파일코인 수익창출 가치 그림" />
 			</div>			
 		</section>
     </div>
+    <script>
+    // total_liquidity_amount 처리
+    var totalLiquidityAmountElement = document.getElementById('totalLiquidityAmount');
+    console.log(totalLiquidityAmountElement);
+    var totalLiquidityAmount = parseFloat(totalLiquidityAmountElement.getAttribute('data-amount'));
+    totalLiquidityAmount = totalLiquidityAmount === 0 ? '0' : Math.floor(totalLiquidityAmount).toLocaleString();
+    totalLiquidityAmountElement.textContent = totalLiquidityAmount + ' FIL';
+
+    // total_lodcked_fil 처리 (전체 대여 중인 FIL)
+    var totalLodckedFilElement = document.getElementById('totalLodckedFil');
+    var totalLodckedFil = parseFloat(totalLodckedFilElement.getAttribute('data-amount'));
+    totalLodckedFil = totalLodckedFil === 0 ? '0' : Math.floor(totalLodckedFil).toLocaleString();
+    totalLodckedFilElement.textContent = totalLodckedFil + ' FIL';
+
+    // available_fil 처리 (전체 대여 가능한 FIL)
+    var availableFilElement = document.getElementById('availableFil');
+    var availableFil = parseFloat(availableFilElement.getAttribute('data-amount'));
+    availableFil = availableFil === 0 ? '0' : Math.floor(availableFil).toLocaleString();
+    availableFilElement.textContent = availableFil + ' FIL';
+</script>
 </main>
+
 </html>
