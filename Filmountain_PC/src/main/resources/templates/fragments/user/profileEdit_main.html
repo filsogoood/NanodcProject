@@ -60,5 +60,162 @@
                 </div>
             </div>
         </div>
+        
+		<div class="container mt-5">
+			<!-- 알림 모달 -->
+			<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true" th:if="${alertMessage}">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="alertModalLabel">알림</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p th:text="${alertMessage}"></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 진행상황 템플릿
+			<div class="col-12 col-lg-6">
+              <div class="timeline-vertical">
+                <div class="timeline-item">
+                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
+                    <div class="col-12 col-md-auto d-flex">
+                      <div class="timeline-item-bar position-relative me-3 me-md-0">
+                        <div class="icon-item icon-item-sm bg-success" data-bs-theme="light"><span class="fa-solid fa-check text-white fs-10"></span></div><span class="timeline-bar border-end border-success"></span>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="timeline-item-content ps-6 ps-md-3">
+                        <h4>Order is processing</h4>
+                        <p class="fs-9 text-body-secondary mb-0">Your package is ready for the seller to prepare.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
+                    <div class="col-12 col-md-auto d-flex">
+                      <div class="timeline-item-bar position-relative me-3 me-md-0">
+                        <div class="icon-item icon-item-sm bg-success" data-bs-theme="light"><span class="fa-solid fa-check text-white fs-10"></span></div><span class="timeline-bar border-end border-warning"></span>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="timeline-item-content ps-6 ps-md-3">
+                        <h4>Picked Up</h4>
+                        <p class="fs-9 text-body-secondary mb-0">Your package has been picked up from the seller.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
+                    <div class="col-12 col-md-auto d-flex">
+                      <div class="timeline-item-bar position-relative me-3 me-md-0">
+                        <div class="icon-item icon-item-sm bg-warning" data-bs-theme="light"><span class="fa-solid fa-truck-ramp-box text-white fs-10"></span></div><span class="timeline-bar border-end border-dashed"></span>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="timeline-item-content ps-6 ps-md-3">
+                        <h4>Ready to Ship</h4>
+                        <p class="fs-9 text-body-secondary mb-0">Your package is now ready to be shipped.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
+                    <div class="col-12 col-md-auto d-flex">
+                      <div class="timeline-item-bar position-relative me-3 me-md-0">
+                        <div class="icon-item icon-item-sm bg-body-quaternary" data-bs-theme="light"><span class="fa-solid fa-truck text-white fs-10"></span></div><span class="timeline-bar border-end border-dashed"></span>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="timeline-item-content ps-6 ps-md-3">
+                        <h4>Shipped</h4>
+                        <p class="fs-9 text-body-secondary mb-0">Pending</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="row g-md-3 align-items-center">
+                    <div class="col-12 col-md-auto d-flex">
+                      <div class="timeline-item-bar position-relative me-3 me-md-0">
+                        <div class="icon-item icon-item-sm bg-body-quaternary" data-bs-theme="light"><span class="fa-solid fa-truck-fast text-white fs-10"></span></div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="timeline-item-content ps-6 ps-md-3">
+                        <h4>Delivered</h4>
+                        <p class="fs-9 text-body-secondary mb-0">Pending</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            -->
+            
+			<!-- 계약 현황 -->
+			<div class="container mt-5">
+				<div class="col-auto">
+					<h2 class="mb-3">계약 현황</h2>
+					<button class="btn btn-warning w-100 mb-3">전자계약서 작성하기</button>
+					<div class="form-group mb-3">
+						<label for="process" class="form-label fs-8">진행현황</label>
+						<div class="table-responsive">
+							<table class="table table-bordered" id="agreementTable">
+								<tbody>
+									<tr th:each="agreement : ${agreements}">
+										<td class="step" data-step="1">
+											<span class="step-label">전자서명 진행중<i data-feather="check" class="check-icon"></i></span>
+											<a th:if="${agreement.process == '전자서명 진행중'}" th:href="@{/user/contract}" class="button-inline">전자서명 하기</a>
+											<a th:if="${agreement.process != '전자서명 진행중'}" th:href="@{'https://app.nanodc.info/docs/' + ${agreement.user_id} + '_contract.pdf'}" class="button-inline">계약서 PDF 다운로드</a>
+										</td>
+									</tr>
+									<tr>
+										<td class="step" data-step="2">
+											<span class="step-label">계약서 검토중<i data-feather="check" class="check-icon"></i></span>
+										</td>
+									</tr>
+									<tr>
+										<td class="step" data-step="3">
+											<span class="step-label">계약금 입금 확인중<i data-feather="check" class="check-icon"></i></span>
+										</td>
+									</tr>
+									<tr>
+										<td class="step" data-step="4">
+											<span class="step-label">중도금 입금 확인중<i data-feather="check" class="check-icon"></i></span>
+										</td>
+									</tr>
+									<tr>
+										<td class="step" data-step="5">
+											<span class="step-label">잔금 입금 확인중<i data-feather="check" class="check-icon"></i></span>
+										</td>
+									</tr>
+									<tr>
+										<td class="step" data-step="6">
+											<span class="step-label">계약완료<i data-feather="check" class="check-icon"></i></span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							
+							<!-- 숨겨진 데이터 -->
+							<div id="hiddenData" class="hidden" th:each="agreement : ${agreements}" th:data-process="${agreement.process}"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        
     </div>
 </html>
