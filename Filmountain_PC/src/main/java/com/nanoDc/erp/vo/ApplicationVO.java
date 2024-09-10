@@ -4,15 +4,15 @@ import java.sql.Timestamp;
 
 public class ApplicationVO {
     private int application_id;
-    private String name;
+    private int user_id;
     private Timestamp created_at;
-    private String dob;
-    private String tel;
-    private String email;
-    private String level;
     private String sp_product;
     private String message;
     private String status;
+    private String user_name;
+    private String user_email;
+    private String phone_number;
+    
 
     // Getters and Setters
     public int getApplication_id() {
@@ -23,13 +23,7 @@ public class ApplicationVO {
         this.application_id = application_id;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Timestamp getCreated_at() {
         return created_at;
@@ -39,37 +33,6 @@ public class ApplicationVO {
         this.created_at = created_at;
     }
 
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
 
     public String getSp_product() {
         return sp_product;
@@ -93,6 +56,38 @@ public class ApplicationVO {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	public String getUser_email() {
+		return user_email;
+	}
+
+	public void setUser_email(String user_email) {
+		this.user_email = user_email;
+	}
+
+	public String getPhone_number() {
+		return phone_number;
+	}
+
+	public void setPhone_number(String phone_number) {
+		this.phone_number = phone_number;
 	}
 
 

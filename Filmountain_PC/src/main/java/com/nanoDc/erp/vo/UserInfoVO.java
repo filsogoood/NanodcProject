@@ -40,7 +40,8 @@ public class UserInfoVO {
 	private String new_password;
 	private int profileIcon_id;
 	private String wallet_address;
-
+	private String contract_status;
+	private String product;
 	
 	public int getProfileIcon_id() {
 		return profileIcon_id;
@@ -192,6 +193,18 @@ public class UserInfoVO {
 	}
 	public void setWallet_address(String wallet_address) {
 		this.wallet_address = wallet_address;
+	}
+	public String getContract_status() {
+		return contract_status;
+	}
+	public void setContract_status(String contract_status) {
+		this.contract_status = contract_status;
+	}
+	public String getProduct() {
+		return product;
+	}
+	public void setProduct(String product) {
+		this.product = product;
 	}
 
 	

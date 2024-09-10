@@ -138,7 +138,7 @@
 	<!-- INSERT -->
 	
 	<insert id="addNewUser" parameterType="com.nanoDc.erp.vo.UserInfoVO">
-		INSERT INTO filmountain_test.user_info
+		INSERT INTO nanodc.user_info
 		(phone_number,
 		 user_status, 
 		 user_reg_date, 

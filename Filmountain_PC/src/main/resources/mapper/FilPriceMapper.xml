@@ -3,20 +3,20 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanoDc.erp.mapper.FilPriceMapper">
 	<insert id="addNewFilPrice" parameterType="com.nanoDc.erp.vo.FilPriceVO">
-		INSERT INTO filmountain_test.fil_price
+		INSERT INTO nanodc.fil_price
 		(fil_last, reg_date)
 		VALUES(#{fil_last}, NOW())
 	</insert>
 	<select id="getFilPriceDataForMonth" resultType="com.nanoDc.erp.vo.FilPriceVO">
 		SELECT fil_price_id, fil_last, reg_date
-		FROM filmountain_test.fil_price
+		FROM nanodc.fil_price
 		WHERE reg_date >= CURDATE() - INTERVAL 1 MONTH
 		ORDER BY reg_date
 	</select>
 	
 	<select id="getLatestFilPrice" resultType="com.nanoDc.erp.vo.FilPriceVO">
 		SELECT fil_price_id, fil_last, reg_date
-		FROM filmountain_test.fil_price
+		FROM nanodc.fil_price
 		ORDER BY reg_date DESC
 		LIMIT 1
 	</select>

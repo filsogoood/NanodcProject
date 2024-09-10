@@ -67,7 +67,6 @@
                                 <th class="sort align-middle ps-0" scope="col" data-sort="name" style="width:10%;">신청자 이름</th>
                                 <th class="sort align-middle pe-3" scope="col" data-sort="tel" style="width:10%;">연락처</th>
                                 <th class="sort align-middle text-start pe-3" scope="col" data-sort="email" style="width:10%; min-width: 200px;">이메일</th>
-                                <th class="sort align-middle text-start pe-3" scope="col" data-sort="level" style="width:5%; min-width: 200px;">직급</th>
                                 <th class="sort align-middle text-start pe-18 " scope="col" data-sort="sp_product" style="width:5%;">신청 상품</th>
                                 <th class="sort align-middle text-start pe-3 " scope="col" data-sort="message" style="width:10%;">메모</th>
                                 <th class="sort align-middle text-end pe-3 " scope="col" data-sort="message" style="width:5%;">심사</th>
@@ -76,20 +75,16 @@
                         <tbody class="list" id="order-table-body">
                             <tr th:each="item : ${selectApplication}">
                                 <td th:text="${#dates.format(item.created_at, 'yyyy-MM-dd HH:mm:ss')}" class="fs-9 align-middle py-3 user_reg_date align-middle white-space-nowrap py-0"></td>
-                                <td th:text="${item.name}" class="name align-middle fw-semibold text-body-highlight ps-2"></td>
-                                <td th:text="${item.tel}" class="tel align-middle fw-semibold text-body-highlight"></td>
-                                <td th:text="${item.email}" class="email align-middle fw-semibold text-body-highlight"></td>
-                                <td th:text="${item.level}" class="level align-middle fw-semibold text-body-highlight"></td>
+                                <td th:text="${item.user_name}" class="name align-middle fw-semibold text-body-highlight ps-2"></td>
+                                <td th:text="${item.phone_number}" class="tel align-middle fw-semibold text-body-highlight"></td>
+                                <td th:text="${item.user_email}" class="email align-middle fw-semibold text-body-highlight"></td>
                                 <td th:text="${item.sp_product}" class="sp_product align-middle fw-semibold text-body-highlight"></td>
                                 <td th:text="${item.message}" class="message align-middle fw-semibold text-body-highlight"></td>
                                  <td class="text-end pe-0">
 						            <button class="btn btn-secondary agree_button"
 						            type="button" 
 						            th:data-application-id="${item.application_id}" 
-                                        th:data-name="${item.name}"
-                                        th:data-tel="${item.tel}"
-                                        th:data-email="${item.email}"
-                                        th:data-level="${item.level}"
+                                        th:data-id="${item.user_id}"
                                         th:data-sp-product="${item.sp_product}" >승인</button>
 						        </td>
                             </tr>

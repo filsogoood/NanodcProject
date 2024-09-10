@@ -194,43 +194,42 @@
                                 <tr>
                                     <th class="fs-9 align-middle py-3 order align-middle white-space-nowrap py-0" scope="col" data-sort="user_reg_date" style="width:20%;">가입일시</th>
                                     <th class="sort align-middle ps-0" scope="col" data-sort="user_name" style="width:10%;">사용자 이름</th>
-                                    <th class="sort align-middle pe-3" scope="col" data-sort="level" style="width:10%;">레벨</th>
                                     <th class="sort align-middle text-start pe-3" scope="col" data-sort="contract_status" style="width:10%; min-width: 200px;">상태</th>
-                
                                     <th class="sort align-middle text-start pe-18 " scope="col" data-sort="product" style="width:10%;">상품</th>
                                     <th class="sort align-middle text-end pe-12 " scope="col" data-sort="process" style="width:10%;">진행현황</th>
                                     <th class="text-end pe-4" scope="col" style="width:10%;">상세</th>
                                 </tr>
                             </thead>
                             <tbody class="list" id="order-table-body">
-                                <tr th:each="item : ${mergedList}">
-                                    <td th:text="${#dates.format(item['user'].user_reg_date, 'yyyy-MM-dd HH:mm:ss')}" class="fs-9 align-middle py-3 user_reg_date align-middle white-space-nowrap py-0"></td>
-                                    <td th:text="${item['user'].user_name}" class="user_name align-middle fw-semibold text-body-highlight ps-2"></td>
-                                    <td th:text="${item['user'].level}" class="level align-middle fw-semibold text-body-highlight"></td>
-                                    <td th:text="${item['user'].contract_status}" class="contract_status align-middle fw-semibold text-body-highlight"></td>
-                                    <td th:text="${item['user'].product}" class="product align-middle fw-semibold text-body-highlight"></td>
-                                    <td class="process align-middle fw-semibold text-body-highlight">
-                                        <ul>
-                                            <li th:each="agreement : ${item['agreements']}" th:text="${agreement.process}"></li>
-                                        </ul>
-                                    </td>
-                                    <td class="text-end pe-0">
-                                        <button class="btn btn-secondary detail-agreement-button"
-                                        type="button" 
-                                        th:data-user-id="${item['user'].user_id}" 
-                                        th:data-process="${item['agreements'][0].process}"
-                                        th:data-system-location="${item['agreements'][0].system_location}"
-                                        th:data-final-payment="${item['agreements'][0].final_payment}"
-                                        th:data-supply-discount-price="${item['agreements'][0].supply_discount_price}"
-                                        th:data-supply-price="${item['agreements'][0].supply_price}"
-                                        th:data-first-payment="${item['agreements'][0].first_payment}"
-                                        th:data-second-payment="${item['agreements'][0].second_payment}"
-                                        th:data-last-payment="${item['agreements'][0].last_payment}"
-                                        >상세</button>
-                                    </td>
-                                </tr>
+                                <tr th:each="item : ${agreementList}">
+							    <td th:text="${#dates.format(item.reg_date, 'yyyy-MM-dd HH:mm:ss')}" class="fs-9 align-middle py-3 user_reg_date align-middle white-space-nowrap py-0"></td>
+							    <td th:text="${item.user_name}" class="user_name align-middle fw-semibold text-body-highlight ps-2"></td>
+							  
+							    <td th:text="${item.contract_status}" class="contract_status align-middle fw-semibold text-body-highlight"></td>
+							    <td th:text="${item.sp_product}" class="product align-middle fw-semibold text-body-highlight"></td>
+							    <td class="process align-middle fw-semibold text-body-highlight">
+							        <ul>
+							            <li th:each="agreement : ${agreementList}" th:text="${agreement.process}"></li>
+							        </ul>
+							    </td>
+							    <td class="text-end pe-0">
+							        <button class="btn btn-secondary detail-agreement-button"
+							            type="button" 
+							            th:data-user-id="${item.user_id}" 
+							            th:data-process="${item.process}"
+							            th:data-system-location="${item.system_location}"
+							            th:data-final-payment="${item.final_payment}"
+							            th:data-supply-discount-price="${item.supply_discount_price}"
+							            th:data-supply-price="${item.supply_price}"
+							            th:data-first-payment="${item.first_payment}"
+							            th:data-second-payment="${item.second_payment}"
+							            th:data-last-payment="${item.last_payment}"
+							        >상세</button>
+							    </td>
+							</tr>
+
                                 <!-- 기본 템플릿 -->
-                                <tr th:if="${mergedList.size() == 0}">
+                                <tr th:if="${agreementList.size() == 0}">
                                     <td colspan="6" class="text-center">데이터가 없습니다.</td>
                                 </tr>
                             </tbody>

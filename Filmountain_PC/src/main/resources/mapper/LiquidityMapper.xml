@@ -20,11 +20,11 @@
 		    wallet.key_id,
 		    wallet.lp_address
 		FROM 
-		    filmountain_test.Liquidity_tx AS Liquidity_tx
+		    nanodc.Liquidity_tx AS Liquidity_tx
 		INNER JOIN 
-		    filmountain_test.wallet AS wallet ON Liquidity_tx.wallet_id = wallet.wallet_id
+		    nanodc.wallet AS wallet ON Liquidity_tx.wallet_id = wallet.wallet_id
 		INNER JOIN 
-		    filmountain_test.user_info AS user ON Liquidity_tx.user_id = user.user_id
+		    nanodc.user_info AS user ON Liquidity_tx.user_id = user.user_id
 		WHERE 
 		    user.user_status = 'active'
 		ORDER BY 
@@ -42,11 +42,11 @@
 		    Liquidity_reward.reward_amount,
 		    wallet.lp_address
 		FROM 
-		    filmountain_test.Liquidity_reward AS Liquidity_reward
+		    nanodc.Liquidity_reward AS Liquidity_reward
 		INNER JOIN 
-		    filmountain_test.wallet AS wallet ON Liquidity_reward.wallet_id = wallet.wallet_id
+		    nanodc.wallet AS wallet ON Liquidity_reward.wallet_id = wallet.wallet_id
 		INNER JOIN 
-		    filmountain_test.user_info AS user ON Liquidity_reward.user_id = user.user_id
+		    nanodc.user_info AS user ON Liquidity_reward.user_id = user.user_id
 		WHERE 
 		    user.user_status = 'active'
 		ORDER BY 
