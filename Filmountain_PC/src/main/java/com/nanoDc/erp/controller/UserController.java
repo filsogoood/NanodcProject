@@ -324,6 +324,13 @@ public class UserController {
 		        } else {
 		            mav.addObject("withLoginOptions", false);
 		        }
+		        
+		        List<LiquidityVO> totalpoolInfo = this.userService.getTotalPoolInfo();
+		        if (totalpoolInfo == null || totalpoolInfo.isEmpty()) {
+		            totalpoolInfo = new ArrayList<>(); // 빈 리스트로 처리
+		        }
+		        
+		        mav.addObject("totalpoolInfo", totalpoolInfo);
 		        mav.setViewName("views/user/userMain");
 		        return mav;
 		    }

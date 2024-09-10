@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	
-      <div class="content" th:fragment="MainContent">
+      <div class="content  section-light container-small" th:fragment="MainContent">
         <div class="container mt-5">
             <div class="card">
                 <div class="card-body">
@@ -10,19 +10,19 @@
                         <input id="userId" th:value="${loginVO.userInfoVO.user_id}" type="hidden">
                     </div>
                         <label class="col-md-4 form-control-label" style="margin-top:5px;"><b>기존 비밀번호</b></label>
-                        <div class="col-md-8">
+                        <div class="col-md-8 mb-2">
                             <input id="original_password" class="form-control" type="password">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4 form-control-label" style="margin-top:5px;"><b>새 비밀번호</b></label>
-                        <div class="col-md-8">
+                        <div class="col-md-8 mb-2">
                             <input id="user_password" class="form-control" type="password" placeholder="8~16자리/영문 대소문자, 숫자, 특수문자 조합" >
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4 form-control-label" style="margin-top:5px;"><b>새 비밀번호 확인</b></label>
-                        <div class="col-md-8">
+                        <div class="col-md-8 mb-2">
                             <input id="user_password_repeat" class="form-control" type="password" placeholder="8~16자리/영문 대소문자, 숫자, 특수문자 조합" >
                         </div>
                     </div>

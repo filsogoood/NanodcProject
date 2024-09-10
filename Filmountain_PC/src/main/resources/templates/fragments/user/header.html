@@ -4,35 +4,18 @@
         <nav class="navbar navbar-expand-lg container-small px-3 px-lg-7 px-xxl-3">
             <a class="navbar-brand flex-1 flex-lg-grow-0" href="/index">
                 <div class="d-flex align-items-center">
-                    <img src="/assets/img/logos/filmountain_logo_header.png" alt="filmountain logo" width="200px;" />
+                    <img src="/assets/img/logos/nanodc-logo.png" alt="nanodc logo" width="90px;" />
                 </div>
             </a>
-            <div class="d-lg-none">
-                <div class="theme-control-toggle fa-icon-wait px-2">
-                    <input class="form-check-input ms-0 theme-control-toggle-input" type="checkbox" data-theme-control="phoenixTheme" value="dark" id="themeControlToggleSm" />
-                    <label class="mb-0 theme-control-toggle-label theme-control-toggle-light" for="themeControlToggleSm" data-bs-toggle="tooltip" data-bs-placement="left" title="Switch theme">
-                        <span class="icon" data-feather="moon"></span>
-                    </label>
-                    <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggleSm" data-bs-toggle="tooltip" data-bs-placement="left" title="Switch theme">
-                        <span class="icon" data-feather="sun"></span>
-                    </label>
-                </div>
-            </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="border-bottom border-translucent border-bottom-lg-0 mb-2">
-                    <div class="search-box d-inline d-lg-none">
-                        <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
-                            <input class="form-control search-input search rounded-pill my-4" type="search" placeholder="Search" aria-label="Search" />
-                            <span class="fas fa-search search-box-icon"></span>
-                        </form>
-                    </div>
-                </div>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<!--
                     <li class="nav-item border-bottom border-translucent border-bottom-lg-0"><a class="nav-link lh-1 py-0 fs-9 fw-bold py-3" href="/NanoDC">NANODC</a></li>
                     <li class="nav-item border-bottom border-translucent border-bottom-lg-0"><a class="nav-link lh-1 py-0 fs-9 fw-bold py-3" href="/Liquidity">LIQUIDITY</a></li>
+                    -->
                     
                     <!-- These two items will only be shown when logged in -->
                     <li class="nav-item border-bottom border-translucent border-bottom-lg-0" th:if="${withLoginOptions}">
@@ -42,7 +25,13 @@
                         <a class="nav-link lh-1 py-0 fs-9 fw-bold py-3" href="/Liquidity_Dashboard">LP Dashboard</a>
                     </li>
                 </ul>
-
+                <!--
+				<div class="theme-control-toggle fa-icon-wait px-2">
+	                <input class="form-check-input ms-0 theme-control-toggle-input" type="checkbox" data-theme-control="phoenixTheme" value="dark" id="themeControlToggle" />
+	                <label class="mb-0 theme-control-toggle-label theme-control-toggle-light" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Switch theme"><span class="icon" data-feather="moon"></span></label>
+	                <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Switch theme"><span class="icon" data-feather="sun"></span></label>
+              	</div>
+              	-->
                 <div th:if="${withLoginOptions}">
                     <ul class="navbar-nav navbar-nav-icons flex-row">
                         <li class="nav-item" style="margin:auto;">안녕하세요 <span th:text="${userInfoVO.user_name}">000</span>님</li>
@@ -80,11 +69,9 @@
                     </ul>
                 </div>
 
-                <div class="d-grid d-lg-flex align-items-center">
-                    <div class='sign-wrapper' th:unless="${withLoginOptions}">
-                        <a class="btn btn-link text-body order-1 order-lg-0 ps-4 me-lg-2" href="/login">Sign in</a>
-                        <a class="btn btn-phoenix-primary order-0" href="/Signup"><span class="fw-bold">Sign Up</span></a>
-                    </div>
+                <div class="d-grid d-lg-flex align-items-center" th:unless="${withLoginOptions}">
+                    <a class="btn btn-link text-body order-1 order-lg-0 ps-4 me-lg-2" href="/login">Sign in</a>
+                    <a class="btn btn-phoenix-warning text-warning-dark order-0" href="/Signup"><span class="fw-bold">Sign Up</span></a>
                 </div>
             </div>
         </nav>

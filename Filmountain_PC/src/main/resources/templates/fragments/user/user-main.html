@@ -2,42 +2,241 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <main class="main" th:fragment="Main">
 	<div class="main-container">
+		
+		<div class="modal fade" id="verticallyCentered" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="verticallyCenteredModalLabel">구매신청서</h5>
+		        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9"></span></button>
+		      </div>
+		      <div class="modal-body">
+		        <form>
+		          <div class="mb-3">
+		
+		            <label class="form-label" for="basic-form-email">Email</label>
+		
+		            <input class="form-control" id="basic-form-email" type="email" placeholder="name@example.com" />
+		          </div>
+		          <div class="mb-3">
+		
+		            <label class="form-label" for="level">구분</label>
+		
+		            <select class="form-select" id="level" aria-label="Default select example">
+		              <option selected="selected">구분을 선택하세요.</option>
+		              <option value="총판">총판</option>
+		              <option value="대리점">대리점</option>
+		              <option value="SP">SP</option>
+		            </select>
+		          </div>
+		          
+		          <div class="mb-3">
+		
+		            <label class="form-label" for="spProduct">구매 SP상품</label>
+		
+		            <select class="form-select" id="spProduct" aria-label="Default select example">
+		              <option selected="selected">구매하실 SP상품을 선택하세요.</option>
+		              <option value="nanodc2p">NANODC2P</option>
+		              <option value="nanodc4p">NANODC4P</option>
+		              <option value="nanodc6p">NANODC6P</option>
+		            </select>
+		          </div>
+		          
+		          
+		          <div class="mb-3">
+		
+		            <label class="form-label" for="basic-form-textarea">Description</label>
+		
+		            <textarea class="form-control" id="basic-form-textarea" rows="3" placeholder="Description"></textarea>
+		          </div>
+		
+		          <button class="btn btn-primary" type="submit">Submit</button>
+		        </form>
+		      </div>
+		      <!--
+		      <div class="modal-footer">
+		        <button class="btn btn-primary" type="button">Okay</button>
+		        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+		      </div>
+		      -->
+		    </div>
+		  </div>
+		</div>
+		
+		
+		<!--
 		<section class="py-0" style="height: 700px;">
 	        <div class="bg-holder" style="background-image:url(assets/img/bg/main-bg.png);background-position:center;background-size:40%;">
 	        </div>
-	        <!--/.bg-holder-->
 	
 	        <div class="container-lg position-relative">
 	          <div class="row flex-center">
 	            <div class="col-12 col-sm-9 col-xl-7 px-4 px-xxl-6 text-center pt-10" style="margin-top: 200px">
-	              <h1 class="display-3 fw-bolder lh-sm mb-4">간편하게 참여하는 필마운틴 LIQUIDITY</h1>
-	              <p class="mb-10" style="font-size: 24px; color: #fff;">지속 가능한 수익을 창출해보세요.</p>
+	              <h1 class="display-3 fw-bolder lh-sm mb-4">간편하게 참여하는 NANODC LIQUIDITY</h1>
+	              <p class="mb-10" style="font-size: 24px;">지속 가능한 수익을 창출해보세요.</p>
 	            </div>
 	          </div>
 	        </div>
 	      </section>
-		<section class="pt-13 pb-10" id="feature">
-
-        <div class="container-small px-lg-7 px-xxl-3">
+		<section class="pt-13 pb-0" id="feature">
+		-->
+		
+	<section class="pb-3 overflow-hidden" id="home">
+        <div class="hero-header-container-alternate position-relative">
+          <div class="container-small px-lg-7 px-xxl-3">
+            <div class="row align-items-center">
+              <div class="col-12 col-lg-6 pt-2 pb-6 position-relative z-5 text-center text-lg-start">
+                <h1 class="fs-3 fs-md-2 fs-xl-2 fw-black mb-4">혁신적인 4차산업<br />프렌차이즈<br />4나노데이터센터</h1>
+                <p class="mb-5 pe-xl-10" style="text-align: left;">Super High Performance Server Solution Providing for the 4th Generation Business Success!</p>
+                <div class="row gx-3 gy-7 justify-content-center">
+					<div class="text-center text-warning-dark" style="width: 30%;">
+						<h2 class="text-warning-dark">4</h2>
+						<p class="fs-9">OPERATING NANODC</p>
+					</div>
+					<div class="text-center text-warning-dark" style="width: 30%;">
+						<h2 class="text-warning-dark">2</h2>
+						<p class="fs-9">PLANNED DC</p>
+					</div>
+					<div class="text-center text-warning-dark" style="width: 30%;">
+						<h2 class="text-warning-dark">12PiB</h2>
+						<p class="fs-9">RAW POWER</p>
+					</div>
+				</div>
+              </div>
+              <div class="col-12 col-lg-auto d-none d-lg-block">
+                <div class="hero-image-container position-absolute h-100 end-0 d-flex align-items-center">
+                  <div class="position-relative text-center">
+					  
+					  <img class="w-100 d-dark-none rounded-2" src="/assets/img/bg/nanodc-bg.png" alt="hero-header" />
+					  <img class="w-100 d-light-none rounded-2" src="/assets/img/bg/nanodc-bg.png" alt="hero-header" />
+					  <!--
+						  
+					  <img class="position-absolute end-0 hero-image-container-bg" src="/assets/img/bg/nanodc-3d-icon.png" alt="" />
+					  <div class="position-absolute end-0 hero-image-container-overlay" style="transform: skewY(-8deg)"></div>
+					  <img class="w-100 d-light-none rounded-2 hero-image-shadow" src="../../assets/img/bg/bg-35.png" alt="hero-header" />
+					  -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-small px-md-8 mb-8 d-lg-none">
+            <div class="position-relative">
+              <img class="img-fluid ms-auto d-light-none rounded-2 hero-image-shadow" src="/assets/img/bg/nanodc-bg.png" alt="hero-header"/>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <div class="container-small px-lg-7 px-xxl-3">
           <div class="row flex-between-center px-xl-11 mb-10 mb-md-9">
             <div class="col-md-6 order-1 order-md-0 text-center text-md-start">
               <h4 class="mb-3">SP(Storage Provider)</h4>
-              <p class="mb-5">탈중앙화된 스토리지 제공자로, 서로 분산된 지리적 환경에서 데이터를 나눠 저장하여 사용자들은 데이터가 삭제될 걱정없이 데이터를 저장합니다.</p><a class="btn btn-link me-2 p-0 fs-9" href="/NanoDC" role="button">VIEW MORE<i class="fa-solid fa-angle-right ms-2"></i></a>
+              <p class="mb-5">탈중앙화된 스토리지 제공자로, 서로 분산된 지리적 환경에서 데이터를 나눠 저장하여 사용자들은 데이터가 삭제될 걱정없이 데이터를 저장합니다.</p>
+              <!-- 로그인된 사용자에게만 모달을 띄우는 버튼 -->
+				<a class="btn btn-link me-2 p-0 fs-9 text-warning-dark"
+				   th:if="${withLoginOptions}" 
+				   data-bs-toggle="modal" 
+				   data-bs-target="#verticallyCentered">
+				   구매신청<i class="fa-solid fa-angle-right ms-2"></i>
+				</a>
+				
+				<!-- 로그인되지 않은 사용자에게 경고창을 띄우고 로그인 페이지로 이동시키는 버튼 -->
+				<a class="btn btn-link me-2 p-0 fs-9 text-warning-dark"
+				   th:unless="${withLoginOptions}" 
+				   href="javascript:void(0);" 
+				   onclick="showLoginAlert()">
+				   구매신청<i class="fa-solid fa-angle-right ms-2"></i>
+				</a>
+
             </div>
-            <div class="col-md-5 mb-5 mb-md-0 text-center"><img class="w-75 w-md-100 d-dark-none" src="../../assets/img/spot-illustrations/34.png" alt="" /><img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" /></div>
+            <div class="col-md-5 mb-5 mb-md-0 text-center"><img class="w-75 w-md-100 d-dark-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" /><img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" /></div>
           </div>
-          <div class="row flex-between-center px-xl-11 mb-10 mb-md-9">
-            <div class="col-md-6 order-1 order-md-0 text-center text-md-start">
-              <h4 class="mb-3">LP(Liquidity Provider)</h4>
-              <p class="mb-5">NANODC POOL에 유동성을 제공하여 SP가 원활하게 데이터를 저장할 수 있도록 돕고 이들은 자산을 유동성 풀에 예치하여 데이터 저장 수수료를 나눠받습니다.</p><a class="btn btn-link me-2 p-0 fs-9" href="/Liquidity" role="button">VIEW MORE<i class="fa-solid fa-angle-right ms-2"></i></a>
+        </div>
+        
+        <section class="overflow-hidden rotating-earth-container pb-5 pb-md-0">
+
+        <div class="container-small px-lg-7 px-xxl-3">
+          <div class="row">
+            <div class="col-lg-20 text-center" style="margin: 0 auto;">
+			  <h1 class="text-center mb-6">FIL 보유 및 대출 현황</h1>
+              <hr style="width: 20%; margin:50px auto;"/>
+              <div class="row gy-10 gx-10">
+                <div class="col-sm-4 text-center">					
+                  <p>전체 유동성</p>
+                  <h4 class="mb-2 fs-4" style="font-weight: 800;"id="totalLiquidityAmount" 
+					            th:data-amount="${totalpoolInfo[0].total_liquidity_amount}">0 FIL</h4>
+                </div>
+                <div class="col-sm-4 text-center">					
+                  <p>가용중인 유동성</p>
+                  <h4 class="mb-2 fs-4" style="font-weight: 800;"
+                  				th:text="${totalpoolInfo[0] != null ? totalpoolInfo[0].total_liquidity_amount : '0'}">0 FIL</h4>
+                </div>
+                <div class="col-sm-4 text-center">					
+                  <p>가용가능한 유동성</p>
+                  <h4 class="mb-2 fs-4" style="font-weight: 800;"id="availableFil" 
+					            th:data-amount="${totalpoolInfo[0].total_liquidity_amount - totalpoolInfo[0].total_locked_fil}">0 FIL</h4>
+                </div>   
+              </div>
+              <hr style="width: 20%; margin:50px auto; display: none;" />
+              <div class="row gy-10 gx-10"  style="display: none;">
+                <div class="col-sm-6 text-center">					
+                  <p>대출 중인 SP들의 전체 power</p>
+                  <h4 class="mb-2 fs-4" style="font-weight: 800;">15666</h4>
+                </div>
+                <div class="col-sm-6 text-center">					
+                  <p>대출 중인 SP들의 전체 sector 크기</p>
+                  <h4 class="mb-2 fs-4" style="font-weight: 800;">15615</h4>
+                </div>   
+              </div>
             </div>
-            <div class="col-md-5 mb-5 mb-md-0 text-center"><img class="w-75 w-md-100 d-dark-none" src="../../assets/img/spot-illustrations/35.png" alt="" /><img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/hand-cash-icon.png" alt="손 위에 동전들" /></div>
           </div>
         </div>
         <!-- end of .container-->
 
       </section>
 		
+        
+        <div class="container-small px-lg-7 px-xxl-3"> 
+          <div class="row flex-between-center px-xl-11 mb-10 mb-md-9">
+            <div class="col-md-6 order-1 order-md-0 text-center text-md-start">
+              <h4 class="mb-3">LP(Liquidity Provider)</h4>
+              <p class="mb-5">NANODC POOL에 유동성을 제공하여 SP가 원활하게 데이터를 저장할 수 있도록 돕고 이들은 자산을 유동성 풀에 예치하여 데이터 저장 수수료를 나눠받습니다.</p><a class="btn btn-link me-2 p-0 fs-9 text-warning-dark" href="/Liquidity" role="button"> Join Liquidity<i class="fa-solid fa-angle-right ms-2"></i></a>
+            </div>
+            <div class="col-md-5 mb-5 mb-md-0 text-center"><img class="w-75 w-md-100 d-dark-none" src="../assets/img/icons/hand-cash-icon.png" alt="손 위에 동전들" /><img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/hand-cash-icon.png" alt="손 위에 동전들" /></div>
+          </div>
+        </div>
+        <!-- end of .container-->
+       
+		
     </div>
+    
+    <!-- 자바스크립트 경고창 및 리다이렉트 함수 -->
+	<script>
+	    function showLoginAlert() {
+	        alert("로그인이 필요합니다.");  // 경고창 띄우기
+	        window.location.href = "/login";  // 로그인 페이지로 리다이렉트
+	    }
+	</script>
 </main>
+<script>
+	    // total_liquidity_amount 처리
+	    var totalLiquidityAmountElement = document.getElementById('totalLiquidityAmount');
+	    console.log(totalLiquidityAmountElement);
+	    var totalLiquidityAmount = parseFloat(totalLiquidityAmountElement.getAttribute('data-amount'));
+	    totalLiquidityAmount = totalLiquidityAmount === 0 ? '0' : Math.floor(totalLiquidityAmount).toLocaleString();
+	    totalLiquidityAmountElement.textContent = totalLiquidityAmount + ' FIL';
+	
+	    // total_lodcked_fil 처리 (전체 대여 중인 FIL)
+	    var totalLodckedFilElement = document.getElementById('totalLodckedFil');
+	    var totalLodckedFil = parseFloat(totalLodckedFilElement.getAttribute('data-amount'));
+	    totalLodckedFil = totalLodckedFil === 0 ? '0' : Math.floor(totalLodckedFil).toLocaleString();
+	    totalLodckedFilElement.textContent = totalLodckedFil + ' FIL';
+	
+	    // available_fil 처리 (전체 대여 가능한 FIL)
+	    var availableFilElement = document.getElementById('availableFil');
+	    var availableFil = parseFloat(availableFilElement.getAttribute('data-amount'));
+	    availableFil = availableFil === 0 ? '0' : Math.floor(availableFil).toLocaleString();
+	    availableFilElement.textContent = availableFil + ' FIL';
+	</script>
 </html>
