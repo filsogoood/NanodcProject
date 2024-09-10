@@ -133,8 +133,21 @@
             <div class="col-md-6 order-1 order-md-0 text-center text-md-start">
               <h4 class="mb-3">SP(Storage Provider)</h4>
               <p class="mb-5">탈중앙화된 스토리지 제공자로, 서로 분산된 지리적 환경에서 데이터를 나눠 저장하여 사용자들은 데이터가 삭제될 걱정없이 데이터를 저장합니다.</p>
-              <a class="btn btn-link me-2 p-0 fs-9 text-warning-dark" data-bs-toggle="modal" data-bs-target="#verticallyCentered">구매신청<i class="fa-solid fa-angle-right ms-2"></i></a>
-              <!-- 새로운 버튼 추가 -->
+              <!-- 로그인된 사용자에게만 모달을 띄우는 버튼 -->
+				<a class="btn btn-link me-2 p-0 fs-9 text-warning-dark"
+				   th:if="${withLoginOptions}" 
+				   data-bs-toggle="modal" 
+				   data-bs-target="#verticallyCentered">
+				   구매신청<i class="fa-solid fa-angle-right ms-2"></i>
+				</a>
+				
+				<!-- 로그인되지 않은 사용자에게 경고창을 띄우고 로그인 페이지로 이동시키는 버튼 -->
+				<a class="btn btn-link me-2 p-0 fs-9 text-warning-dark"
+				   th:unless="${withLoginOptions}" 
+				   href="javascript:void(0);" 
+				   onclick="showLoginAlert()">
+				   구매신청<i class="fa-solid fa-angle-right ms-2"></i>
+				</a>
 
             </div>
             <div class="col-md-5 mb-5 mb-md-0 text-center"><img class="w-75 w-md-100 d-dark-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" /><img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" /></div>
@@ -198,7 +211,13 @@
 		
     </div>
     
-    
+    <!-- 자바스크립트 경고창 및 리다이렉트 함수 -->
+	<script>
+	    function showLoginAlert() {
+	        alert("로그인이 필요합니다.");  // 경고창 띄우기
+	        window.location.href = "/login";  // 로그인 페이지로 리다이렉트
+	    }
+	</script>
 </main>
 <script>
 	    // total_liquidity_amount 처리
