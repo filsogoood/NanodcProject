@@ -74,10 +74,10 @@
     <main class="main" id="top">
 		<!--TOPBAR  -->
        <div th:replace="fragments/user/header :: Header(withLoginOptions=${withLoginOptions}, loginVO=${loginVO})"></div>
-      	<!--MainContent-->
-      <div th:replace="~{fragments/user/profileEdit_main :: MainContent}"></div>  
+      <!--MainContent-->
+      <div th:replace="~{fragments/user/user-myAgreement :: MainContent}"></div>  
 	    <!--FOOTER-->
-	   <div th:replace="fragments/user/footer :: Footer"></div> 
+	    <div th:replace="fragments/user/footer :: Footer"></div> 
       <script>
         var navbarTopStyle = window.config.config.phoenixNavbarTopStyle;
         var navbarTop = document.querySelector('.navbar-top');

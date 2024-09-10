@@ -363,6 +363,39 @@ public class UserController {
 	        mav.setViewName("views/user/userprofileEdit");
 	        return mav;
 	    }
+	
+		//나의 계약현황
+		@GetMapping(value={"/myAgreement"})
+		 public  ModelAndView myAgreement(HttpServletRequest request) {
+		    ModelAndView mav = new ModelAndView();
+		    HttpSession session = request.getSession();
+			    if(!userService.checkSession(request)) {
+		        	mav.setViewName("redirect:/login");
+		            return mav;
+		        }
+		        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+		        if (loginVO != null) {
+		        	UserInfoVO userInfoVO = loginVO.getUserInfoVO();
+		        	 try {
+		        		 userInfoVO.setUser_email(AESUtil.decrypt(userInfoVO.getUser_email()));
+		        		 userInfoVO.setPhone_number(AESUtil.decrypt(userInfoVO.getPhone_number()));
+			            } catch (Exception e) {
+			                
+			                // 필요한 경우 예외 처리
+			            }
+		            mav.addObject("withLoginOptions", true);
+		            mav.addObject("userInfoVO", userInfoVO);
+		            mav.addObject("loginVO", loginVO);
+		        } else {
+		            mav.addObject("withLoginOptions", false);
+		        }
+		        mav.setViewName("views/user/userMyAgreement");
+		        return mav;
+		    }
+	
+	
+	
+	
 	//나노디씨 소개 랜더링
 	@GetMapping(value={"/NanoDC"})
 	 public  ModelAndView NanoDC(HttpServletRequest request) {
