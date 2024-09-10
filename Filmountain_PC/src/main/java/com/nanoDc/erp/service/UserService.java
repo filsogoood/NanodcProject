@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nanoDc.erp.config.AESUtil;
+import com.nanoDc.erp.mapper.AgreementMapper;
+import com.nanoDc.erp.mapper.ApplicationMapper;
 import com.nanoDc.erp.mapper.HardwareInvestmentMapper;
 import com.nanoDc.erp.mapper.HardwareProductMapper;
 import com.nanoDc.erp.mapper.HardwareRewardSharingMapper;
@@ -18,6 +20,8 @@ import com.nanoDc.erp.mapper.LiquidityMapper;
 import com.nanoDc.erp.mapper.TransactionMapper;
 import com.nanoDc.erp.mapper.UserInfoMapper;
 import com.nanoDc.erp.mapper.WalletMapper;
+import com.nanoDc.erp.vo.AgreementVO;
+import com.nanoDc.erp.vo.ApplicationVO;
 import com.nanoDc.erp.vo.HardwareInvestmentVO;
 import com.nanoDc.erp.vo.HardwareProductVO;
 import com.nanoDc.erp.vo.HardwareRewardSharingDetailVO;
@@ -44,9 +48,12 @@ public class UserService {
 	TransactionMapper transactionMapper;
 	@Autowired
 	WalletMapper walletMapper;
-
+	@Autowired
+	AgreementMapper agreementMapper;
 	@Autowired
 	LiquidityMapper liquidityMapper;
+	@Autowired
+	ApplicationMapper applicationMapper;
 	
 	
 	
@@ -210,8 +217,19 @@ public class UserService {
 	 public boolean isPhone_numberNameDuplicate(String user_name,String phone_number) {
 	        return userInfoMapper.checkPhonenumberName(user_name,phone_number) > 1;
 	    }
-	 
+	 public List<AgreementVO> getAgreementsByUserId(int userId) {
+	        return agreementMapper.selectByIdAgreementList(userId);
+	    }
+	public String updateContract_info(AgreementVO agreementVO, HttpServletRequest request) {
+		 agreementMapper.updateContract_info(agreementVO);
+		return "success";
+	}
 	
+	//신청서 삽입
+	public String insertApplication(ApplicationVO applicationVO, HttpServletRequest request) {
+		this.applicationMapper.insertApplication(applicationVO);
+    	return "success";
+    }	
 	 
 	 
 }

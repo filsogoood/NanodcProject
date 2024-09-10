@@ -51,6 +51,8 @@ import com.nanoDc.erp.mapper.HardwareProductMapper;
 import com.nanoDc.erp.mapper.LiquidityMapper;
 import com.nanoDc.erp.mapper.UserInfoMapper;
 import com.nanoDc.erp.service.UserService;
+import com.nanoDc.erp.vo.AgreementVO;
+import com.nanoDc.erp.vo.ApplicationVO;
 import com.nanoDc.erp.vo.FilPriceVO;
 import com.nanoDc.erp.vo.HardwareInvestmentVO;
 import com.nanoDc.erp.vo.HardwareProductVO;
@@ -237,7 +239,70 @@ public class UserController {
 		        return "redirect:/login";
 		    }
 		 
-		 
+		//유저 웹 계약서 페이지
+				 @GetMapping(value={"/agreement"})
+				 public ModelAndView agreement(HttpServletRequest request) {
+				     ModelAndView mav = new ModelAndView();
+				     HttpSession session = request.getSession();
+				     if (!userService.checkSession(request)) {
+				         mav.setViewName("redirect:/user/Weblogin");
+				         return mav;
+				     }
+				     
+				     LoginVO loginVO = (LoginVO) session.getAttribute("user");
+				     if ("계약완료".equals(loginVO.getUserInfoVO().getContract_status())) {
+				    	 mav.setViewName("redirect:/home");
+				        }
+				     if (loginVO != null && loginVO.getUserInfoVO() != null) {
+				         int userId = loginVO.getUserInfoVO().getUser_id();
+				         List<AgreementVO> agreements = userService.getAgreementsByUserId(userId);
+				         mav.addObject("loginVO", loginVO);
+				         mav.addObject("agreements", agreements);
+				     } else {
+				         mav.setViewName("redirect:/user/Weblogin");
+				         return mav;
+				     }
+				     
+				     mav.setViewName("views/user/user_agreement");
+				     return mav;
+				 }
+				 @GetMapping(value={"/contract"})
+				 public ModelAndView contract(HttpServletRequest request) {
+				     ModelAndView mav = new ModelAndView();
+				     HttpSession session = request.getSession();
+				     if (!userService.checkSession(request)) {
+				         mav.setViewName("redirect:/user/Weblogin");
+				         return mav;
+				     }
+				     
+				     LoginVO loginVO = (LoginVO) session.getAttribute("user");
+				     if (loginVO != null && loginVO.getUserInfoVO() != null) {
+				         int userId = loginVO.getUserInfoVO().getUser_id();
+				         List<AgreementVO> agreements = userService.getAgreementsByUserId(userId);
+				         for (AgreementVO agreement : agreements) {
+				             if ("true".equals(agreement.getAuth_status())) {
+				                 mav.setViewName("redirect:/user/agreement");
+				                 return mav;
+				             }
+				         }
+				         mav.addObject("loginVO", loginVO);
+				         mav.addObject("agreements", agreements);
+				         LocalDate currentDate = LocalDate.now();
+				         DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyyMMdd");
+				         String formattedDate1 = currentDate.format(formatter1);
+				         mav.addObject("currentDate", formattedDate1);
+
+				         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy년 M월 d일");
+				         String formattedDate2 = currentDate.format(formatter2);
+				         mav.addObject("formattedDate", formattedDate2);
+				     } else {
+				         mav.setViewName("redirect:/user/Weblogin");
+				         return mav;
+				     }
+				     
+				     mav.setViewName("views/user/contract_view");
+				     return mav;
+				 }
 		 //유저앱 버튼 홈 페이지
 		 @GetMapping(value={"/index"})
 		 public  ModelAndView index(HttpServletRequest request) {
@@ -646,6 +711,12 @@ public class UserController {
 	 @PostMapping(value={"/deleteWalletByWalletId"})
 	 public String deleteWalletByWalletId(@RequestBody WalletVO walletVO, HttpServletRequest request) {
 	    return userService.deleteWalletByWalletId(walletVO.getWallet_id());
+	    }  
+	 
+	 @ResponseBody
+	 @PostMapping(value={"/insertApplication"})
+	 public String insertApplication(@RequestBody ApplicationVO applicationVO, HttpServletRequest request) {
+	    return userService.insertApplication(applicationVO,request);
 	    }  
 	 
 	 

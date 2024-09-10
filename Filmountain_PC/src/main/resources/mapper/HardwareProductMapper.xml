@@ -13,7 +13,7 @@
 			   city,
 			   details,
 			   picture_url
-		FROM filmountain_test.hw_product
+		FROM nanodc.hw_product
 		ORDER BY
     	recruitment_start_date DESC;
 	</select>
@@ -29,7 +29,7 @@
 			   product.details,
 			   product.picture_url,
 			   product.miner_id
-		FROM filmountain_test.hw_product product
+		FROM nanodc.hw_product product
 		INNER JOIN hw_investment investment ON investment.hw_product_id = product.hw_product_id
 		where investment.user_id = #{user_id}
 		GROUP BY product.hw_product_id
@@ -89,7 +89,7 @@
 			   product.details,
 			   product.picture_url,
 			   product.miner_id
-		FROM filmountain_test.hw_product product
+		FROM nanodc.hw_product product
 		where product.hw_product_id = #{hw_product_id}
 	</select>
 	

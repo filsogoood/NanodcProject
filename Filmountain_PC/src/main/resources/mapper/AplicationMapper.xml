@@ -5,27 +5,30 @@
 <mapper namespace="com.nanoDc.erp.mapper.ApplicationMapper">
     <insert id="insertApplication" parameterType="com.nanoDc.erp.vo.ApplicationVO">
         INSERT INTO applications (name, dob, tel, email, level, sp_product, message)
-        VALUES (#{name}, #{dob}, #{tel}, #{email}, #{level}, #{sp_product}, #{message})
+        VALUES (#{user_id}, #{sp_product}, #{message})
     </insert>
     <select id="selectApplication" resultType="com.nanoDc.erp.vo.ApplicationVO">
-	     SELECT 
-            application_id,
-            name,
-            created_at,
-            tel,
-            email,
-            level,
-            sp_product,
-            message,
-            status
-        FROM 
-            applications
-        WHERE 
-            status != 'receipt' OR status IS NULL OR status = ''
-        ORDER BY 
-            created_at DESC;
-	  
-	</select>
+    SELECT 
+        a.application_id,
+        a.created_at,
+        a.sp_product,
+        a.message,
+        a.status,
+        u.user_id,
+        u.user_name,
+        u.user_email,
+        u.phone_number
+    FROM 
+        applications a
+    LEFT JOIN 
+        user_info u ON a.user_id = u.user_id
+    WHERE 
+        a.status != '처리완료' 
+        OR a.status IS NULL 
+        OR a.status = ''
+    ORDER BY 
+        a.created_at DESC;
+</select>
 	
 	<update id="updateApplicationStatus">
         UPDATE applications

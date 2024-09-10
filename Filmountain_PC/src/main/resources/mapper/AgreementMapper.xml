@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanoDc.erp.mapper.AgreementMapper">
+	<insert id="insertAgreementProcess" parameterType="com.nanoDc.erp.vo.AgreementVO">
+	    INSERT INTO agreement_process
+	    (user_id, contract_status,process,reg_date,sp_product)
+	    VALUES
+	    (#{user_id}, #{contract_status}, #{process},#{NOW()},#{sp_product})
+	</insert>
+	<update id="updateAgreement" parameterType="com.nanoDc.erp.vo.AgreementVO">
+	    UPDATE agreement_process
+	    <set>
+	        <if test="contract_status != null">
+	            contract_status = #{contract_status},
+	        </if>
+	        <if test="auth_status != null">
+	            auth_status = #{auth_status},
+	        </if>
+	        <if test="agreement_dir != null">
+	            agreement_dir = #{agreement_dir},
+	        </if>
+	        <if test="reg_date != null">
+	            reg_date = #{reg_date},
+	        </if>
+	        <if test="process != null">
+	            process = #{process},
+	        </if>
+	        <if test="system_location != null">
+	            system_location = #{system_location},
+	        </if>
+	        <if test="supply_discount_price != null">
+	            supply_discount_price = #{supply_discount_price},
+	        </if>
+	        <if test="final_payment != null">
+	            final_payment = #{final_payment},
+	        </if>
+	        
+	        <if test="supply_price != null">
+	            supply_price = #{supply_price},
+	        </if>
+	        <if test="first_payment != null">
+	            first_payment = #{first_payment},
+	        </if>
+	        <if test="second_payment != null">
+	            second_payment = #{second_payment},
+	        </if>
+	        <if test="last_payment != null">
+	            last_payment = #{last_payment},
+	        </if>
+	    </set>
+	    WHERE 
+	       user_id = #{user_id}
+	</update>
+
+	<select id="selectAgreementlist" resultType="com.nanoDc.erp.vo.AgreementVO">
+	    SELECT 
+	        ap.process_id,
+	        ap.contract_status,
+	        ap.auth_status,
+	        ap.user_id,
+	        ap.agreement_dir,
+	        ap.reg_date,
+	        ap.process,
+	        ap.system_location,
+	        ap.supply_discount_price,
+	        ap.supply_price,
+	        ap.final_payment,
+	        ap.first_payment,
+	        ap.second_payment,
+	        ap.last_payment,        
+	        ui.level,
+	        ui.user_name,
+	        ap.sp_product
+	        
+	    FROM 
+	        agreement_process ap
+	    JOIN
+	        user_info ui ON ap.user_id = ui.user_id
+	  
+	</select>
+	
+	<select id="selectByIdAgreementList" parameterType="integer" resultType="com.nanoDc.erp.vo.AgreementVO">
+	    SELECT 
+	        ap.process_id,
+	        ap.contract_status,
+	        ap.auth_status,
+	        ap.user_id,
+	        ap.agreement_dir,
+	        ap.reg_date,
+	        ap.process,
+	        ap.system_location,
+	        ap.supply_discount_price,
+	        ap.supply_price,
+	        ap.final_payment,
+	        ap.first_payment,
+	        ap.second_payment,
+	        ap.last_payment,
+	        ui.product,
+	        ui.level
+	    FROM 
+	        agreement_process ap
+	    JOIN
+	        user_info ui ON ap.user_id = ui.user_id
+	    WHERE
+	        ap.user_id = #{user_id}
+	</select>
+	
+	<update id="updateContract_info" parameterType="com.nanoDc.erp.vo.AgreementVO">
+	    UPDATE agreement_process
+	    <set>
+	        
+	        <if test="auth_status != null">
+	            auth_status = #{auth_status},
+	        </if>
+	        <if test="agreement_dir != null">
+	            agreement_dir = #{agreement_dir},
+	        </if>
+	        <if test="reg_date != null">
+	            reg_date = #{reg_date},
+	        </if>
+	        <if test="process != null">
+	            process = #{process},
+	        </if>
+	       
+	    </set>
+	    WHERE 
+	       user_id = #{user_id}
+	</update>
+	<update id="updateAuthStatus" parameterType="map">
+				UPDATE agreement_process
+				SET auth_status = #{auth_status}
+				WHERE user_id = #{user_id}
+	    </update>
+
+	
+</mapper>

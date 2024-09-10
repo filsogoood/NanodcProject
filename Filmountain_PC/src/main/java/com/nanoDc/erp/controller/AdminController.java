@@ -38,6 +38,8 @@ import com.nanoDc.erp.config.AESUtil;
 import com.nanoDc.erp.mapper.TransactionMapper;
 import com.nanoDc.erp.mapper.UserInfoMapper;
 import com.nanoDc.erp.service.AdminService;
+import com.nanoDc.erp.vo.AgreementVO;
+import com.nanoDc.erp.vo.ApplicationVO;
 import com.nanoDc.erp.vo.HardwareInvestmentVO;
 import com.nanoDc.erp.vo.HardwareProductVO;
 import com.nanoDc.erp.vo.HardwareRewardSharingDetailVO;
@@ -350,6 +352,56 @@ public class AdminController {
 	        mav.addObject("loginVO",loginVO);
 	        return mav;
 	    }
+	 /* 계약현황 페이지 */ 
+	 @GetMapping(value = {"agreementManager"})
+	 public ModelAndView agreement_manager(HttpServletRequest request, Integer init_page) {
+	     ModelAndView mav = new ModelAndView(); 
+	     HttpSession session = request.getSession();
+	     
+	     // 세션 체크
+	     if (!adminService.checkSession(request)) {
+	         mav.setViewName("redirect:/admin/login");
+	         return mav;
+	     }
+	     
+	     // 로그인 정보 가져오기
+	     LoginVO loginVO = (LoginVO) session.getAttribute("user");
+	     List<AgreementVO> agreementList= this.adminService.selectAgreementlist();
+	     // 사용자 정보 리스트 가져오기
+	    
+
+	     // 필터링된 사용자 리스트와 기타 객체들을 뷰에 추가
+	     mav.addObject("loginVO", loginVO);
+	     mav.addObject("agreementList",agreementList);
+
+	     mav.setViewName("views/admin/agreementManager");
+	     
+	     return mav;
+	 }
+	//신청서 현황 페이지
+		 @GetMapping(value = {"applicationManager"})
+		 public ModelAndView applicationmanager(HttpServletRequest request, Integer init_page) {
+		     ModelAndView mav = new ModelAndView(); 
+		     HttpSession session = request.getSession();
+		     
+		     // 세션 체크
+		     if (!adminService.checkSession(request)) {
+		         mav.setViewName("redirect:/admin/login");
+		         return mav;
+		     }
+		     LoginVO loginVO = (LoginVO)session.getAttribute("user");
+		     
+		     // 사용자 정보 리스트 가져오기
+		     List<ApplicationVO> selectApplication = this.adminService.selectApplication();
+		     
+		     
+		     mav.addObject("selectApplication", selectApplication); 
+		     mav.addObject("loginVO",loginVO);
+		     // 뷰 설정
+		     mav.setViewName("views/admin/applicationManager");
+		     
+		     return mav;
+		 }
 	
 
 	 /*----------------------------------*/
@@ -595,7 +647,22 @@ public class AdminController {
 	            return adminService.updateLPStatus(liquidityVO,request);
 	       
 	    	}
+	    /*---------------------------------------------*/
+		 /* -----------applicationManager 기능 ----------*/
+		 /* --------------------------------------------*/
 	    
+	  //**>>>>>   계약현황업데이트   <<<<<**//
+	    @ResponseBody
+	    @PostMapping("/updateApplicationStatus")
+	    public String updateApplicationStatus(@RequestBody ApplicationVO applicationVO,
+	                                  HttpServletRequest request) {
+	        
+	        if(!adminService.checkSession(request)) {
+	            return "failed:session_closed";
+	        }
+	        
+	        return adminService.updateApplicationStatus(applicationVO, request);
+	    }
 }
 
 	 

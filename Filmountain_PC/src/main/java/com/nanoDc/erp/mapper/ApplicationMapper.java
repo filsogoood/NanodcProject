@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface ApplicationMapper {
-    void insertApplication(ApplicationVO application);
+    public void insertApplication(ApplicationVO applicationVO);
     public List<ApplicationVO> selectApplication();
     public void updateApplicationStatus (ApplicationVO applicationVO);
 }

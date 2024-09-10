@@ -54,8 +54,8 @@
 		    p.service_start_date,
 		    p.service_end_date,
 		    p.total_budget_fil
-		FROM filmountain_test.hw_reward_sharing r
-		INNER JOIN filmountain_test.hw_product p ON r.hw_product_id = p.hw_product_id
+		FROM nanodc.hw_reward_sharing r
+		INNER JOIN nanodc.hw_product p ON r.hw_product_id = p.hw_product_id
 		WHERE r.status = 'active'
 		ORDER BY r.regdate DESC
 		</select>
@@ -110,12 +110,12 @@
 		    r.regdate DESC
 		</select>
 		<insert id="insertHardwareRewardSharing" parameterType = "com.nanoDc.erp.vo.HardwareRewardSharingVO">
-			INSERT INTO filmountain_test.hw_reward_sharing
+			INSERT INTO nanodc.hw_reward_sharing
 			(hw_product_id, regdate, status, total_fil)
 			VALUES(#{hw_product_id}, NOW(), #{status}, #{total_fil})
 		</insert>
 		<insert id="insertHardwareRewardSharingDetail" parameterType = "com.nanoDc.erp.vo.HardwareRewardSharingDetailVO">
-			INSERT INTO filmountain_test.hw_reward_sharing_detail
+			INSERT INTO nanodc.hw_reward_sharing_detail
 				(hw_reward_sharing_id, user_id, reward_fil)
 				VALUES(#{hw_reward_sharing_id}, #{user_id}, #{reward_fil})
 		</insert>

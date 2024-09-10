@@ -16,9 +16,9 @@
 		   		   investment.hw_invest_fil,
 		   		   investment.user_id,
 		   		   investment.hw_product_id	   
-			FROM filmountain_test.hw_investment AS investment
-			INNER JOIN filmountain_test.hw_product AS product ON investment.hw_product_id = product.hw_product_id
-			INNER JOIN filmountain_test.user_info AS user ON investment.user_id = user.user_id
+			FROM nanodc.hw_investment AS investment
+			INNER JOIN nanodc.hw_product AS product ON investment.hw_product_id = product.hw_product_id
+			INNER JOIN nanodc.user_info AS user ON investment.user_id = user.user_id
 			WHERE investment.hw_status='active' AND user.user_status='active'
 			ORDER BY 
         	investment.hw_reg_date DESC;
@@ -37,9 +37,9 @@
 		   		   investment.hw_invest_fil,
 		   		   investment.user_id,
 		   		   investment.hw_product_id	   
-			FROM filmountain_test.hw_investment AS investment
-			INNER JOIN filmountain_test.hw_product AS product ON investment.hw_product_id = product.hw_product_id
-			INNER JOIN filmountain_test.user_info AS user ON investment.user_id = user.user_id
+			FROM nanodc.hw_investment AS investment
+			INNER JOIN nanodc.hw_product AS product ON investment.hw_product_id = product.hw_product_id
+			INNER JOIN nanodc.user_info AS user ON investment.user_id = user.user_id
 			WHERE investment.hw_status='active' AND user.user_status='active' AND user.user_id = #{user_id}
 			<if test="hw_product_id != 0">
         	AND product.hw_product_id = #{hw_product_id}
@@ -51,9 +51,9 @@
 		   		   investment.hw_reg_date,
 		   		   investment.user_id,
 		   		   investment.hw_invest_fil
-			FROM filmountain_test.hw_investment AS investment
-			INNER JOIN filmountain_test.hw_product AS product ON investment.hw_product_id = product.hw_product_id
-			INNER JOIN filmountain_test.user_info AS user ON investment.user_id = user.user_id
+			FROM nanodc.hw_investment AS investment
+			INNER JOIN nanodc.hw_product AS product ON investment.hw_product_id = product.hw_product_id
+			INNER JOIN nanodc.user_info AS user ON investment.user_id = user.user_id
 			WHERE investment.hw_status='active' AND user.user_status='active'
         	AND product.hw_product_id = #{hw_product_id}
 	</select>
@@ -61,9 +61,9 @@
 	
 	<select id="selectUserDefaultProductId" parameterType="integer" resultType="integer">
 			SELECT investment.hw_product_id	   
-				FROM filmountain_test.hw_investment AS investment
-				INNER JOIN filmountain_test.hw_product AS product ON investment.hw_product_id = product.hw_product_id
-				INNER JOIN filmountain_test.user_info AS user ON investment.user_id = user.user_id
+				FROM nanodc.hw_investment AS investment
+				INNER JOIN nanodc.hw_product AS product ON investment.hw_product_id = product.hw_product_id
+				INNER JOIN nanodc.user_info AS user ON investment.user_id = user.user_id
 				WHERE investment.hw_status='active' AND user.user_status='active' AND user.user_id = #{user_id}
 				GROUP BY investment.hw_product_id
 				ORDER BY MIN(investment.hw_reg_date)
@@ -72,7 +72,7 @@
 	
 	<!-- insert -->
 	<insert id="addNewinvestmentUser" parameterType="com.nanoDc.erp.vo.HardwareInvestmentVO">
-		INSERT INTO filmountain_test.hw_investment
+		INSERT INTO nanodc.hw_investment
 		(hw_reg_date,
 		 hw_status,
 		 hw_product_id,
@@ -90,7 +90,7 @@
 	
 	<update id="updateinvestmentUser" parameterType="com.nanoDc.erp.vo.HardwareInvestmentVO">
  	  
- 	    UPDATE filmountain_test.hw_investment
+ 	    UPDATE nanodc.hw_investment
  	    SET
 	        hw_reg_date = #{hw_reg_date},
 	        hw_status = #{hw_status},

@@ -12,12 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.nanoDc.erp.mapper.AgreementMapper;
+import com.nanoDc.erp.mapper.ApplicationMapper;
 import com.nanoDc.erp.mapper.HardwareInvestmentMapper;
 import com.nanoDc.erp.mapper.HardwareProductMapper;
 import com.nanoDc.erp.mapper.HardwareRewardSharingMapper;
 import com.nanoDc.erp.mapper.LiquidityMapper;
 import com.nanoDc.erp.mapper.TransactionMapper;
 import com.nanoDc.erp.mapper.UserInfoMapper;
+import com.nanoDc.erp.vo.AgreementVO;
+import com.nanoDc.erp.vo.ApplicationVO;
 import com.nanoDc.erp.vo.HardwareInvestmentVO;
 import com.nanoDc.erp.vo.HardwareProductVO;
 import com.nanoDc.erp.vo.HardwareRewardSharingDetailVO;
@@ -47,6 +52,10 @@ public class AdminService {
 	LiquidityMapper liquidityMapper;
 	@Autowired
 	private AESUtil aESUtil;
+	@Autowired
+	AgreementMapper agreementMapper;
+	@Autowired
+	ApplicationMapper applicationMapper;
 	//**>>>>>   관리자 지갑 정보   <<<<<**//
     @Value("${admin.wallet.address}")
     private String admin_walletAddress;
@@ -288,9 +297,30 @@ public class AdminService {
 	    	    return result;
 	    	}	
 	    		
-
+	  //계약서 정보 가져오기
+		 public List<AgreementVO> selectAgreementlist() {
+		        return this.agreementMapper.selectAgreementlist();
+		    }
+		//신청서 정보 가져오기
+			 public List<ApplicationVO> selectApplication() {
+				 List<ApplicationVO> selectApplicationList = applicationMapper.selectApplication();
+				 for (ApplicationVO application : selectApplicationList) {
+			            try {
+			            	application.setUser_email(AESUtil.decrypt(application.getUser_email()));
+			            	application.setPhone_number(AESUtil.decrypt(application.getPhone_number()));
+			            } catch (Exception e) {
+			                e.printStackTrace();
+			                // 필요한 경우 예외 처리
+			            }
+			        }
+			        return selectApplicationList;
+			    }
 	    
-	    
+			//**>>>>>  신청서 현황 업데이트  <<<<<**//
+			    public String updateApplicationStatus(ApplicationVO applicationVO, HttpServletRequest request) {
+				 	applicationMapper.updateApplicationStatus(applicationVO);
+			    	return "success";
+			    }
 	  //**>>>>>  로터스 코인 전송 기능 사용안함  <<<<<**//
 	    /*
 	    
