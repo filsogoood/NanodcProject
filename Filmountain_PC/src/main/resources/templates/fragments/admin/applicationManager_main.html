@@ -67,6 +67,7 @@
                                 <th class="sort align-middle ps-0" scope="col" data-sort="name" style="width:10%;">신청자 이름</th>
                                 <th class="sort align-middle pe-3" scope="col" data-sort="tel" style="width:10%;">연락처</th>
                                 <th class="sort align-middle text-start pe-3" scope="col" data-sort="email" style="width:10%; min-width: 200px;">이메일</th>
+                                <th class="sort align-middle text-start pe-3" scope="col" data-sort="level" style="width:5%; min-width: 200px;">직급</th>
                                 <th class="sort align-middle text-start pe-18 " scope="col" data-sort="sp_product" style="width:5%;">신청 상품</th>
                                 <th class="sort align-middle text-start pe-3 " scope="col" data-sort="message" style="width:10%;">메모</th>
                                 <th class="sort align-middle text-end pe-3 " scope="col" data-sort="message" style="width:5%;">심사</th>
@@ -78,6 +79,7 @@
                                 <td th:text="${item.user_name}" class="name align-middle fw-semibold text-body-highlight ps-2"></td>
                                 <td th:text="${item.phone_number}" class="tel align-middle fw-semibold text-body-highlight"></td>
                                 <td th:text="${item.user_email}" class="email align-middle fw-semibold text-body-highlight"></td>
+                                <td th:text="${item.level}" class="level align-middle fw-semibold text-body-highlight"></td>
                                 <td th:text="${item.sp_product}" class="sp_product align-middle fw-semibold text-body-highlight"></td>
                                 <td th:text="${item.message}" class="message align-middle fw-semibold text-body-highlight"></td>
                                  <td class="text-end pe-0">

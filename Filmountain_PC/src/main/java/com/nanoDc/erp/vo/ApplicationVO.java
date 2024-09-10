@@ -12,6 +12,7 @@ public class ApplicationVO {
     private String user_name;
     private String user_email;
     private String phone_number;
+    private String level;
     
 
     // Getters and Setters
@@ -88,6 +89,14 @@ public class ApplicationVO {
 
 	public void setPhone_number(String phone_number) {
 		this.phone_number = phone_number;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
 	}
 
 

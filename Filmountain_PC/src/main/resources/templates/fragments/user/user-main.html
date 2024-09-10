@@ -11,47 +11,36 @@
 		        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9"></span></button>
 		      </div>
 		      <div class="modal-body">
-		        <form>
-		          <div class="mb-3">
-		
-		            <label class="form-label" for="basic-form-email">Email</label>
-		
-		            <input class="form-control" id="basic-form-email" type="email" placeholder="name@example.com" />
-		          </div>
-		          <div class="mb-3">
-		
-		            <label class="form-label" for="level">구분</label>
-		
-		            <select class="form-select" id="level" aria-label="Default select example">
-		              <option selected="selected">구분을 선택하세요.</option>
-		              <option value="총판">총판</option>
-		              <option value="대리점">대리점</option>
-		              <option value="SP">SP</option>
-		            </select>
-		          </div>
-		          
-		          <div class="mb-3">
-		
-		            <label class="form-label" for="spProduct">구매 SP상품</label>
-		
-		            <select class="form-select" id="spProduct" aria-label="Default select example">
-		              <option selected="selected">구매하실 SP상품을 선택하세요.</option>
-		              <option value="nanodc2p">NANODC2P</option>
-		              <option value="nanodc4p">NANODC4P</option>
-		              <option value="nanodc6p">NANODC6P</option>
-		            </select>
-		          </div>
-		          
-		          
-		          <div class="mb-3">
-		
-		            <label class="form-label" for="basic-form-textarea">Description</label>
-		
-		            <textarea class="form-control" id="basic-form-textarea" rows="3" placeholder="Description"></textarea>
-		          </div>
-		
-		          <button class="btn btn-primary" type="submit">Submit</button>
-		        </form>
+		        <form id="purchaseForm">
+					 <input type="hidden" id="userId" name="userId">
+				    <div class="mb-3">
+				        <label class="form-label" for="level">구분</label>
+				        <select class="form-select" id="level" name="level" aria-label="Default select example">
+				            <option selected="selected">구분을 선택하세요.</option>
+				            <option value="총판">총판</option>
+				            <option value="대리점">대리점</option>
+				            <option value="SP">SP</option>
+				        </select>
+				    </div>
+				
+				    <div class="mb-3">
+				        <label class="form-label" for="spProduct">구매 SP상품</label>
+				        <select class="form-select" id="spProduct" name="spProduct" aria-label="Default select example">
+				            <option selected="selected">구매하실 SP상품을 선택하세요.</option>
+				            <option value="NanoDC2p">NANODC2P</option>
+				            <option value="NanoDC4p">NANODC4P</option>
+				            <option value="NanoDC6p">NANODC6P</option>
+				        </select>
+				    </div>
+				
+				    <div class="mb-3">
+				        <label class="form-label" for="basic-form-textarea">Description</label>
+				        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Description"></textarea>
+				    </div>
+				
+				    <button class="btn btn-primary" id="confirm_application"type="submit">Submit</button>
+				</form>
+
 		      </div>
 		      <!--
 		      <div class="modal-footer">
@@ -137,9 +126,12 @@
 				<a class="btn btn-link me-2 p-0 fs-9 text-warning-dark"
 				   th:if="${withLoginOptions}" 
 				   data-bs-toggle="modal" 
-				   data-bs-target="#verticallyCentered">
+				   id="purchaseButton"
+				   data-bs-target="#verticallyCentered"
+				   th:data-user-id="${userInfoVO.user_id}">
 				   구매신청<i class="fa-solid fa-angle-right ms-2"></i>
 				</a>
+
 				
 				<!-- 로그인되지 않은 사용자에게 경고창을 띄우고 로그인 페이지로 이동시키는 버튼 -->
 				<a class="btn btn-link me-2 p-0 fs-9 text-warning-dark"
@@ -164,18 +156,18 @@
               <div class="row gy-10 gx-10">
                 <div class="col-sm-4 text-center">					
                   <p>전체 유동성</p>
-                  <h4 class="mb-2 fs-4" style="font-weight: 800;"id="totalLiquidityAmount" 
+                  <h4 class="mb-2 fs-4 total-fil fil-count" style="font-weight: 800;"id="totalLiquidityAmount" 
 					            th:data-amount="${totalpoolInfo[0].total_liquidity_amount}">0 FIL</h4>
                 </div>
                 <div class="col-sm-4 text-center">					
                   <p>가용중인 유동성</p>
-                  <h4 class="mb-2 fs-4" style="font-weight: 800;"
-                  				th:text="${totalpoolInfo[0] != null ? totalpoolInfo[0].total_liquidity_amount : '0'}">0 FIL</h4>
+                  <h4 class="mb-2 fs-4 total-fil fil-count" style="font-weight: 800;" id="totalLodckedFil"
+                  				th:data-amount="${totalpoolInfo[0].total_locked_fil}">0 FIL</h4>
                 </div>
                 <div class="col-sm-4 text-center">					
                   <p>가용가능한 유동성</p>
-                  <h4 class="mb-2 fs-4" style="font-weight: 800;"id="availableFil" 
-					            th:data-amount="${totalpoolInfo[0].total_liquidity_amount - totalpoolInfo[0].total_locked_fil}">0 FIL</h4>
+                  <h4 class="mb-2 fs-4 total-fil fil-count" style="font-weight: 800;"id="availableFil" 
+								th:data-amount="${totalpoolInfo[0].total_liquidity_amount - totalpoolInfo[0].total_locked_fil}">0 FIL</h4>
                 </div>   
               </div>
               <hr style="width: 20%; margin:50px auto; display: none;" />
@@ -201,7 +193,7 @@
           <div class="row flex-between-center px-xl-11 mb-10 mb-md-9">
             <div class="col-md-6 order-1 order-md-0 text-center text-md-start">
               <h4 class="mb-3">LP(Liquidity Provider)</h4>
-              <p class="mb-5">NANODC POOL에 유동성을 제공하여 SP가 원활하게 데이터를 저장할 수 있도록 돕고 이들은 자산을 유동성 풀에 예치하여 데이터 저장 수수료를 나눠받습니다.</p><a class="btn btn-link me-2 p-0 fs-9 text-warning-dark" href="/Liquidity" role="button"> Join Liquidity<i class="fa-solid fa-angle-right ms-2"></i></a>
+              <p class="mb-5">NANODC POOL에 유동성을 제공하여 SP가 원활하게 데이터를 저장할 수 있도록 돕고 이들은 자산을 유동성 풀에 예치하여 데이터 저장 수수료를 나눠받습니다.</p><a class="btn btn-link me-2 p-0 fs-9 text-warning-dark" href="/Liquidity_Dashboard" role="button"> Join Liquidity<i class="fa-solid fa-angle-right ms-2"></i></a>
             </div>
             <div class="col-md-5 mb-5 mb-md-0 text-center"><img class="w-75 w-md-100 d-dark-none" src="../assets/img/icons/hand-cash-icon.png" alt="손 위에 동전들" /><img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/hand-cash-icon.png" alt="손 위에 동전들" /></div>
           </div>
@@ -213,30 +205,38 @@
     
     <!-- 자바스크립트 경고창 및 리다이렉트 함수 -->
 	<script>
+		
 	    function showLoginAlert() {
 	        alert("로그인이 필요합니다.");  // 경고창 띄우기
 	        window.location.href = "/login";  // 로그인 페이지로 리다이렉트
 	    }
+	
+	    document.addEventListener('DOMContentLoaded', function() {
+            // total_liquidity_amount 처리
+            var totalLiquidityAmountElement = document.getElementById('totalLiquidityAmount');
+            if (totalLiquidityAmountElement) {
+                var totalLiquidityAmount = parseFloat(totalLiquidityAmountElement.getAttribute('data-amount'));
+                totalLiquidityAmount = totalLiquidityAmount === 0 ? '0' : Math.floor(totalLiquidityAmount).toLocaleString();
+                totalLiquidityAmountElement.textContent = totalLiquidityAmount + ' FIL';
+            }
+
+            // total_lodcked_fil 처리 (전체 대여 중인 FIL)
+            var totalLodckedFilElement = document.getElementById('totalLodckedFil');
+            if (totalLodckedFilElement) {
+                var totalLodckedFil = parseFloat(totalLodckedFilElement.getAttribute('data-amount'));
+                totalLodckedFil = totalLodckedFil === 0 ? '0' : Math.floor(totalLodckedFil).toLocaleString();
+                totalLodckedFilElement.textContent = totalLodckedFil + ' FIL';
+            }
+
+            // available_fil 처리 (전체 대여 가능한 FIL)
+            var availableFilElement = document.getElementById('availableFil');
+            if (availableFilElement) {
+                var availableFil = parseFloat(availableFilElement.getAttribute('data-amount'));
+                availableFil = availableFil === 0 ? '0' : Math.floor(availableFil).toLocaleString();
+                availableFilElement.textContent = availableFil + ' FIL';
+            }
+        });
 	</script>
 </main>
-<script>
-	    // total_liquidity_amount 처리
-	    var totalLiquidityAmountElement = document.getElementById('totalLiquidityAmount');
-	    console.log(totalLiquidityAmountElement);
-	    var totalLiquidityAmount = parseFloat(totalLiquidityAmountElement.getAttribute('data-amount'));
-	    totalLiquidityAmount = totalLiquidityAmount === 0 ? '0' : Math.floor(totalLiquidityAmount).toLocaleString();
-	    totalLiquidityAmountElement.textContent = totalLiquidityAmount + ' FIL';
-	
-	    // total_lodcked_fil 처리 (전체 대여 중인 FIL)
-	    var totalLodckedFilElement = document.getElementById('totalLodckedFil');
-	    var totalLodckedFil = parseFloat(totalLodckedFilElement.getAttribute('data-amount'));
-	    totalLodckedFil = totalLodckedFil === 0 ? '0' : Math.floor(totalLodckedFil).toLocaleString();
-	    totalLodckedFilElement.textContent = totalLodckedFil + ' FIL';
-	
-	    // available_fil 처리 (전체 대여 가능한 FIL)
-	    var availableFilElement = document.getElementById('availableFil');
-	    var availableFil = parseFloat(availableFilElement.getAttribute('data-amount'));
-	    availableFil = availableFil === 0 ? '0' : Math.floor(availableFil).toLocaleString();
-	    availableFilElement.textContent = availableFil + ' FIL';
-	</script>
+
 </html>
