@@ -7,14 +7,14 @@
 		  <div class="modal-dialog modal-dialog-centered">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="verticallyCenteredModalLabel">Modal title</h5>
+		        <h5 class="modal-title" id="verticallyCenteredModalLabel">구매신청서</h5>
 		        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9"></span></button>
 		      </div>
 		      <div class="modal-body">
 		        <form>
 		          <div class="mb-3">
 		
-		            <label class="form-label" for="basic-form-email">Email address</label>
+		            <label class="form-label" for="basic-form-email">Email</label>
 		
 		            <input class="form-control" id="basic-form-email" type="email" placeholder="name@example.com" />
 		          </div>
@@ -53,10 +53,12 @@
 		          <button class="btn btn-primary" type="submit">Submit</button>
 		        </form>
 		      </div>
+		      <!--
 		      <div class="modal-footer">
 		        <button class="btn btn-primary" type="button">Okay</button>
 		        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
 		      </div>
+		      -->
 		    </div>
 		  </div>
 		</div>
@@ -131,7 +133,8 @@
             <div class="col-md-6 order-1 order-md-0 text-center text-md-start">
               <h4 class="mb-3">SP(Storage Provider)</h4>
               <p class="mb-5">탈중앙화된 스토리지 제공자로, 서로 분산된 지리적 환경에서 데이터를 나눠 저장하여 사용자들은 데이터가 삭제될 걱정없이 데이터를 저장합니다.</p>
-              <a class="btn btn-link me-2 p-0 fs-9 text-warning-dark" href="#" role="button" id="openModalButton">구매신청<i class="fa-solid fa-angle-right ms-2"></i></a>
+              <a class="btn btn-link me-2 p-0 fs-9 text-warning-dark" data-bs-toggle="modal" data-bs-target="#verticallyCentered">구매신청<i class="fa-solid fa-angle-right ms-2"></i></a>
+              <!-- 새로운 버튼 추가 -->
 
             </div>
             <div class="col-md-5 mb-5 mb-md-0 text-center"><img class="w-75 w-md-100 d-dark-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" /><img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" /></div>
@@ -195,7 +198,9 @@
 		
     </div>
     
-    <script>
+    
+</main>
+<script>
 	    // total_liquidity_amount 처리
 	    var totalLiquidityAmountElement = document.getElementById('totalLiquidityAmount');
 	    console.log(totalLiquidityAmountElement);
@@ -215,30 +220,4 @@
 	    availableFil = availableFil === 0 ? '0' : Math.floor(availableFil).toLocaleString();
 	    availableFilElement.textContent = availableFil + ' FIL';
 	</script>
-	
-	<script>
-		// 모달 제어
-		var modal = new bootstrap.Modal(document.getElementById('verticallyCentered')); 
-        var btn = document.getElementById('openModalButton'); 
-		var span = document.getElementsByClassName("close")[0];
-		
-		// 버튼 클릭 시 모달 열기
-        btn.onclick = function(event) {
-            event.preventDefault();
-            modal.show(); // 모달 표시
-        }
-		
-		// 모달 닫기
-		span.onclick = function() {
-		  modal.style.display = "none";
-		}
-		
-		// 모달 외부 클릭 시 닫기
-		window.onclick = function(event) {
-		  if (event.target == modal) {
-		    modal.style.display = "none";
-		  }
-		}
-	</script>
-</main>
 </html>
