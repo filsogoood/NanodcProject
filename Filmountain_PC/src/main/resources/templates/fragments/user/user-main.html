@@ -134,20 +134,20 @@
               <h4 class="mb-3">SP(Storage Provider)</h4>
               <p class="mb-5">탈중앙화된 스토리지 제공자로, 서로 분산된 지리적 환경에서 데이터를 나눠 저장하여 사용자들은 데이터가 삭제될 걱정없이 데이터를 저장합니다.</p>
               <!-- 로그인된 사용자에게만 모달을 띄우는 버튼 -->
-				<a class="btn btn-link me-2 p-0 fs-9 text-warning-dark"
+				<button class="btn btn-warning me-1 mb-1 btn-lg"
 				   th:if="${withLoginOptions}" 
 				   data-bs-toggle="modal" 
 				   data-bs-target="#verticallyCentered">
 				   구매신청<i class="fa-solid fa-angle-right ms-2"></i>
-				</a>
+				</button>
 				
 				<!-- 로그인되지 않은 사용자에게 경고창을 띄우고 로그인 페이지로 이동시키는 버튼 -->
-				<a class="btn btn-link me-2 p-0 fs-9 text-warning-dark"
+				<button class="btn btn-warning me-1 mb-1 btn-lg"
 				   th:unless="${withLoginOptions}" 
 				   href="javascript:void(0);" 
 				   onclick="showLoginAlert()">
-				   구매신청<i class="fa-solid fa-angle-right ms-2"></i>
-				</a>
+				   구매신청
+				</button>
 
             </div>
             <div class="col-md-5 mb-5 mb-md-0 text-center"><img class="w-75 w-md-100 d-dark-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" /><img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" /></div>
@@ -201,7 +201,8 @@
           <div class="row flex-between-center px-xl-11 mb-10 mb-md-9">
             <div class="col-md-6 order-1 order-md-0 text-center text-md-start">
               <h4 class="mb-3">LP(Liquidity Provider)</h4>
-              <p class="mb-5">NANODC POOL에 유동성을 제공하여 SP가 원활하게 데이터를 저장할 수 있도록 돕고 이들은 자산을 유동성 풀에 예치하여 데이터 저장 수수료를 나눠받습니다.</p><a class="btn btn-link me-2 p-0 fs-9 text-warning-dark" href="/Liquidity" role="button"> Join Liquidity<i class="fa-solid fa-angle-right ms-2"></i></a>
+              <p class="mb-5">NANODC POOL에 유동성을 제공하여 SP가 원활하게 데이터를 저장할 수 있도록 돕고 이들은 자산을 유동성 풀에 예치하여 데이터 저장 수수료를 나눠받습니다.</p>
+              <a href="/Liquidity" role="button"> <button class="btn btn-warning me-1 mb-1 btn-lg">Join Liquidity</button></a>
             </div>
             <div class="col-md-5 mb-5 mb-md-0 text-center"><img class="w-75 w-md-100 d-dark-none" src="../assets/img/icons/hand-cash-icon.png" alt="손 위에 동전들" /><img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/hand-cash-icon.png" alt="손 위에 동전들" /></div>
           </div>
