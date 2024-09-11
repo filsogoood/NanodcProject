@@ -1,11 +1,11 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KakaoTalk 전자서명</title>
     <link rel="stylesheet" href="../../../assets/css/kakao_contract_sign.css">
-   <script src="/user/js/kakao_cert/verify.js" defer></script>
     <script src="/user/js/kakao_cert/sign.js" defer></script>
     
     
@@ -22,7 +22,7 @@
                 <input type="text" name="hp" placeholder="휴대전화번호(예:01012345678)" required>
                 <input type="text" name="birthday" placeholder="생년월일(예:20190424)" required>
                 <button type="submit" id="submitButton" class="cert-button">확인</button>
-                <button type="button" class="cert-button" onclick="goBack()">뒤로가기</button>
+                <button type="button" id="backButton" class="cert-button" onclick="goBack()">뒤로가기</button>
             </form>
         </div>
     </div>

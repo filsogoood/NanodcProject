@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import com.barocert.BarocertException;
 import com.nanoDc.erp.mapper.AgreementMapper;
 import com.nanoDc.erp.service.KakaoAgreementService;
@@ -33,9 +33,11 @@ public class KakaocertServiceController {
     private AgreementMapper agreementMapper;
 
     @GetMapping("/kakaocert/signForm")
-    public String showSignForm(HttpServletRequest request, HttpSession session, Model model) {
-        if (!userService.checkSession(request)) {
-            return "redirect:/login";
+    public ModelAndView showSignForm(HttpServletRequest request, HttpSession session, Model model) {
+    	ModelAndView mav = new ModelAndView();
+    	if(!userService.checkSession(request)) {
+        	mav.setViewName("redirect:/login");
+            return mav;
         }
 
 /*        Boolean signInitiated = (Boolean) session.getAttribute("signInitiated");
@@ -48,11 +50,13 @@ public class KakaocertServiceController {
             boolean isVerified = kakaoAgreementService.isUserVerified(loginVO.getUserInfoVO().getUser_id());
             if (isVerified) {
                 model.addAttribute("message", "이미 서명하셨습니다.");
-                return "redirect:/myAgreement";
+                mav.setViewName("redirect:/myAgreement");
+                return mav;
             }
         }
-
-        return "/views/user/kakao_contract_sign";
+        mav.setViewName("views/user/kakao_contract_sign");
+        
+        return mav;
     }
 
     @PostMapping("/kakaocert/requestSign")
@@ -91,13 +95,17 @@ public class KakaocertServiceController {
     }
 
     @GetMapping("/kakaocert/confirmAuthStatus")
-    public String showConfirmationPage(@RequestParam("receiptID") String receiptID, HttpServletRequest request,
+    public ModelAndView showConfirmationPage(@RequestParam("receiptID") String receiptID, HttpServletRequest request,
             Model model) {
-        if (!userService.checkSession(request)) {
-            return "redirect:/login";
+    	ModelAndView mav = new ModelAndView();
+    	if(!userService.checkSession(request)) {
+        	mav.setViewName("redirect:/login");
+            return mav;
         }
         model.addAttribute("receiptID", receiptID);
-        return "/views/user/kakao_confirm";
+        mav.setViewName("views/user/kakao_confirm");
+        
+        return mav;
     }
 
     @PostMapping("/kakaocert/confirmAuthStatus")
