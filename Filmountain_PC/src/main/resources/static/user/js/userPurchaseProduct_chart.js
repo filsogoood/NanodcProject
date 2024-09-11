@@ -63,10 +63,10 @@
     $investmentChartList.forEach($investmentChart => {
       const userOptions = getData($investmentChart, 'options');
       const chart = echarts.init($investmentChart);
-      const investmentChartParent = $investmentChart.closest('#investmentChartParent');
+      const investmentCard = $investmentChart.closest('.card-body');
       
-      let hw_invest_fil = parseFloat(investmentChartParent.querySelector('#hw_invest_fil').textContent.replace(/[^0-9.-]+/g,""));
-      let total_budget_fil = parseFloat(investmentChartParent.querySelector('#total_budget_fil').textContent.replace(/[^0-9.-]+/g,""));
+      const hw_invest_fil = parseFloat(investmentCard.querySelector('#hw_invest_fil').textContent.replace(/[^0-9.-]+/g,"")) || 0;
+      const total_budget_fil = parseFloat(investmentCard.querySelector('#total_budget_fil').textContent.replace(/[^0-9.-]+/g,"")) || 0;
 
       const getDefaultOptions = () => ({
         color: [

@@ -11,12 +11,15 @@
         
         <!--<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-9" style="gap: 10px;">-->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-2 g-3 mb-9" style="gap: 2%;">
-			<div class="card" th:each="investment, iterStat : ${investmentList}">
+			<div class="card" style="padding:0;" th:each="investment, iterStat : ${investmentList}">
 		  <div class="row g-0">
-		    <div class="col-md-4">
+		    <div class="col-md-6">
+			<!--
 		      <img class="img-fluid h-100 rounded-start" th:if="${iterStat.index == 0}" th:src="'/uploads/'+${investment.picture_url}" alt="..." />
+		    -->
+		      <img class="img-fluid h-100 rounded-start" src="../assets/img/thumb/goyang01.jpg" alt="..." />
 		    </div>
-		    <div class="col-md-8">
+		    <div class="col-md-6">
 		      <div class="card-body">
 		        <h4 class="card-title" th:text="${investment.hw_product_name}"></h4>
 		        <p class="card-text" th:each="detail : ${product_detail}" th:if="${detail.hw_product_id == investment.hw_product_id}" th:utext="${detail.details}"></p>
