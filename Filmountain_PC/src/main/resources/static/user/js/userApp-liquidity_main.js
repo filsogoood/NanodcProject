@@ -18,8 +18,8 @@ $(document).ready(function() {
 
   const d = b * c; // 총 투자 금액
   const e = safeParseFloat($('#reward').text()); // 수익 (FIL)
-  const stub = safeParseFloat($('#staking-amount').text());
-
+  const locked_fil = safeParseFloat($('#locked_amount').text());
+  const stub = safeParseFloat($('#staking-amount').text()) - locked_fil ;
   const f = (c !== 0) ? (e / c) * 100 : 0; // 수익비율
   const g = d + (e * a); // 총 자산
   const avg = (c !== 0) ? g / c : 0; // 평균단가
@@ -32,7 +32,8 @@ $(document).ready(function() {
   $('#total-cash').text(Math.round(d).toLocaleString() + '원');
   $('#staking-amount').text(Math.round(zfil).toLocaleString() + ' FIL');
   $('#unstake-amount').text(Math.round(stub).toLocaleString() + ' FIL');
-  $('#zfil_amount').text(Math.round(zfil).toLocaleString() + ' zFIL');
+  $('#locked_amount').text(Math.round(locked_fil).toLocaleString() + ' FIL');
+  $('#zfil_amount').text(Math.round(zfil).toLocaleString() + ' FIL');
 
   if (e === 0) { 
     $('#reward').text('0 FIL');

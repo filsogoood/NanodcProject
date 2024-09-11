@@ -147,7 +147,7 @@ $(document).ready(function() {
 		        // Send the PDF to the server via AJAX
 		        $.ajax({
 		            type: 'POST',
-		            url: '/user/updateContract',
+		            url: '/updateContract',
 		            data: formData,
 		            processData: false,
 		            contentType: false,
@@ -196,7 +196,7 @@ $(document).ready(function() {
 			            //계약서 다운로드 링크
 	    $('#downloadContractButton').on('click', function() {
 	        
-	        var url = `https://app.nanodc.info/docs/${UserId}_contract.pdf`;
+	        var url = `https://service.nanodc.info/docs/${UserId}_contract.pdf`;
 	        console.log(url);
 	        window.location.href = url;
 	        });
@@ -211,7 +211,7 @@ $(document).ready(function() {
     signButton.addEventListener('click', () => {
         if (isVerified) {
             alert('이미 서명하셨습니다.');
-            window.location.href = '/user/agreement';
+            window.location.href = '/myAgreement';
         } else {
             window.location.href = '/kakaocert/signForm';
         }

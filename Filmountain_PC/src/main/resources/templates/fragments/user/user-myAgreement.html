@@ -29,7 +29,6 @@
 			<div class="container mt-5">
 				<div class="col-auto">
 					<h2 class="mb-3">계약 현황</h2>
-					<button class="btn btn-warning w-100 mb-3">전자계약서 작성하기</button>
 					<div class="form-group mb-3">
 						<label for="process" class="form-label fs-8">진행현황</label>
 						<div class="table-responsive">
@@ -38,15 +37,11 @@
 									<tr th:each="agreement : ${agreements}">
 										<td class="step" data-step="1">
 											<span class="step-label">전자서명 진행중<i data-feather="check" class="check-icon"></i></span>
-											<a th:if="${agreement.process == '전자서명 진행중'}" th:href="@{/user/contract}" class="button-inline">전자서명 하기</a>
-											<a th:if="${agreement.process != '전자서명 진행중'}" th:href="@{'https://app.nanodc.info/docs/' + ${agreement.user_id} + '_contract.pdf'}" class="button-inline">계약서 PDF 다운로드</a>
+											<a th:if="${agreement.process == '전자서명 진행중'}" th:href="@{/contract}" class="button-inline">전자계약서 작성</a>
+											<a th:if="${agreement.process != '전자서명 진행중'}" th:href="@{'https://service.nanodc.info/docs/' + ${agreement.user_id} + '_contract.pdf'}" class="button-inline">계약서 PDF 다운로드</a>
 										</td>
 									</tr>
-									<tr>
-										<td class="step" data-step="2">
-											<span class="step-label">계약서 검토중<i data-feather="check" class="check-icon"></i></span>
-										</td>
-									</tr>
+									
 									<tr>
 										<td class="step" data-step="3">
 											<span class="step-label">계약금 입금 확인중<i data-feather="check" class="check-icon"></i></span>

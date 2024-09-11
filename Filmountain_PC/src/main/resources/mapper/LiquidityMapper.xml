@@ -81,7 +81,7 @@
 	</select>
 	
 	<select id="selectLiquidityInfotxByUser" parameterType="integer" resultType="com.nanoDc.erp.vo.LiquidityVO">
-		  	SELECT Liquidity_info.lq_info_id, Liquidity_info.liquidity_amount, Liquidity_info.user_id, Liquidity_info.withdraw_amount, Liquidity_info.wallet_id, Liquidity_info.reg_date, Liquidity_info.total_reward,wallet.f4_address
+		  	SELECT Liquidity_info.lq_info_id, Liquidity_info.liquidity_amount, Liquidity_info.user_id, Liquidity_info.withdraw_amount, Liquidity_info.wallet_id, Liquidity_info.reg_date, Liquidity_info.total_reward,wallet.f4_address,Liquidity_info.locked_fil
 			FROM Liquidity_info Liquidity_info
 			inner join wallet wallet on wallet.wallet_id = Liquidity_info.wallet_id
 			WHERE Liquidity_info.user_id =#{user_id}

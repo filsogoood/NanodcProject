@@ -4,10 +4,9 @@
 <mapper namespace="com.nanoDc.erp.mapper.WalletMapper">
 	<update id="addspWallet" parameterType="com.nanoDc.erp.vo.WalletVO">
 	    UPDATE nanodc.wallet
-	    SET sp_address = #{sp_address}, 
-	        status = 'active', 
-	        reg_date = now()
-	    WHERE user_id = #{user_id};
+		    SET sp_address = #{sp_address}, 
+		        reg_date = now()
+		    WHERE user_id = #{user_id};
 	</update>
 	
 	

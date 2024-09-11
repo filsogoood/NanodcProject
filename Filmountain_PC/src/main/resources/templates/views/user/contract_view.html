@@ -83,10 +83,11 @@
                         <th colspan="1">계약내역</th>
                         <td colspan="1">NANODC 시스템 구매 및 관리 기본계약</td>
                     </tr>
-                    <tr>
-                        <th colspan="1">구매상품</th>
-                        <td colspan="1"><mark>NANODC4P</mark></td>
-                    </tr>
+                    <tr th:each="agreement : ${agreements}">
+					    <th colspan="1">구매상품</th>
+					    <td colspan="1"><mark th:text="${agreement.sp_product}">NANODC4P</mark></td>
+					</tr>
+
                     <tr>
                         <th colspan="1">상품내역</th>
                         <td colspan="1">

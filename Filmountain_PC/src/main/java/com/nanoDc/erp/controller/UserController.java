@@ -241,33 +241,7 @@ public class UserController {
 		        return "redirect:/login";
 		    }
 		 
-		//유저 웹 계약서 페이지
-				 @GetMapping(value={"/agreement"})
-				 public ModelAndView agreement(HttpServletRequest request) {
-				     ModelAndView mav = new ModelAndView();
-				     HttpSession session = request.getSession();
-				     if (!userService.checkSession(request)) {
-				         mav.setViewName("redirect:/user/Weblogin");
-				         return mav;
-				     }
-				     
-				     LoginVO loginVO = (LoginVO) session.getAttribute("user");
-				     if ("계약완료".equals(loginVO.getUserInfoVO().getContract_status())) {
-				    	 mav.setViewName("redirect:/home");
-				        }
-				     if (loginVO != null && loginVO.getUserInfoVO() != null) {
-				         int userId = loginVO.getUserInfoVO().getUser_id();
-				         List<AgreementVO> agreements = userService.getAgreementsByUserId(userId);
-				         mav.addObject("loginVO", loginVO);
-				         mav.addObject("agreements", agreements);
-				     } else {
-				         mav.setViewName("redirect:/user/Weblogin");
-				         return mav;
-				     }
-				     
-				     mav.setViewName("views/user/user_agreement");
-				     return mav;
-				 }
+		
 				 
 		
 		 //유저앱 버튼 홈 페이지
@@ -348,6 +322,9 @@ public class UserController {
 			                
 			                // 필요한 경우 예외 처리
 			            }
+		        	int userId = loginVO.getUserInfoVO().getUser_id();
+			        List<AgreementVO> agreements = userService.getAgreementsByUserId(userId);
+			        mav.addObject("agreements", agreements);
 		            mav.addObject("withLoginOptions", true);
 		            mav.addObject("userInfoVO", userInfoVO);
 		            mav.addObject("loginVO", loginVO);

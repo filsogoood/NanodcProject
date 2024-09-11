@@ -130,7 +130,7 @@
 	</update>
 	<update id="updateAuthStatus" parameterType="map">
 				UPDATE agreement_process
-				SET auth_status = #{auth_status}
+				SET auth_status = #{auth_status}, process = "계약금 입금 확인중"
 				WHERE user_id = #{user_id}
 	    </update>
 

@@ -71,7 +71,7 @@
 		    COALESCE(SUM(invest.hw_invest_fil), 0) AS total_investment_fil,
 		    (SELECT SUM(hrsd.reward_fil) from hw_reward_sharing_detail hrsd WHERE hrsd.user_id=user.user_id GROUP BY hrsd.user_id) as total_reward_fil,
 		    (SELECT SUM(transaction.fil_amount) from transaction transaction WHERE transaction.status='출금신청' AND transaction.user_id=user.user_id GROUP BY transaction.user_id) as processed_fil,
-		    (SELECT SUM(transaction.fil_amount) from transaction transaction WHERE transaction.status='출금완료' AND transaction.user_id=user.user_id GROUP BY transaction.user_id) as paid_fil
+		    (SELECT SUM(transaction.fil_amount) from transaction transaction WHERE transaction.status='출금승인' AND transaction.user_id=user.user_id GROUP BY transaction.user_id) as paid_fil
 		FROM
 		    user_info user
 		LEFT JOIN
