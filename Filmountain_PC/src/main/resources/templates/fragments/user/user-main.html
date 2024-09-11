@@ -153,22 +153,31 @@
 			  <h1 class="text-center mb-6">FIL 보유 및 대출 현황</h1>
               <hr style="width: 20%; margin:50px auto;"/>
               <div class="row gy-10 gx-10">
-                <div class="col-sm-4 text-center">					
+                <div class="col-sm-2 text-center">					
                   <p>전체 유동성</p>
                   <h4 class="mb-2 fs-4 total-fil fil-count" style="font-weight: 800;"id="totalLiquidityAmount" 
 					            th:data-amount="${totalpoolInfo[0].total_liquidity_amount}">0 FIL</h4>
                 </div>
-                <div class="col-sm-4 text-center">					
+                <div class="col-sm-2 text-center">					
                   <p>가용중인 유동성</p>
                   <h4 class="mb-2 fs-4 total-fil fil-count" style="font-weight: 800;" id="totalLodckedFil"
                   				th:data-amount="${totalpoolInfo[0].total_locked_fil}">0 FIL</h4>
                 </div>
-                <div class="col-sm-4 text-center">					
+                <div class="col-sm-2 text-center">					
                   <p>가용가능한 유동성</p>
                   <h4 class="mb-2 fs-4 total-fil fil-count" style="font-weight: 800;"id="availableFil" 
 								th:data-amount="${totalpoolInfo[0].total_liquidity_amount - totalpoolInfo[0].total_locked_fil}">0 FIL</h4>
                 </div>   
+                <div class="col-sm-2 col-md-4 col-xxl-4 my-3 my-sm-0">
+	                <div class="position-relative d-flex flex-center mb-sm-4 mb-xl-0 echart-fil-balance-status-container mt-sm-7 mt-lg-4 mt-xl-0">
+	                  <div class="echart-fil-balance-status" style="min-height:245px; width:100%;"></div>
+	                  <div class="position-absolute rounded-circle bg-primary-subtle top-50 start-50 translate-middle d-flex flex-center" style="height:100px; width:100px;">
+	                    <h3 class="mb-0 text-primary-dark fw-bolder" data-label="data-label">455</h3>
+	                  </div>
+	                </div>
+	              </div>
               </div>
+              
               <hr style="width: 20%; margin:50px auto; display: none;" />
               <div class="row gy-10 gx-10"  style="display: none;">
                 <div class="col-sm-6 text-center">					
