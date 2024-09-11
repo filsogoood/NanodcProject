@@ -35,6 +35,7 @@ $(document).ready(function() {
         firstPayment = $(this).data('first-payment');
         secondPayment = $(this).data('second-payment');
         lastPayment = $(this).data('last-payment');
+        console.log(formatNumberWithCommas(supplyPrice));
 
         // 폼 필드에 값 설정
         $('#system_location').val(systemLocation);
@@ -103,9 +104,10 @@ $(document).ready(function() {
 
     $('#update_agreement_confirm').on('click', function() {
 				
-				if(finalPayment+secondPayment+lastPayment != finalPayment ){
-										$('#success_alert_title').text('계약금액 총합이 안맞습니다.');
-										$("#success_alert").modal('show');	 
+				if (firstPayment + secondPayment + lastPayment !== finalPayment) {
+					$('#fail_alert_title').text('금액 총합이 맞지 않습니다.');  // 모달 제목 업데이트
+					$("#fail_alert").modal('show');
+		    	return;
 				}
 		       
 
@@ -193,54 +195,51 @@ $(document).ready(function() {
         
         
         $('#update_properties').on('click', function() {
-				if(finalPayment+secondPayment+lastPayment != finalPayment ){
-										$('#success_alert_title').text('계약금액 총합이 안맞습니다.');
-										$("#success_alert").modal('show');	 
-				}
-        					
-		        var formData = new FormData();	
-		        
-			 
-					 formData.append('agreementVO', new Blob([JSON.stringify({
-				            user_id: UserId,
-				            system_location: $('#system_location').val() || null,
-            				final_payment: removeCommasFromNumber($('#final_payment').val()) || null, // 콤마 제거 및 null 처리
-            				supply_discount_price: $('#supply_discount_price').val() || null, // null 처리
-            				supply_price: removeCommasFromNumber($('#supply_price').val()) || null, // 콤마 제거 및 null 처리
-				            first_payment: removeCommasFromNumber($('#first_payment').val()) || null ,
-		            		second_payment: removeCommasFromNumber($('#second_payment').val()) || null ,
-		            		last_payment: removeCommasFromNumber($('#last_payment').val()) || null 
-				            
-				            // 필요한 다른 필드들을 추가
-				        })], {
-				            type: "application/json"
-				        }));
-					 $.ajax({
-                    type: 'POST',
-                    url: '/admin/agreementUpdate',
-                    data: formData,
-		            processData: false,
-		            contentType: false,
-                    success: function(data) {
-                               $("#detail_product_modal").modal('hide');	 
-									if(data=='success'){
-										$('#success_alert').modal('show');
-			                        }
-			                        else if(data='failed:session_closed'){
-										$('#fail_alert_title').text('로그인을 다시해 주십시오.');
-										$("#fail_alert").modal('show');	 	
-									}
-			                        else{
-										$('#fail_alert_title').text('업데이트 실패');
-										$("#fail_alert").modal('show');	 
-									}
-                            },
-                    error: function(error) {
-                        // 요청에 실패했을 때 수행할 동작
-                        console.error('승인 요청 실패:', error);
-                    },   
-                });
-                });
+        firstPayment = removeCommasFromNumber($('#first_payment').val());
+        secondPayment = removeCommasFromNumber($('#second_payment').val());
+        lastPayment = removeCommasFromNumber($('#last_payment').val());
+        finalPayment = removeCommasFromNumber($('#final_payment').val());
+
+        if (parseInt(firstPayment) + parseInt(secondPayment) + parseInt(lastPayment) != parseInt(finalPayment)) {
+		    debugger;
+		    $('#fail_alert_title').text('금액 총합이 맞지 않습니다.');  // 모달 제목 업데이트
+		    $("#fail_alert").modal('show');
+		    return;
+		}
+
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/admin/agreementUpdate',
+            contentType: "application/json",
+            data: JSON.stringify({
+                user_id: UserId,
+                system_location: $('#system_location').val() || null,
+                final_payment: finalPayment || null,
+                supply_discount_price: $('#supply_discount_price').val() || null,
+                supply_price: removeCommasFromNumber($('#supply_price').val()) || null,
+                first_payment: firstPayment || null,
+                second_payment: secondPayment || null,
+                last_payment: lastPayment || null
+            }),
+            success: function(data) {
+                $("#detail_product_modal").modal('hide');
+                if (data === 'success') {
+                    $('#success_alert').modal('show');
+                } else if (data === 'failed:session_closed') {
+                    $('#fail_alert_title').text('로그인을 다시 해 주십시오.');
+                    $("#fail_alert").modal('show');
+                } else {
+                    $('#fail_alert_title').text('업데이트 실패');
+                    $("#fail_alert").modal('show');
+                }
+            },
+            error: function(error) {
+                console.error('요청 실패:', error);
+            }
+        });
+    });
                 
                 
     $('#receipt_update').on('click', function() {

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NanoDC</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/filmountain/nanoDC_icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/filmountain/nanoDC_icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/img/filmountain/nanoDC_icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../assets/img/filmountain/nanoDC_icon.png">
+    <link rel="manifest" href="../../../assets/img/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="../../../assets/img/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
+    <script src="../../../vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="../../../vendors/simplebar/simplebar.min.js"></script>
+    <script src="../../../assets/js/config.js"></script>
+    <link rel="stylesheet" href="/assets/css/contract.css">
+    <script src="/vendors/jquery/jquery.min.js"></script>
+    <script src="/vendors/jquery-easing/jquery.easing.min.js"></script> 
+    <script src="/user/js/user_Contract.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="/vendors/bootstrap/bootstrap.min.js"></script>
+    
+</head>
+
+<body>
+	
+    <section>
+        <div class="content-wrapper" id="sec01-content-wrapper">
+            <div class="contract-number">
+                <p><mark>계약번호 <span th:text="${currentDate}"></span>A</mark></p>
+            </div>
+            <div class="title">
+                <p class="title-txt">나노데이터센터 구매 및 관리 계약서</p>
+                <span class="title-txt">구매 상품</span>
+				<span th:each="agreement : ${agreements}">
+                    <mark>
+                        <img th:src="@{/assets/img/contract_img/nanodc4p.png}" 
+                             th:if="${agreement.sp_product == 'NanoDC4p'}" 
+                             alt="나노디씨4P 로고" />
+                        <img th:src="@{/assets/img/contract_img/nanodc2p.png}" 
+                             th:if="${agreement.sp_product == 'NanoDC2p'}" 
+                             alt="나노디씨2P 로고" />
+                        <img th:src="@{/assets/img/contract_img/nanodc60.png}" 
+                             th:if="${agreement.sp_product == 'NanoDC6p'}" 
+                             alt="나노디씨6P 로고" />
+                    </mark>
+                </span>
+            </div>
+            <div class="date">
+                 <p><mark><span th:text="${formattedDate}"></span></mark></p>
+            </div>
+            <div class="contractor">
+                <p><mark>계약자 <span class="contractor-name" th:text="${loginVO.userInfoVO.user_name}"></span></mark></p>
+                <input type="hidden" id="user-id" th:value="${loginVO.userInfoVO.user_id}" />
+                <img src="/assets/img/contract_img/zetacube_logo.png">
+            </div>
+        </div>
+    </section>
+    <section>
+        
+        <div class="content-wrapper" id="sec02-content-wrapper">
+            <div class="header-line">
+                <img src="/assets/img/contract_img/zetacube_logo2.png">
+                <hr />
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th colspan="2" class="title">NANODC 시스템 구매 및 관리 계약서</th>
+                    </tr>
+                    <tr>
+                        <th colspan="1">계 약 자</th>
+                         <td>
+                            <mark>
+                                상호:<input type="text" class="form-control dynamic-width"  value="" placeholder="상호명"><br />
+                                주소: <input type="text" class="form-control dynamic-width"  value="" placeholder="회사 주소 또는 개인 주소"><br />
+                                성명: <span class="contractor-name" th:text="${loginVO.userInfoVO.user_name}"></span>
+                            </mark>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="1">계약내역</th>
+                        <td colspan="1">NANODC 시스템 구매 및 관리 기본계약</td>
+                    </tr>
+                    <tr>
+                        <th colspan="1">구매상품</th>
+                        <td colspan="1"><mark>NANODC4P</mark></td>
+                    </tr>
+                    <tr>
+                        <th colspan="1">상품내역</th>
+                        <td colspan="1">
+							 주소: <input type="text" class="form-control dynamic-width"  value="" placeholder="설치 예정 주소">
+						<mark th:each="agreement : ${agreements}">
+						    <br>
+						    15평 칸막이 및 사인월 공사<br>
+						    3상 전기 인입 공사<br>
+						    얼굴 인식 출입 보안 시스템 모니터링용 CCTV 시스템 NANODC 서버렉<br>
+						    UPS 20KW와 배터리 40개<br>
+						    10Gb 네트워크장비와 광케이블 및 광 모듈 12세트<br>
+						    <!-- 조건부로 NAS 스토리지를 표시 -->
+						    <span th:if="${agreement.product == 'NanoDC2p'}">
+						        2PiB (페타바이트) NAS 스토리지<br>
+						    </span>
+						    <span th:if="${agreement.product == 'NanoDC4p'}">
+						        4PiB (페타바이트) NAS 스토리지<br>
+						    </span>
+						    <span th:if="${agreement.product == 'NanoDC6p'}">
+						        6PiB (페타바이트) NAS 스토리지<br>
+						    </span>
+						    실링용 워커 장비
+						</mark>
+						                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="1">계약기간</th>
+                        <td colspan="1"><mark><span th:text="${formattedDate}" id="start-date"></span></mark>
+                        <mark> ~ </mark>
+                        <mark><span id="end-date"></span></mark>
+                        </td>
+                    </tr>
+                    <tr class="contract-footer">
+                        <td colspan="2">
+                            <p>본 계약의 체결 사실을 증명하기 위해 계약서 2통을 작성하여 각각 그 적법한<br>대표자가 서명 날인한 후 각 1통씩을 보관하기로 한다.</p>
+                            <img src="/assets/img/contract_img/company-seal.png" alt="직인" />
+                            <p class="contract-date" th:text="${formattedDate}"><mark></mark></p>
+                            <p class="signatory">주식회사 제타큐브 대표이사 이 부 연</p>
+                            <p>주소: 경기도 부천시 소사구 양지로 237 광양프런티어밸리 5차 지식산업센터 1079호<br>전화: 02-1644-3096 팩스: 02-2088-4655 e-Mail : allen@zetacube.net</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="footer-line">
+                <hr />
+                <p>2</p>
+                <img src="/assets/img/contract_img/nanodc-logo.png">
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="content-wrapper" id="sec03-content-wrapper">        
+            <div class="header-line">
+                <img src="/assets/img/contract_img/zetacube_logo2.png">
+                <hr />
+            </div>
+            <div class="contract-content-wrapper">
+                <div class="title">
+                    <p>NANODC 시스템 구매 및 관리 계약서</p>
+                </div>
+                <div class="contract-content">
+                    <p>  <input type="text" class="form-control dynamic-width"  value="" placeholder="상호 또는 성명">(이하 "구매자"라 한다)와 주식회사 제타큐브 (이하 "관리자"라 한다)은 양사의 공동의 사업 기획에 따라 <input type="text" class="form-control dynamic-width"  value="" placeholder="설치 예정 주소">에 설치되어 운영 할 예정인 NANODC 시스템 (초소형 FILECOIN 데이터센 터 시스템 이하 “시스템”이라 한다)을 구매/유지/관리함에 있어 다음과 같은 조건으로 제품 구매 및 “시스템” 유지 관리 계약서를 체결한다.</p>
+                    <div class="content">
+                        <p class="contract-terms">제 1 조 [계약의 목적]</p>
+                        <p>&nbsp;&nbsp;본 계약은 “구매자”가 “관리자”를 통해 공급하여 “관리자”가 관리하며 운영하는 “시스템”에 대한 구매 조건과 유지관리 내용의 정의와 “구매자”와 “관리자” 간의 수익배분에 관한 제반 사항을 규정하는 것을 목적으로 한다.</p>
+                    </div>
+                    
+                    <div class="content">
+                        <p class="contract-terms">제 2 조 [계약기간]</p>
+                        <p>&nbsp;&nbsp;본 계약의 기간은 계약의 체결일로부터 72개월 까지로 한다. 단, “발주자”와 “공급사”는 계약 만료 후에도 상호 협의를 통해 구체적인 조건을 정하여 본 계약을 갱신할 수 있다. 또한 계약 기간 만료 후에도 스토리지 보상기간이 남은 경우 해당 보상이 완료될 때까지 계약은 자동 연장 된다.</p>
+                    </div>
+                    
+                    <div class="content">
+                        <p class="contract-terms">제 3 조 [관리 대상 시스템 정의]</p>
+                        <p>&nbsp;&nbsp;① 본 계약에서 관리의 대상이 되는 “구매자”가 “관리사”에게 발주한 시스템은 아래와 같다.<br />
+
+                            &nbsp;&nbsp;<mark>상 품 명 : <span th:text="${agreements[0].product}"></span></mark><br />
+                            
+                            &nbsp;&nbsp;시스템 구성 : <mark th:each="agreement : ${agreements}"><span th:text="${agreements[0].system_location}"></span><br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;칸막이 및 사인월 공사<br />
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3상 전기 인입 공사<br />
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;얼굴 인식 출입 보안 시스템 모니터링용 CCTV 시스템 NANODC 서버렉<br />
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UPS 20KW와 배터리 40개<br />
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10Gb 네트워크장비와 광케이블 및 광 모듈 12세트<br />
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span th:if="${agreement.product == 'NanoDC2p'}">
+						        2PiB (페타바이트) NAS 스토리지<br>
+						    </span>
+						    <span th:if="${agreement.product == 'NanoDC4p'}">
+						        4PiB (페타바이트) NAS 스토리지<br>
+						    </span>
+						    <span th:if="${agreement.product == 'NanoDC6p'}">
+						        6PiB (페타바이트) NAS 스토리지<br>
+						    </span>
+                            </mark>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="footer-line">
+                <hr />
+                <p>3</p>
+                <img src="/assets/img/contract_img/nanodc-logo.png">
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <div class="content-wrapper" id="sec04-content-wrapper">        
+            <div class="header-line">
+                <img src="/assets/img/contract_img/zetacube_logo2.png">
+                <hr />
+            </div>
+            <div class="contract-content-wrapper">
+                <div class="contract-content">
+                    <div class="content">
+                        <p>                            
+                            &nbsp;&nbsp;② “시스템”의 세부 구성은 “시스템” 의 운영상황에 따라 변경 될 수 있다.<br />
+                            
+                            &nbsp;&nbsp;③ “시스템”의 운영 중 언실드 데이터 등의 이유로 스토리지 용량 증설이 요구될 시에는 “구매자”와 “관리자”가 추 후 협의하여 “구매자” 가 추가 구매한다.<br />
+                            
+                            &nbsp;&nbsp;④ 에어컨, 전기증설 등 “시스템”의 운영에 필요한 추가적인 시설이 필요할 경우는 ”구매자”가 판단하여 추가 설치한다.<br />
+                        </p>
+                    </div>                    
+                    
+                    <div class="content">
+                        <p class="contract-terms">제 4 조 [시스템 구매 비용]</p>
+  					  <p>&nbsp;&nbsp;① 공급 가격 : 부가세 별도 <mark><span id="supply-price" th:text="${agreements[0].supply_price}"></span></mark><br />&nbsp;&nbsp;② 할인 가격 적용 : <mark><span th:text="${agreements[0].supply_discount_price}"></span>% 할인 적용 부가세 별도 <span id="final-payment" th:text="${agreements[0].final_payment}"></span></mark></p>
+  						</div>
+                    
+                    <div class="content">
+                        <p class="contract-terms">제 5 조 [시스템 구매 비용 지급 일정]</p>
+                        <p>
+                            &nbsp;&nbsp;본 시스템의 구매 비용은 아래와 같은 일정으로 “구매자”가 “관리자” 에게 지급하기로 한다.<br /><br />
+                            
+                            &nbsp;&nbsp;① 계약금 : 계약 체결 시 <mark><span id="first_payment" th:text="${agreements[0].first_payment}"></span></mark> (부가세 별도)<br />
+                            &nbsp;&nbsp;② 중도금 : 계약 체결 후 15일 이내 <mark><span id="second_payment" th:text="${agreements[0].second_payment}"></span></mark> (부가세 별도)<br />
+                            &nbsp;&nbsp;③ 잔 금 : 계약 후 30일 이내 “시스템” 설치 확인 후<mark><span id="last_payment" th:text="${agreements[0].last_payment}"></span></mark> (부가세 별도)<br />
+                        </p>
+                    </div>                    
+                    
+                    <div class="content">
+                        <p class="contract-terms">제 6 조 [“시스템” 공급 일정]</p>
+                        <p>                        
+                            &nbsp;&nbsp;① “관리자”는 “시스템”의 제반 공사 및 설치를 본 계약체결 후 30일 이내에 완료 하여야 한다.<br />
+                            &nbsp;&nbsp;② 예정된 30일 기한보다 “시스템”의 공급이 늦어질 경우 “관리자”는 “구매자”에게 계약 총액의 1/1000의 금액을 지체일수데로 지급한다.<br />
+                            &nbsp;&nbsp;③ 천재지변, 전쟁, 공급사 납품 지연 등의 불가항력적 상황에 의해 “시스템”의 공급일정 이 변경될 경우 “관리자”는 “구매자”에게 사전 통보하고 합의하여 일정을 조율할 수 있다.<br />
+
+                        </p>
+                    </div>
+                    
+                    <div class="content">
+                        <p class="contract-terms">제 7 조 [공급 후 수익 발생 일정]</p>
+                        <p>                        
+                            &nbsp;&nbsp;① “시스템”의 설치 후 30일 이내에 수익 발생이 시작 되며 증가된다.<br />
+                            &nbsp;&nbsp;② 모든 수익은 네트워크의 운영 상황에 의해 변동된다.<br />
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="footer-line">
+                <hr />
+                <p>4</p>
+                <img src="/assets/img/contract_img/nanodc-logo.png">
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <div class="content-wrapper" id="sec05-content-wrapper">        
+            <div class="header-line">
+                <img src="/assets/img/contract_img/zetacube_logo2.png">
+                <hr />
+            </div>
+            <div class="contract-content-wrapper">
+                <div class="contract-content">
+                    <div class="content">
+                        <p>      
+                            &nbsp;&nbsp;③ 발생된 수익은 “관리자”가 “구매자”에게 제공한 전자지갑으로 배분되며 배분 시기는 매일을 원칙으로 하되 담보 대여 등의 조건에 의해 동결 될 경우 지급 시기는 조절될 수 있다.
+
+                        </p>
+                    </div>                    
+                    
+                    <div class="content">
+                        <p class="contract-terms">제 8 조 [운영 및 유지보수 관리]</p>
+                        <p>                        
+                            &nbsp;&nbsp;① “관리자”는 “시스템”을 24시간 365일 원격 관리 유지한다.<br />
+                            &nbsp;&nbsp;② “구매자”는 “시스템”을 유지하기 위한 공간 및 전력, 환경을 관리하며 이에 대한 비용을 지불한다.<br />
+                            &nbsp;&nbsp;③ “관리자”는 “시스템”을 유지하기 위한 인건비 및 출장비 등의 비용을 지불한다.<br />
+                            &nbsp;&nbsp;④ “구매자”와 “관리자”는 “시스템”이 안정적으로 운영되도록 상호 최선을 다한다.
+                        </p>
+                    </div>
+
+                    <div class="content">
+                        <p class="contract-terms">제 9 조 [유무상 유지보수 비용 처리]</p>
+                        <p>                        
+                            &nbsp;&nbsp;본 계약에 의해 “관리자”에 의해 관리되는 “시스템”에 대한 무상유지기간은 24개 월로 정의하며 해당 기간동안 발생되는 모든 유지보수 비용은 “관리자”가 부담하기로 한다. 이후 48개월간의 운영 중 발생하는 유지보수 비용은 발생원가 기준으로 “구매자”가 부담한다.
+                        </p>
+                    </div>
+
+                    <div class="content">
+                        <p class="contract-terms">제 10 조 [“시스템” 장애 처리 및 손실 부담]</p>
+                        <p>                        
+                            &nbsp;&nbsp;① “관리자”는 “시스템”의 오류가 발생 시 48시간 내에 복구하는 것을 원칙으로 한다.<br />
+                            &nbsp;&nbsp;② 48시간 이내에 복구되지 못해 발생한 손실에 관하여서는 원칙적으로 “관리자”가 책임지고 관리비 등의 정산을 통해 배상한다.<br />
+                            &nbsp;&nbsp;③ 단, “구매자”의 전력, 환경 관리문제로 발생된 손실일 경우는 “구매자”가 책임진다.<br />
+                            &nbsp;&nbsp;④ “구매자”의 요청에 의해 저장 데이터를 중도 삭제 (슬래싱) 할 경우 발생하는 페널티 (30%정도)는 “구매자”가 감수한다.
+                        </p>
+                    </div>
+                    
+                    <div class="content">
+                        <p class="contract-terms">제 11 조 [관리비 정산 방식]</p>
+                        <p>                        
+                            &nbsp;&nbsp;① “발주자”는 “관리사”에게 “시스템” 운영에서 발생한 수익 중 2/10을 지급하기로 한다.<br />
+                            &nbsp;&nbsp;② “관리사”는 매 월 말일 “시스템” 에서 발생한 수익을 계산하여 “발주자”와 “관리사”가 지정한 전자지갑 주소로 전송한다.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="footer-line">
+                <hr />
+                <p>5</p>
+                <img src="/assets/img/contract_img/nanodc-logo.png">
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="content-wrapper" id="sec06-content-wrapper">        
+            <div class="header-line">
+                <img src="/assets/img/contract_img/zetacube_logo2.png">
+                <hr />
+            </div>
+            <div class="contract-content-wrapper">
+                <div class="contract-content">
+                    <div class="content">
+                        <p>      
+                            &nbsp;&nbsp;③ 수익 배분 지급 주기는 향 후 “시스템”의 운영 상황에 따라 “발주자”와 “관리사”간의 합의에 따라 변경 될 수 있다.
+                        </p>
+                    </div>
+                    
+                    <div class="content">
+                        <p class="contract-terms">제 12 조 [데이터 온보딩 및 담보 제공]</p>
+                        <p>                        
+                            &nbsp;&nbsp;① “관리자”는 “시스템”의 원활한 운영을 위한 데이터 저장 작업인 “데이터 온보딩”을 최 선을 다해 지원한다.<br />
+                            &nbsp;&nbsp;② “관리자”는 데이터 온보딩 시 필요한 담보 FIL (파일코인)을 국내 외 사이트를 통해 원활히 조달할 수 있도록 하는데 있어 최선을 다한다.<br />
+                            &nbsp;&nbsp;③ 담보 FIL (파일코인) 대여 시 발생되는 비용은 “시스템”운영 수익의 40%로 정의 하며 이는 “구매자”가 부담하기로 한다.<br />
+                            &nbsp;&nbsp;④ “구매자”는 “관리자”의 담보 지원과 데이터 온보딩 업무 지원에 적극 협조한다.
+
+                        </p>
+                    </div>
+
+                    <div class="content">
+                        <p class="contract-terms">제 13 조 [데이터 저장 및 검색등 추가 수익 배분]</p>
+                        <p>                        
+                            &nbsp;&nbsp;“시스템”의 운영 중 고객 데이터 저장수익과 검색수익 또는 장비임대수익 등의 분배에 대해서는 원칙적으로 “구매자” 와 “관리자”가 8:2의 비율로 분배 하는 것으로 협의하며 필요시 협의하여 조정 하기로 한다.
+
+                        </p>
+                    </div>
+
+                    <div class="content">
+                        <p class="contract-terms">제 14 조 [“시스템”의 감가상각 발생]</p>
+                        <p>                        
+                            &nbsp;&nbsp;계약 기간인 72개월이 도래하면 “시스템”은 감가상각에 의해 잔존 가치는 없어진다. 다만, 이후 연장 계약이 진행될 경우 사용 가능한 부품을 “관리자”가 판단하여 연장 계약시 재사용 하거나 매입할 수 있다.
+
+                        </p>
+                    </div>
+                    
+                    <div class="content">
+                        <p class="contract-terms">제 15 조 [비밀 엄수 의무]</p>
+                        <p>                        
+                            &nbsp;&nbsp;① 각 당사자는 본 계약의 내용 및 그 이행과 관련하여 당사자가 알게 된 정보 즉, 본 계약 그 자체 및 이행과 관련하여 제공된 문서, 자료 등을 상대방의 동의 없이 전부 또 는 일부를 제 3자에게 공개할 수 없다. 다만, 이미 일반인에게 널리 알려진 정보나 법령 또는 계약에 의하여 공개가 허용, 강제되는 정보는 그러하지 아니한다.
+
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="footer-line">
+                <hr />
+                <p>6</p>
+                <img src="/assets/img/contract_img/nanodc-logo.png">
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="content-wrapper" id="sec07-content-wrapper">        
+            <div class="header-line">
+                <img src="/assets/img/contract_img/zetacube_logo2.png">
+                <hr />
+            </div>
+            <div class="contract-content-wrapper">
+                <div class="contract-content">
+                    <div class="content">
+                        <p>      
+                            &nbsp;&nbsp;② 제1항의 의무를 위반한 당사자는 상대방에게 손해배상책임이 있다.<br />
+                            &nbsp;&nbsp;③ 본 조의 비밀유지의무는 본 계약의 종료 후 2년간 유효하게 존속한다.
+
+                        </p>
+
+                    </div>
+
+                    <div class="content">
+                        <p class="contract-terms">제 16 조 [ 양도금지 ]</p>
+                        <p>                        
+                            &nbsp;&nbsp;"구매자"는 “관리자”의 사전 서면 승인 없이 본 계약상 권리, 의무의 일부 또는 전부를 제 3 자에게 양도할 수 없다.
+                        </p>
+                    </div>
+
+                    <div class="content">
+                        <p class="contract-terms">제 17 조 [계약의 해지]</p>
+                        <p>                        
+                            &nbsp;&nbsp;① “구매자”와 “관리자”는 다음의 각 호의 1이 발생할 경우 서면통지를 통하여 즉시 본 계약을 해지할 수 있다.<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp; 1. “구매자” 또는 “관리자”가 발행한 어음이나 수표가 부도 또는 거래 정지된 경우<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp; 2. “구매자” 또는 “관리자”가 파산 당하거나 한 경우<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp; 3. “구매자” 또는 “관리자”가 본 계약조건을 위반하거나 불법행위로 인해 거래관계가 지속될 수 없는 경우<br />
+                            &nbsp;&nbsp;② 본 계약에 정한 계약 해지사유 이외에 일방당사자가 부득이한 사유로 계약을 해지하는 경우에는 1개월 전에 상대방에게 서면으로 해제의 의사표시를 하여야 하며 본 계약 의 해지로 인해 귀책 당사자에 대한 손해배상청구권에는 영향을 미치지 아니한다.                        
+                        </p>
+                    </div>
+                    
+                    <div class="content">
+                        <p class="contract-terms">제 18 조 [손해배상]</p>
+                        <p>                        
+                            &nbsp;&nbsp;“구매자” 또는 “관리자”의 귀책사유로 본 계약이 해제 또는 해지되고 그로 말미암아 상대방에게 손해가 발생할 경우는 그 상대방에게 손해배상을 청구할 수 있다.
+                        </p>
+                    </div>
+
+                    <div class="content">
+                        <p class="contract-terms">제 19 조 [불가항력]</p>
+                        <p>                        
+                            &nbsp;&nbsp;전쟁, 폭동, 내란, 법령의 제정․개폐, 수송기관의 사고, 천재지변, 노사분규 기타 예측할 수 없는 사고 등 불가항력에 의하여 “관리사”가 “시스템”을 유지 관리 할 수 없게 된 경우 “관리사”는 본 계약상의 제반 의무로부터 면책된다.
+                        </p>
+                    </div>
+
+                </div>
+                
+            </div>
+            <div class="footer-line">
+                <hr />
+                <p>7</p>
+                <img src="/assets/img/contract_img/nanodc-logo.png">
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="content-wrapper" id="sec08-content-wrapper">        
+            <div class="header-line">
+                <img src="/assets/img/contract_img/zetacube_logo2.png">
+                <hr />
+            </div>
+            <div class="contract-content-wrapper">
+                <div class="contract-content">
+                    <div class="content">
+                        <p class="contract-terms">제 20 조 [통지의무]</p>
+                        <p>                        
+                            &nbsp;&nbsp;각 당사자는 다음 각호에 해당하는 사실이 발생된 경우에는 지체 없이 필요서류를 첨부 하여 상대방에게 서면으로 통지하여야 한다.<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;1. 주소, 상호, 대표자 등 사업자등록증에 명시된 사항이 변경된 경우<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;2. 계약 당사자의 법률적 성격이 변경된 경우<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;3. 기타 상호간 중대한 변경이 있는 경우
+                        </p>
+                    </div>
+                    <div class="content">
+                        <p class="contract-terms">제 21 조 [합의관할]</p>
+                        <p>                        
+                            &nbsp;&nbsp;본 계약에서 명시하지 않은 사항이나 계약의 해석에 대한 분쟁은 관련법규 및 상관례에 따라 상호합의 하에 해결하는 것을 원칙으로 하며, 합의가 이루어지지 아니하는 경우에는 서울지방법원을 합의 관할법원으로 하여 해결한다.
+                        </p>
+                    </div>
+                    <div class="content">
+                        <p class="contract-terms">제 22 조 [계약발효］</p>
+                        <p>                        
+                            &nbsp;&nbsp;본 계약의 효력은 본 계약서에 쌍방이 기명 날인한 날로부터 발생한다.
+                        </p>
+                    </div>
+                </div>
+            </div>            
+            <div class="footer-line">
+                <hr />
+                <p>8</p>
+                <img src="/assets/img/contract_img/nanodc-logo.png">
+            </div>   
+            <div class="small-date">
+               <p><mark><span th:text="${formattedDate}"></span></mark></p>
+            </div>
+            <div class="signature">
+                <div class="buyer">
+                    <p>"구매자"</p>
+                    <p>주 소: <input type="text" class="form-control dynamic-width"  value="" placeholder="회사 또는 개인주소지"></mark></p>
+                    <br />
+                    <p>상 호: <input type="text" class="form-control dynamic-width"  value="" placeholder="상호명"></mark></p>
+                    <p>대표자 : <span class="contractor-name" th:text="${loginVO.userInfoVO.user_name}"></span> &nbsp;&nbsp;&nbsp;(인)</p>
+                     <button id="signButton" class="cert-button" data-is-verified="${isVerified}">서명하기</button>
+                </div>
+                <div class="administrator">
+                    <img src="/assets/img/contract_img/company-seal.png" alt="회사직인" />
+                    <p>“관리자”</p>
+                    <p>주 소 : 경기도 부천시 소사구 양지로 237 광양프런티어밸리 5차 1078, 1079호</p>
+                    <br />
+                    <br />
+                    <p>상 호 : 주식회사 제타큐브</p>
+                    <p>대표자 : 이 부 연 &nbsp;&nbsp;&nbsp;(인)</p>
+                </div>
+            </div>     
+    </section>
+
+
+    
+</body>
+</html>

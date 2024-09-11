@@ -327,6 +327,12 @@ public class AdminService {
 				 	agreementMapper.insertAgreementProcess(agreementVO);
 			    	return "success";
 			    }
+			    
+			    //**>>>>>  계약현황 업데이트  <<<<<**//
+			    public String updateAgreement(AgreementVO agreementVO, HttpServletRequest request) {
+				 	agreementMapper.updateAgreement(agreementVO);
+			    	return "success";
+			    }
 	 
 	    
 	 
