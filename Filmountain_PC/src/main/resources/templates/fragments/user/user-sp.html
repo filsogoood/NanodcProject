@@ -25,7 +25,7 @@
 		        <p class="card-text" th:each="detail : ${product_detail}" th:if="${detail.hw_product_id == investment.hw_product_id}" th:utext="${detail.details}"></p>
 		        <div class="d-flex justify-content-between">
 	                <div>
-	                  <h5 style="display:none;">가격 : <span class="fw-semibold ms-1" id="invest_percent" th:text="${investment.invest_percent} + 원"></span></h5>
+	                  <h5 style="display:none;">가격 : <span class="fw-semibold ms-1" id="invest_percent" th:text="${investment.invest_percent}"></span></h5>
 	                </div>
 	            </div>
                 <div class="pb-4 pt-3">
@@ -33,15 +33,15 @@
                 </div>
                 <div>
 					<div class="d-flex align-items-center mb-2">
-                    	<div class="bullet-item bg-success-light me-2"></div>
-                    	<h6 class="text-body fw-semibold flex-1 mb-0">가격</h6>
-                    	<h6 class="text-body fw-semibold mb-0" id="total_budget_fil" th:text="${investment.total_budget_fil} + 원"></h6>
-                    </div>
+					    <div class="bullet-item bg-success-light me-2"></div>
+					    <h6 class="text-body fw-semibold flex-1 mb-0">가격</h6>
+					    <h6 class="text-body fw-semibold mb-0" id="total_budget_fil" th:text="${investment.total_budget_fil}"></h6>
+					</div>
 					<div class="d-flex align-items-center mb-2">
-                  		<div class="bullet-item bg-success me-2"></div>
-          				<h6 class="text-body fw-semibold flex-1 mb-0">구매금액</h6>
-              			<h6 class="text-body fw-semibold mb-0" id="hw_invest_fil" th:text="${investment.hw_invest_fil} + 원"></h6>
-                	</div>
+					    <div class="bullet-item bg-success me-2"></div>
+					    <h6 class="text-body fw-semibold flex-1 mb-0">구매금액</h6>
+					    <h6 class="text-body fw-semibold mb-0" id="hw_invest_fil" th:text="${investment.hw_invest_fil}"></h6>
+					</div>
 	                <div class="d-flex align-items-center mt-4">
 	                  <p class="mb-0 fw-bold fs-9">구매일 :<span class="fw-semibold text-body-tertiary text-opactity-85 ms-1" th:text="${#dates.format(investment.hw_reg_date, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
 	                </div>
@@ -389,5 +389,4 @@
           </div>
         </div>   
       </div>       
-            
 </html>

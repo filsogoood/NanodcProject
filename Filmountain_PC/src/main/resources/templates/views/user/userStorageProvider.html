@@ -91,6 +91,27 @@
      
           
       </script>
+      
+      <script>
+		    document.addEventListener('DOMContentLoaded', function () {
+			    let totalBudgetElement = document.querySelector('#total_budget_fil');
+			    let hwInvestElement = document.querySelector('#hw_invest_fil');
+			
+			    if (totalBudgetElement) {
+			        let totalBudget = parseFloat(totalBudgetElement.textContent.replace(/[^0-9.-]+/g, ""));
+			        if (!isNaN(totalBudget)) {
+			            totalBudgetElement.innerText = totalBudget.toLocaleString() + ' 원';
+			        }
+			    }
+			
+			    if (hwInvestElement) {
+			        let hwInvest = parseFloat(hwInvestElement.textContent.replace(/[^0-9.-]+/g, ""));
+			        if (!isNaN(hwInvest)) {
+			            hwInvestElement.innerText = hwInvest.toLocaleString() + ' 원';
+			        }
+			    }
+			});
+		</script>
  
     <!-- ===============================================-->
     <!--    End of Main Content-->
