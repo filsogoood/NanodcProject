@@ -676,7 +676,21 @@ public class AdminController {
 	        
 	        return adminService.insertAgreement(agreementVO, request);
 	    }
-}
+
+		//**>>>>>   계약현황업데이트   <<<<<**//
+		@ResponseBody
+		@PostMapping("/agreementUpdate")
+		public String agreementUpdate(@RequestBody AgreementVO agreementVO,
+		                              HttpServletRequest request) {
+		    
+		    if(!adminService.checkSession(request)) {
+		        return "failed:session_closed";
+		    }
+		    
+		    return adminService.updateAgreement(agreementVO, request);
+		}
+		
+		}
 
 	 
 		

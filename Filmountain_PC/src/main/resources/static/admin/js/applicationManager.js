@@ -23,7 +23,8 @@ $(document).ready(function() {
                     user_id: user_id,
                     contract_status: "신규계약",
                     process:"전자서명 진행중",
-                    product: sp_product
+                    product: sp_product,
+                    level:level
                 }),
                 success: function (data) {
                     if (data == 'success') {

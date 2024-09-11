@@ -23,6 +23,7 @@ public class AgreementVO {
     private int last_payment;
     private String user_name;
     private String sp_product;
+    private String level;
     // Getters and Setters
     public int getProcess_id() {
         return process_id;
@@ -160,6 +161,14 @@ public class AgreementVO {
 
 	public void setSp_product(String sp_product) {
 		this.sp_product = sp_product;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
 	}
 
 	

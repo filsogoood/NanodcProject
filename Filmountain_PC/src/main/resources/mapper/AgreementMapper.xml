@@ -69,7 +69,7 @@
 	        ap.first_payment,
 	        ap.second_payment,
 	        ap.last_payment,        
-	        ui.level,
+	        ap.level,
 	        ui.user_name,
 	        ap.sp_product
 	        
@@ -97,8 +97,8 @@
 	        ap.first_payment,
 	        ap.second_payment,
 	        ap.last_payment,
-	        ui.product,
-	        ui.level
+	        ap.sp_product,
+	        ap.level
 	    FROM 
 	        agreement_process ap
 	    JOIN

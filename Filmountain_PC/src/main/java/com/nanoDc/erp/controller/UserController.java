@@ -84,6 +84,8 @@ public class UserController {
 	 	private LiquidityMapper liquidityMapper;
 	 @Autowired
 		private AESUtil aESUtil;
+	 @Value("${upload.directory2}")
+	    private String uploadDirectory2;
 	 	
 	 /*로그인 페이지*/ 
 		@GetMapping(value={"/login"})
@@ -266,43 +268,8 @@ public class UserController {
 				     mav.setViewName("views/user/user_agreement");
 				     return mav;
 				 }
-				 @GetMapping(value={"/contract"})
-				 public ModelAndView contract(HttpServletRequest request) {
-				     ModelAndView mav = new ModelAndView();
-				     HttpSession session = request.getSession();
-				     if (!userService.checkSession(request)) {
-				         mav.setViewName("redirect:/user/Weblogin");
-				         return mav;
-				     }
-				     
-				     LoginVO loginVO = (LoginVO) session.getAttribute("user");
-				     if (loginVO != null && loginVO.getUserInfoVO() != null) {
-				         int userId = loginVO.getUserInfoVO().getUser_id();
-				         List<AgreementVO> agreements = userService.getAgreementsByUserId(userId);
-				         for (AgreementVO agreement : agreements) {
-				             if ("true".equals(agreement.getAuth_status())) {
-				                 mav.setViewName("redirect:/user/agreement");
-				                 return mav;
-				             }
-				         }
-				         mav.addObject("loginVO", loginVO);
-				         mav.addObject("agreements", agreements);
-				         LocalDate currentDate = LocalDate.now();
-				         DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyyMMdd");
-				         String formattedDate1 = currentDate.format(formatter1);
-				         mav.addObject("currentDate", formattedDate1);
-
-				         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy년 M월 d일");
-				         String formattedDate2 = currentDate.format(formatter2);
-				         mav.addObject("formattedDate", formattedDate2);
-				     } else {
-				         mav.setViewName("redirect:/user/Weblogin");
-				         return mav;
-				     }
-				     
-				     mav.setViewName("views/user/contract_view");
-				     return mav;
-				 }
+				 
+		
 		 //유저앱 버튼 홈 페이지
 		 @GetMapping(value={"/index"})
 		 public  ModelAndView index(HttpServletRequest request) {
@@ -655,7 +622,43 @@ public class UserController {
 				        mav.setViewName("views/user/termsPersonalSign");
 				        return mav;   
 		}
-	 
+		 @GetMapping(value={"/contract"})
+		 public ModelAndView contract(HttpServletRequest request) {
+		     ModelAndView mav = new ModelAndView();
+		     HttpSession session = request.getSession();
+		     if (!userService.checkSession(request)) {
+		         mav.setViewName("redirect:/login");
+		         return mav;
+		     }
+		     
+		     LoginVO loginVO = (LoginVO) session.getAttribute("user");
+		     if (loginVO != null && loginVO.getUserInfoVO() != null) {
+		         int userId = loginVO.getUserInfoVO().getUser_id();
+		         List<AgreementVO> agreements = userService.getAgreementsByUserId(userId);
+		         for (AgreementVO agreement : agreements) {
+		             if ("true".equals(agreement.getAuth_status())) {
+		                 mav.setViewName("redirect:/user/agreement");
+		                 return mav;
+		             }
+		         }
+		         mav.addObject("loginVO", loginVO);
+		         mav.addObject("agreements", agreements);
+		         LocalDate currentDate = LocalDate.now();
+		         DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyyMMdd");
+		         String formattedDate1 = currentDate.format(formatter1);
+		         mav.addObject("currentDate", formattedDate1);
+
+		         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy년 M월 d일");
+		         String formattedDate2 = currentDate.format(formatter2);
+		         mav.addObject("formattedDate", formattedDate2);
+		     } else {
+		         mav.setViewName("redirect:/login");
+		         return mav;
+		     }
+		     
+		     mav.setViewName("views/user/contract_view");
+		     return mav;
+		 }
 	 
 	 /*유저 프로필 편집 기능 */
 	 @ResponseBody
@@ -725,6 +728,48 @@ public class UserController {
 	    }  
 	 
 	 
+	 @ResponseBody
+	 @PostMapping(value = "/updateContract", consumes = {"multipart/form-data"})
+	 public String updateContract(@RequestPart("agreementVO") AgreementVO agreementVO,
+	                              @RequestPart(value = "file", required = false) MultipartFile file,
+	                              HttpServletRequest request) {
+	     Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	     logger.debug("Request received for updating contract");
+
+	     if (!userService.checkSession(request)) {
+	         logger.debug("Session invalid");
+	         return "failed:session_closed";
+	     }
+
+	     
+
+	     if (file != null && !file.isEmpty()) {
+	         try {
+	             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+	             logger.debug("Uploading file: {}", fileName);
+
+	             Path uploadPath = Paths.get(uploadDirectory2);
+	             if (!Files.exists(uploadPath)) {
+	                 Files.createDirectories(uploadPath);
+	             }
+
+	             Path filePath = uploadPath.resolve(fileName);
+	             file.transferTo(filePath.toFile());
+	             String filePathString = "/" + fileName;
+	             agreementVO.setAgreement_dir(filePathString);
+
+	             logger.debug("File uploaded successfully: {}", filePathString);
+	         } catch (IOException e) {
+	             logger.error("File upload error", e);
+	             return "failed:file_upload_error";
+	         }
+	     } else {
+	         logger.debug("No file to upload or file is empty");
+	     }
+
+	     return userService.updateContract_info(agreementVO, request);
+	 }
   			
 
 
