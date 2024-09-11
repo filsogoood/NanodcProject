@@ -193,7 +193,21 @@
             <div class="col-md-6 order-1 order-md-0 text-center text-md-start">
               <h4 class="mb-3">LP(Liquidity Provider)</h4>
               <p class="mb-5">NANODC POOL에 유동성을 제공하여 SP가 원활하게 데이터를 저장할 수 있도록 돕고 이들은 자산을 유동성 풀에 예치하여 데이터 저장 수수료를 나눠받습니다.</p>
-              <a href="/Liquidity" role="button"> <button class="btn btn-warning me-1 mb-1 btn-lg">Join Liquidity</button></a>
+              <!-- 로그인된 사용자에게만 Liquidity 페이지로 이동하는 버튼 -->
+				<a class="btn btn-warning me-1 mb-1 btn-lg"
+				   th:if="${withLoginOptions}" 
+				   href="/Liquidity_Dashboard"
+				   role="button">
+				   Join Liquidity<i class="fa-solid fa-angle-right ms-2"></i>
+				</a>
+				
+				<!-- 로그인되지 않은 사용자에게 경고창을 띄우고 로그인 페이지로 이동시키는 버튼 -->
+				<button class="btn btn-warning me-1 mb-1 btn-lg"
+				   th:unless="${withLoginOptions}" 
+				   href="javascript:void(0);" 
+				   onclick="showLoginAlert()">
+				   Join Liquidity
+				</button>
             </div>
             <div class="col-md-5 mb-5 mb-md-0 text-center"><img class="w-75 w-md-100 d-dark-none" src="../assets/img/icons/hand-cash-icon.png" alt="손 위에 동전들" /><img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/hand-cash-icon.png" alt="손 위에 동전들" /></div>
           </div>
