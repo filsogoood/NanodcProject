@@ -28,30 +28,28 @@
     <section>
         <div class="content-wrapper" id="sec01-content-wrapper">
             <div class="contract-number">
-                <p><mark>계약번호 <span th:text="${currentDate}"></span>A</mark></p>
+                <p>계약번호 <span th:text="${currentDate}"></span>A</p>
             </div>
             <div class="title">
                 <p class="title-txt">나노데이터센터 구매 및 관리 계약서</p>
                 <span class="title-txt">구매 상품</span>
 				<span th:each="agreement : ${agreements}">
-                    <mark>
-                        <img th:src="@{/assets/img/contract_img/nanodc4p.png}" 
-                             th:if="${agreement.sp_product == 'NanoDC4p'}" 
-                             alt="나노디씨4P 로고" />
-                        <img th:src="@{/assets/img/contract_img/nanodc2p.png}" 
-                             th:if="${agreement.sp_product == 'NanoDC2p'}" 
-                             alt="나노디씨2P 로고" />
-                        <img th:src="@{/assets/img/contract_img/nanodc60.png}" 
-                             th:if="${agreement.sp_product == 'NanoDC6p'}" 
-                             alt="나노디씨6P 로고" />
-                    </mark>
+                    <img th:src="@{/assets/img/contract_img/nanodc4p.png}" 
+                         th:if="${agreement.sp_product == 'NanoDC4p'}" 
+                         alt="나노디씨4P 로고" />
+                    <img th:src="@{/assets/img/contract_img/nanodc2p.png}" 
+                         th:if="${agreement.sp_product == 'NanoDC2p'}" 
+                         alt="나노디씨2P 로고" />
+                    <img th:src="@{/assets/img/contract_img/nanodc60.png}" 
+                         th:if="${agreement.sp_product == 'NanoDC6p'}" 
+                         alt="나노디씨6P 로고" />
                 </span>
             </div>
             <div class="date">
-                 <p><mark><span th:text="${formattedDate}"></span></mark></p>
+                 <p><span th:text="${formattedDate}"></span></p>
             </div>
             <div class="contractor">
-                <p><mark>계약자 <span class="contractor-name" th:text="${loginVO.userInfoVO.user_name}"></span></mark></p>
+                <p>계약자 <span class="contractor-name" th:text="${loginVO.userInfoVO.user_name}"></span></p>
                 <input type="hidden" id="user-id" th:value="${loginVO.userInfoVO.user_id}" />
                 <img src="/assets/img/contract_img/zetacube_logo.png">
             </div>
@@ -72,11 +70,9 @@
                     <tr>
                         <th colspan="1">계 약 자</th>
                          <td>
-                            <mark>
-                                상호:<input type="text" class="form-control dynamic-width"  value="" placeholder="상호명"><br />
-                                주소: <input type="text" class="form-control dynamic-width"  value="" placeholder="회사 주소 또는 개인 주소"><br />
-                                성명: <span class="contractor-name" th:text="${loginVO.userInfoVO.user_name}"></span>
-                            </mark>
+                            상호:<input type="text" class="form-control dynamic-width"  value="" placeholder="상호명"><br />
+                            주소: <input type="text" class="form-control dynamic-width"  value="" placeholder="회사 주소 또는 개인 주소"><br />
+                            성명: <span class="contractor-name" th:text="${loginVO.userInfoVO.user_name}"></span>
                         </td>
                     </tr>
                     <tr>
@@ -85,14 +81,13 @@
                     </tr>
                     <tr th:each="agreement : ${agreements}">
 					    <th colspan="1">구매상품</th>
-					    <td colspan="1"><mark th:text="${agreement.sp_product}">NANODC4P</mark></td>
+					    <td colspan="1" th:text="${agreement.sp_product}">NANODC4P</td>
 					</tr>
 
                     <tr>
                         <th colspan="1">상품내역</th>
-                        <td colspan="1">
+                        <td colspan="1" th:each="agreement : ${agreements}">
 							 주소: <input type="text" class="form-control dynamic-width"  value="" placeholder="설치 예정 주소">
-						<mark th:each="agreement : ${agreements}">
 						    <br>
 						    15평 칸막이 및 사인월 공사<br>
 						    3상 전기 인입 공사<br>
@@ -110,21 +105,20 @@
 						        6PiB (페타바이트) NAS 스토리지<br>
 						    </span>
 						    실링용 워커 장비
-						</mark>
-						                        </td>
+                        </td>
                     </tr>
                     <tr>
                         <th colspan="1">계약기간</th>
-                        <td colspan="1"><mark><span th:text="${formattedDate}" id="start-date"></span></mark>
-                        <mark> ~ </mark>
-                        <mark><span id="end-date"></span></mark>
+                        <td colspan="1"><span th:text="${formattedDate}" id="start-date"></span>
+                         ~ 
+                        <span id="end-date"></span>
                         </td>
                     </tr>
                     <tr class="contract-footer">
                         <td colspan="2">
                             <p>본 계약의 체결 사실을 증명하기 위해 계약서 2통을 작성하여 각각 그 적법한<br>대표자가 서명 날인한 후 각 1통씩을 보관하기로 한다.</p>
                             <img src="/assets/img/contract_img/company-seal.png" alt="직인" />
-                            <p class="contract-date" th:text="${formattedDate}"><mark></mark></p>
+                            <p class="contract-date" th:text="${formattedDate}"></p>
                             <p class="signatory">주식회사 제타큐브 대표이사 이 부 연</p>
                             <p>주소: 경기도 부천시 소사구 양지로 237 광양프런티어밸리 5차 지식산업센터 1079호<br>전화: 02-1644-3096 팩스: 02-2088-4655 e-Mail : allen@zetacube.net</p>
                         </td>
@@ -162,11 +156,11 @@
                     
                     <div class="content">
                         <p class="contract-terms">제 3 조 [관리 대상 시스템 정의]</p>
-                        <p>&nbsp;&nbsp;① 본 계약에서 관리의 대상이 되는 “구매자”가 “관리사”에게 발주한 시스템은 아래와 같다.<br />
+                        <span>&nbsp;&nbsp;① 본 계약에서 관리의 대상이 되는 “구매자”가 “관리사”에게 발주한 시스템은 아래와 같다.<br />
 
-                            &nbsp;&nbsp;<mark>상 품 명 : <span th:text="${agreements[0].product}"></span></mark><br />
+                            &nbsp;&nbsp;상 품 명 : <span th:text="${agreements[0].product}"></span><br />
                             
-                            &nbsp;&nbsp;시스템 구성 : <mark th:each="agreement : ${agreements}"><span th:text="${agreements[0].system_location}"></span><br />
+                            &nbsp;&nbsp;시스템 구성 : <span th:each="agreement : ${agreements}"><span th:text="${agreements[0].system_location}"></span><br />
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;칸막이 및 사인월 공사<br />
                             
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3상 전기 인입 공사<br />
@@ -186,7 +180,7 @@
 						    <span th:if="${agreement.product == 'NanoDC6p'}">
 						        6PiB (페타바이트) NAS 스토리지<br>
 						    </span>
-                            </mark>
+                            </span>
                         </p>
                     </div>
 
@@ -220,7 +214,7 @@
                     
                     <div class="content">
                         <p class="contract-terms">제 4 조 [시스템 구매 비용]</p>
-  					  <p>&nbsp;&nbsp;① 공급 가격 : 부가세 별도 <mark><span id="supply-price" th:text="${agreements[0].supply_price}"></span></mark><br />&nbsp;&nbsp;② 할인 가격 적용 : <mark><span th:text="${agreements[0].supply_discount_price}"></span>% 할인 적용 부가세 별도 <span id="final-payment" th:text="${agreements[0].final_payment}"></span></mark></p>
+  					  <p>&nbsp;&nbsp;① 공급 가격 : 부가세 별도 <span id="supply-price" th:text="${agreements[0].supply_price}"></span><br />&nbsp;&nbsp;② 할인 가격 적용 : <span th:text="${agreements[0].supply_discount_price}"></span>% 할인 적용 부가세 별도 <span id="final-payment" th:text="${agreements[0].final_payment}"></span></p>
   						</div>
                     
                     <div class="content">
@@ -228,9 +222,9 @@
                         <p>
                             &nbsp;&nbsp;본 시스템의 구매 비용은 아래와 같은 일정으로 “구매자”가 “관리자” 에게 지급하기로 한다.<br /><br />
                             
-                            &nbsp;&nbsp;① 계약금 : 계약 체결 시 <mark><span id="first_payment" th:text="${agreements[0].first_payment}"></span></mark> (부가세 별도)<br />
-                            &nbsp;&nbsp;② 중도금 : 계약 체결 후 15일 이내 <mark><span id="second_payment" th:text="${agreements[0].second_payment}"></span></mark> (부가세 별도)<br />
-                            &nbsp;&nbsp;③ 잔 금 : 계약 후 30일 이내 “시스템” 설치 확인 후<mark><span id="last_payment" th:text="${agreements[0].last_payment}"></span></mark> (부가세 별도)<br />
+                            &nbsp;&nbsp;① 계약금 : 계약 체결 시 <span id="first_payment" th:text="${agreements[0].first_payment}"></span> (부가세 별도)<br />
+                            &nbsp;&nbsp;② 중도금 : 계약 체결 후 15일 이내 <span id="second_payment" th:text="${agreements[0].second_payment}"></span> (부가세 별도)<br />
+                            &nbsp;&nbsp;③ 잔 금 : 계약 후 30일 이내 “시스템” 설치 확인 후<span id="last_payment" th:text="${agreements[0].last_payment}"></span> (부가세 별도)<br />
                         </p>
                     </div>                    
                     
@@ -475,14 +469,14 @@
                 <img src="/assets/img/contract_img/nanodc-logo.png">
             </div>   
             <div class="small-date">
-               <p><mark><span th:text="${formattedDate}"></span></mark></p>
+               <p><span th:text="${formattedDate}"></span></p>
             </div>
             <div class="signature">
                 <div class="buyer">
                     <p>"구매자"</p>
-                    <p>주 소: <input type="text" class="form-control dynamic-width"  value="" placeholder="회사 또는 개인주소지"></mark></p>
+                    <p>주 소: <input type="text" class="form-control dynamic-width"  value="" placeholder="회사 또는 개인주소지"></p>
                     <br />
-                    <p>상 호: <input type="text" class="form-control dynamic-width"  value="" placeholder="상호명"></mark></p>
+                    <p>상 호: <input type="text" class="form-control dynamic-width"  value="" placeholder="상호명"></p>
                     <p>대표자 : <span class="contractor-name" th:text="${loginVO.userInfoVO.user_name}"></span> &nbsp;&nbsp;&nbsp;(인)</p>
                      <button id="signButton" class="cert-button" data-is-verified="${isVerified}">서명하기</button>
                 </div>
