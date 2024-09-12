@@ -229,24 +229,24 @@
     <section class="liquidity-status-container section-light container-small mt-0">
         <h3 class="mb-7">수익 현황</h3>
         <div class="row gx-6 gy-3 mb-9 align-items-center">
-           <div class="col-auto" style="padding-right: 0;" >
-            <button class="btn btn-subtle-warning me-1 mb-1" th:data-user-id="${loginVO.userInfoVO.user_id}" th:data-wallet-id="${walletList[0].wallet_id}" id="deposit-btn">Deposit</button>
+           <div class="col-auto">
+            <button class="btn btn-subtle-warning me-1 mb-1"  th:data-user-id="${loginVO.userInfoVO.user_id}" th:data-wallet-id="${walletList[0].wallet_id}" id="deposit-btn">Deposit</button>
            </div>
-           <div class="col-auto" style="padding-right: 0; padding-left: 0;" >
+           <div class="col-auto">
                 <button class="btn btn-subtle-warning me-1 mb-1" th:data-user-id="${loginVO.userInfoVO.user_id}" th:data-wallet-id="${walletList[0].wallet_id}" id="withdraw-btn">Withdraw</button>
            </div>
-            <div class="col-auto" style="padding-right: 0; padding-left: 0;" >
+            <div class="col-auto">
                 <button class="btn btn-subtle-warning me-1 mb-1" th:data-user-id="${loginVO.userInfoVO.user_id}" id="call-wallet-btn">입금주소 발급</button>
            </div>
         </div>
-        <div class="row gy-10 gx-10 mb-3 justify-content-around" style="gap:30px;" th:each="LiquidityInfotxByUser : ${LiquidityInfotxByUser}">
+        <div class="row gy-10 gx-10 mb-14" style="gap:30px;" th:each="LiquidityInfotxByUser : ${LiquidityInfotxByUser}">
             
-            <div class="col-sm-3 text-center">
+            <div class="col-sm-4 text-center">
                 <p>FIL 현재가격</p>
                 <h4 class="fs-4" style="font-weight: 800;" id="fil_price" th:text="${filprice}">6,155</h2>
             </div>
             
-            <div class="col-sm-3 text-center" th:if="${LiquiditytxByUser.size() > 0}">
+            <div class="col-sm-4 text-center" th:if="${LiquiditytxByUser.size() > 0}">
                 <p>Liquidity 평균단가</p>
                 <h4 class="fs-4" 
                 	style="font-weight: 800;"
@@ -256,15 +256,15 @@
                 </h4>
             </div>
             
-            <div class="col-sm-3 text-center">
+            <div class="col-sm-4 text-center">
                 <p>Total liquidity FIL</p>
                 <h4 class="fs-4" style="font-weight: 800;" id="staking-amount" th:text="${LiquidityInfotxByUser.liquidity_amount}">5,000</h4>
             </div>
-            <div class="col-sm-3 text-center">
+            <div class="col-sm-4 text-center">
                 <p>Total liquidity Cash</p>
                 <h4 class="fs-4" style="font-weight: 800;" id="total-cash" th:text="${LiquidityInfotxByUser.total_reward}">27,475,000/h4>
             </div>
-            <div class="col-sm-3 text-center">
+            <div class="col-sm-4 text-center">
                 <p>수익</p>
                 <h4 class="fs-4" style="font-weight: 800;" id="reward" th:text="${LiquidityInfotxByUser.total_reward }">0/h4>
             </div>
@@ -272,7 +272,7 @@
                 <p>잠긴 FIL</p>
                 <h4 class="fs-4" style="font-weight: 800;" id="locked_amount" th:text="${LiquidityInfotxByUser.locked_fil } ">0/h4>
             </div>
-            <div class="col-sm-3 text-center">
+            <div class="col-sm-4 text-center">
                 <p>인출 가능 금액</p>
                 <h4 class="fs-4" style="font-weight: 800;" id="unstake-amount" th:text="${LiquidityInfotxByUser.total_reward } ">0/h4>
             </div>

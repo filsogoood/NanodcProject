@@ -147,7 +147,7 @@
       }
       const getDefaultOptions = () => ({
         color: [
-          getColor('primary'),
+          getColor('success'),
           getColor('warning')
         ],
         tooltip: {
