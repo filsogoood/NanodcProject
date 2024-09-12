@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <div class="bg-body-emphasis sticky-top landing-navbar header" data-navbar-shadow-on-scroll="data-navbar-shadow-on-scroll" th:fragment="Header(withLoginOptions, loginVO)">
-        <nav class="navbar navbar-expand-lg container-small px-3 px-lg-7 px-xxl-3">
-            <a class="navbar-brand flex-1 flex-lg-grow-0" href="/index">
-                <div class="d-flex align-items-center">
-                    <img src="/assets/img/logos/nanodc-logo.png" alt="nanodc logo" width="90px;" />
-                </div>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+	     <nav class="navbar navbar-expand-lg container-small px-3 px-lg-7 px-xxl-3">
+			<div class="navbar-logo">
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	                <span class="navbar-toggler-icon"></span>
+	            </button>
+				<a class="navbar-brand flex-1 flex-lg-grow-0" href="/index">				
+	                <div class="d-flex align-items-center">						
+	                    <img src="/assets/img/logos/nanodc-logo.png" alt="nanodc logo" width="90px;" />
+	                </div>
+	            </a>
+			</div>
+            
+            
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<!--
                     <li class="nav-item border-bottom border-translucent border-bottom-lg-0"><a class="nav-link lh-1 py-0 fs-9 fw-bold py-3" href="/NanoDC">NANODC</a></li>
                     <li class="nav-item border-bottom border-translucent border-bottom-lg-0"><a class="nav-link lh-1 py-0 fs-9 fw-bold py-3" href="/Liquidity">LIQUIDITY</a></li>
@@ -25,6 +29,8 @@
                         <a class="nav-link lh-1 py-0 fs-9 fw-bold py-3" href="/Liquidity_Dashboard">LP Dashboard</a>
                     </li>
                 </ul>
+				
+                
                 <!--
 				<div class="theme-control-toggle fa-icon-wait px-2">
 	                <input class="form-check-input ms-0 theme-control-toggle-input" type="checkbox" data-theme-control="phoenixTheme" value="dark" id="themeControlToggle" />
@@ -32,49 +38,59 @@
 	                <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Switch theme"><span class="icon" data-feather="sun"></span></label>
               	</div>
               	-->
-                <div th:if="${withLoginOptions}">
-                    <ul class="navbar-nav navbar-nav-icons flex-row">
-                        <li class="nav-item" style="margin:auto;">안녕하세요 <span th:text="${userInfoVO.user_name}">000</span>님</li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
-                                <div class="avatar avatar-l ">
-                                    <img class="rounded-circle" src="/assets/img/filmountain/profiles/0.png" alt="Profile Icon" />
-                                </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border" aria-labelledby="navbarDropdownUser">
-                                <div class="card position-relative border-0">
-                                    <div class="card-body p-0">
-                                        <div class="text-center pt-4 pb-3">
-                                            <div class="avatar avatar-xl ">
-                                                <img class="rounded-circle" src="/assets/img/filmountain/profiles/0.png" alt="Profile Icon" />
-                                            </div>
-                                            <h6 class="mt-2 text-body-emphasis" th:text="${userInfoVO.user_email}">email@example.com</h6>
-                                        </div>
-                                    </div>
-                                    <div class="overflow-auto scrollbar" style="height: 6rem;">
-                                        <ul class="nav d-flex flex-column mb-2 pb-1">
-                                            <li class="nav-item"><a class="nav-link px-3" href="/profileEdit"> <span class="me-2 text-body" data-feather="user"></span><span>마이페이지</span></a></li>
-                                            <li class="nav-item"><a class="nav-link px-3" href="/myAgreement"> <span class="me-2 text-body" data-feather="file"></span><span>나의 계약현황</span></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-footer p-0" style="border-top: 0;">
-                                        <div class="px-3">
-                                            <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="/logout" style="margin-bottom:10px;">
-                                                <span class="me-2" data-feather="log-out"> </span>Sign out
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                
 
                 <div class="d-grid d-lg-flex align-items-center" th:unless="${withLoginOptions}">
                     <a class="btn btn-link text-body order-1 order-lg-0 ps-4 me-lg-2" href="/login">Sign in</a>
                     <a class="btn btn-phoenix-warning text-warning-dark order-0" href="/Signup"><span class="fw-bold">Sign Up</span></a>
                 </div>
             </div>
+            <ul class="navbar-nav navbar-nav-icons flex-row"  th:if="${withLoginOptions}">
+				 
+                
+                
+                <li class="nav-item dropdown">
+					
+					
+                    <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+						<span class="fs-9" style="margin: auto 0;">안녕하세요 <span th:text="${userInfoVO.user_name}">000</span>님</span>
+                        <div class="avatar avatar-l ">
+                            <img class="rounded-circle" src="/assets/img/filmountain/profiles/0.png" alt="Profile Icon" />
+                        </div>
+                    </a>
+                    
+                    
+                    
+                    <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border" aria-labelledby="navbarDropdownUser">
+                        <div class="card position-relative border-0">
+                            <div class="card-body p-0">
+                                <div class="text-center pt-4 pb-3">
+                                    <div class="avatar avatar-xl ">
+                                        <img class="rounded-circle" src="/assets/img/filmountain/profiles/0.png" alt="Profile Icon" />
+                                    </div>
+                                    <h6 class="mt-2 text-body-emphasis" th:text="${userInfoVO.user_email}">email@example.com</h6>
+                                </div>
+                            </div>
+                            <div class="overflow-auto scrollbar" style="height: 6rem;">
+                                <ul class="nav d-flex flex-column mb-2 pb-1">
+                                    <li class="nav-item"><a class="nav-link px-3" href="/profileEdit"> <span class="me-2 text-body" data-feather="user"></span><span>마이페이지</span></a></li>
+                                    <li class="nav-item"><a class="nav-link px-3" href="/myAgreement"> <span class="me-2 text-body" data-feather="file"></span><span>나의 계약현황</span></a></li>
+                                </ul>
+                            </div>
+                            <div class="card-footer p-0" style="border-top: 0;">
+                                <div class="px-3">
+                                    <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="/logout" style="margin-bottom:10px;">
+                                        <span class="me-2" data-feather="log-out"> </span>Sign out
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </li>
+            </ul>
+            
         </nav>
     </div>
 </html>
