@@ -206,31 +206,25 @@
           </div>
         </div>
 
-   <section class="liquidity-status-container section-light container mt-0 bg-body" style="max-width:100%;" th:each="LiquidityInfotxByUser : ${LiquidityInfotxByUser}">
-	   
-          <div class="container-small px-lg-7 px-xxl-3" >
-		   <h3 class="mb-7">LIQUIDITY POOL</h3>
-	        <h4 class="mb-9" style="line-height: 130%;">제타큐브가 직접 운영하는 나노디씨 노드의 유동성 풀에 참여하여, 안정적이고 높은 리워드를 받으세요.</h4>
-	        <div class="row gy-10 gx-10 mb-14">
-				<!--
-	            <div class="col-sm-4 text-center">
-	                <p>교환비율</p>
-	                <h4 class="fs-4" style="font-weight: 800;">zFIL : FIL = 1 : 1</h4>
-	            </div>
-	            -->
-	            <div class="col-sm-4 text-center">
-				    <p>Pool 기여도</p>
-				    <h4 class="fs-4 text-warning-dark" style="font-weight: 800;">
-				        <span th:text="${#numbers.formatDecimal(findUserContributionByUserId[0].contributionPercentage, 1, 1)}">100</span>%
-				    </h4>
-				</div>
-	            <div class="col-sm-4 text-center">
-	                <p>보유 FIL</p>
-	                <h2 class="fs-4 text-warning-dark" id="zfil_amount" th:text="${LiquidityInfotxByUser.liquidity_amount}">5,000</h2>
-	            </div>
-	        </div>
-	   </div>
-        
+   <section class="liquidity-status-container section-light container-small mt-0" th:each="LiquidityInfotxByUser : ${LiquidityInfotxByUser}">
+        <h3 class="mb-7">LIQUIDITY POOL</h3>
+        <h4 class="mb-9" style="line-height: 130%;">제타큐브가 직접 운영하는 나노디씨 노드의 유동성 풀에 참여하여, 안정적이고 높은 리워드를 받으세요.</h4>
+        <div class="row gy-10 gx-10 mb-14">
+         <!--    <div class="col-sm-4 text-center">
+             <p>교환비율</p>
+                <h4 class="fs-4" style="font-weight: 800;">zFIL : FIL = 1 : 1</h4> 
+            </div>-->
+            <div class="col-sm-4 text-center">
+			    <p>Pool 기여도</p>
+			    <h4 class="fs-4" style="font-weight: 800;">
+			        <span  th:text="${#numbers.formatDecimal(findUserContributionByUserId[0].contributionPercentage, 1, 1)}">100</span>%
+			    </h4>
+			</div>
+            <div class="col-sm-4 text-center">
+                <p>기여한 FIL</p>
+                <h2 class="fs-4" id="zfil_amount" th:text="${LiquidityInfotxByUser.liquidity_amount}">5,000</h2>
+            </div>
+        </div>
     </section>
     <section class="liquidity-status-container section-light container-small mt-0">
         <h3 class="mb-7">수익 현황</h3>
@@ -249,12 +243,12 @@
             
             <div class="col-sm-3 text-center">
                 <p>FIL 현재가격</p>
-                <h4 class="fs-4 text-warning-dark" style="font-weight: 800;" id="fil_price" th:text="${filprice}">6,155</h2>
+                <h4 class="fs-4" style="font-weight: 800;" id="fil_price" th:text="${filprice}">6,155</h2>
             </div>
             
             <div class="col-sm-3 text-center" th:if="${LiquiditytxByUser.size() > 0}">
                 <p>Liquidity 평균단가</p>
-                <h4 class="fs-4 text-warning-dark" 
+                <h4 class="fs-4" 
                 	style="font-weight: 800;"
                     id="deposit_price" 
                     th:text="${LiquiditytxByUser[0].deposit_price}">
@@ -264,19 +258,23 @@
             
             <div class="col-sm-3 text-center">
                 <p>Total liquidity FIL</p>
-                <h4 class="fs-4 text-warning-dark" style="font-weight: 800;" id="staking-amount" th:text="${LiquidityInfotxByUser.liquidity_amount}">5,000</h4>
+                <h4 class="fs-4" style="font-weight: 800;" id="staking-amount" th:text="${LiquidityInfotxByUser.liquidity_amount}">5,000</h4>
             </div>
             <div class="col-sm-3 text-center">
                 <p>Total liquidity Cash</p>
-                <h4 class="fs-4 text-warning-dark" style="font-weight: 800;" id="total-cash" th:text="${LiquidityInfotxByUser.total_reward}">27,475,000</h4>
+                <h4 class="fs-4" style="font-weight: 800;" id="total-cash" th:text="${LiquidityInfotxByUser.total_reward}">27,475,000/h4>
             </div>
             <div class="col-sm-3 text-center">
                 <p>수익</p>
-                <h4 class="fs-4 text-warning-dark" style="font-weight: 800;" id="reward" th:text="${LiquidityInfotxByUser.total_reward }">0</h4>
+                <h4 class="fs-4" style="font-weight: 800;" id="reward" th:text="${LiquidityInfotxByUser.total_reward }">0/h4>
+            </div>
+            <div class="col-sm-4 text-center">
+                <p>잠긴 FIL</p>
+                <h4 class="fs-4" style="font-weight: 800;" id="locked_amount" th:text="${LiquidityInfotxByUser.locked_fil } ">0/h4>
             </div>
             <div class="col-sm-3 text-center">
                 <p>인출 가능 금액</p>
-                <h4 class="fs-4 text-warning-dark" style="font-weight: 800;" id="unstake-amount" th:text="${LiquidityInfotxByUser.total_reward } ">0</h4>
+                <h4 class="fs-4" style="font-weight: 800;" id="unstake-amount" th:text="${LiquidityInfotxByUser.total_reward } ">0/h4>
             </div>
             <div style="width: 30%; display: none;">
                 <p>총 자산</p>

@@ -130,23 +130,25 @@
       const chart = window.echarts.init(chartEl);
       var available_fil=document.getElementById('staking-amount').textContent;
       var processed_fil=document.getElementById('unstake-amount').textContent;
-
-   
+      var locked_fil=document.getElementById('locked_amount').textContent;
+		processed_fil = parseFloat(available_fil) - parseFloat(locked_fil);
+ 
       
       const data = [
-        { value: Math.round(parseFloat(available_fil)), name: 'zFIL' },
-        { value: Math.round(parseFloat(processed_fil)), name: '인출가능FIL' }
+        { value: Math.round(parseFloat(processed_fil)), name: '인출가능FIL' },
+         { value: Math.round(parseFloat(locked_fil)), name: '잠긴FIL' }
       ];
-      const totalSource = data.reduce((acc, val) => val.value + acc, 0);
+      const totalSource = Math.round(available_fil);
+
       if (chartLabel) {
         chartLabel.innerHTML = totalSource;
       }
       const getDefaultOptions = () => ({
         color: [
-          getColor('primary'),
-          getColor('warning'),
+         // getColor('primary'),
           getColor('success'),
-          toggleColor(getColor('info-light'), getColor('info-dark')),
+          getColor('warning'),
+         // toggleColor(getColor('info-light'), getColor('info-dark')),
           toggleColor(getColor('danger-lighter'), getColor('danger-darker')),
           toggleColor(getColor('warning-light'), getColor('warning-dark'))
         ],

@@ -115,60 +115,61 @@ $(document).ready(function() {
 			    updatePrice("#last_payment");
 			    
 			    
-			    $(document).ready(function() {
-		    $('#signButton').click(function() {
-		    const user_id = $('#user-id').val().trim();
-		
-		    // Define the PDF options
-		    const opt = {
-		        margin: [0, 0, 0, 0], // 여백을 최소화합니다
-		        filename: `${user_id}_contract.pdf`, // 파일 이름 동적 설정
-		        image: { type: 'jpeg', quality: 0.98 },
-		        html2canvas: { scale: 2, useCORS: true },
-		        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-		    };
-		
-		    // Convert the current page to PDF
-		    const element = document.body; // Change this to the container element if needed
-		
-		    html2pdf().from(element).set(opt).toPdf().get('pdf').then(function(pdf) {
-		        // Create a PDF blob
-		        var pdfBlob = pdf.output('blob');
-		
-		        // Create FormData object
-		        var formData = new FormData();
-		        formData.append('file', pdfBlob, `${user_id}_contract.pdf`);
-		        formData.append('agreementVO', new Blob([JSON.stringify({
-		            user_id: user_id
-		        })], {
-		            type: "application/json"
-		        }));
-		
-		        // Send the PDF to the server via AJAX
-		        $.ajax({
-		            type: 'POST',
-		            url: '/user/updateContract',
-		            data: formData,
-		            processData: false,
-		            contentType: false,
-		            success: function(data) {
-		                if (data === 'success') {
-		                    window.location.href = '/kakaocert/signForm';
-		                } else if (data === 'failed:session_closed') {
-		                    alert('로그인을 다시 해주십시오.');
-		                } else {
-		                    alert('PDF 업로드 실패');
-		                    console.log(data);
-		                }
-		            },
-		           error: function(jqXHR, textStatus, errorThrown) {
-                    console.log('AJAX error: ', textStatus, errorThrown);
-                    console.log('Server response text: ', jqXHR.responseText);
-                    alert('PDF 업로드 중 오류가 발생했습니다.');
-		            }
-		        });
-		    });
-		});
+$(document).ready(function() {
+		    const signButton = document.getElementById('signButton');
+    const isVerified = signButton.getAttribute('data-is-verified') === '1';
+
+    signButton.addEventListener('click', function() {
+        if (isVerified) {
+            alert('이미 서명하셨습니다.');
+            window.location.href = '/myAgreement';
+        } else {
+            const user_id = $('#user-id').val().trim();
+
+            // PDF 생성 및 업로드 코드...
+            const opt = {
+                margin: [0, 0, 0, 0],
+                filename: `${user_id}_contract.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            const element = document.body;
+            html2pdf().from(element).set(opt).toPdf().get('pdf').then(function(pdf) {
+                var pdfBlob = pdf.output('blob');
+                var formData = new FormData();
+                formData.append('file', pdfBlob, `${user_id}_contract.pdf`);
+                formData.append('agreementVO', new Blob([JSON.stringify({
+                    user_id: user_id
+                })], {
+                    type: "application/json"
+                }));
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/updateContract',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        if (data === 'success') {
+                            window.location.href = '/kakaocert/signForm';
+                        } else if (data === 'failed:session_closed') {
+                            alert('로그인을 다시 해주십시오.');
+                        } else {
+                            alert('PDF 업로드 실패');
+                            console.log(data);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log('AJAX error: ', textStatus, errorThrown);
+                        alert('PDF 업로드 중 오류가 발생했습니다.');
+                    }
+                });
+            });
+        }
+    });
 });
 			//글자수에 맞게 칸 조절
 			            function adjustWidth(input) {
@@ -196,32 +197,17 @@ $(document).ready(function() {
 			            //계약서 다운로드 링크
 	    $('#downloadContractButton').on('click', function() {
 	        
-	        var url = `https://app.nanodc.info/docs/${UserId}_contract.pdf`;
+	        var url = `https://service.nanodc.info/docs/${UserId}_contract.pdf`;
 	        console.log(url);
 	        window.location.href = url;
 	        });
 	        
-	        
+	   
 });
 
-$(document).ready(function() {
-    const signButton = document.getElementById('signButton');
-    const isVerified = signButton.getAttribute('data-is-verified') === '1';
 
-    signButton.addEventListener('click', () => {
-        if (isVerified) {
-            alert('이미 서명하셨습니다.');
-            window.location.href = '/user/agreement';
-        } else {
-            window.location.href = '/kakaocert/signForm';
-        }
-    });
+    
 
-    const signError = $('#signError').val();
-    if (signError) {
-        alert(signError);
-    }
-});
 			    
 			    
 	

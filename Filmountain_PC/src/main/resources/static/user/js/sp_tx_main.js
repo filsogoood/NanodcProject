@@ -16,9 +16,8 @@
 					user_id = $(this).data('user-id');
 					user_name = $(this).data('user-name');
         			phone_number = $(this).data('phone-number')
-        			 console.log(user_name);
-        			console.log(phone_number);
-        			console.log(user_id);
+        			// console.log(user_name);
+        			//console.log(user_id);
         			
         			if (total_reward_fil == 0){
 						alert("출금 가능한 FIL이 없습니다.");
@@ -26,7 +25,9 @@
 					$('#addNewTransactionPayout_modal').modal('show');});
 
 				$('#walletManager').on('click', function() {
+					user_id = $(this).data('user-ids');
 					$('#walletManager_modal').modal('show');});
+					
 					
 	$('#addNewTransactionPayout_confirm').click(function() {
 		
@@ -160,7 +161,8 @@
        						});
         			$('#addNewWallet_confirm').click(function(){
 						var sp_address =$("#new_wallet_addr").val();
-						console.log(sp_address);
+				
+						console.log(user_id);
             			$.ajax({
 			                    type: "POST",
 			                    url: "/addspWallet",

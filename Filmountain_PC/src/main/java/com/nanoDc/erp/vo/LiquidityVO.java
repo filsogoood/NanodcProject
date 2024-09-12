@@ -34,6 +34,7 @@ public class LiquidityVO {
 	private BigDecimal contributionPercentage;
 	private BigDecimal total_liquidity_amount;
 	private BigDecimal total_locked_fil;
+	private BigDecimal locked_fil;
 	
 	public BigDecimal getFil_amount() {
 		return fil_amount; 
@@ -187,6 +188,12 @@ public class LiquidityVO {
 	}
 	public void setTotal_locked_fil(BigDecimal total_locked_fil) {
 		this.total_locked_fil = total_locked_fil;
+	}
+	public BigDecimal getLocked_fil() {
+		return locked_fil;
+	}
+	public void setLocked_fil(BigDecimal locked_fil) {
+		this.locked_fil = locked_fil;
 	}
 	
 
