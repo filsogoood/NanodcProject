@@ -56,10 +56,12 @@ $(document).ready(function() {
      $('#withdraw-btn').click(function() {
 		 user_id = $(this).data('user-id');
 		 wallet = $(this).data('wallet-id');
+		 
 		 if ( Math.round(stub).toLocaleString() == 0){
 			 alert("출금 가능한 FIL이 없습니다.");
 			 return;
 		 }
+		 
         $('#Withdraw_modal').modal('show');
     });
     $('#liquidity_modal_confirm').click(function() {

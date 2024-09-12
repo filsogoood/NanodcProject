@@ -8,13 +8,32 @@ $(document).ready(function () {
     // 폼 제출 이벤트 처리
     $('#purchaseForm').submit(function (e) {
         e.preventDefault(); // 폼의 기본 제출 동작을 막음
+        
+        // 폼 필수 입력 항목 체크
+        var userId = $('#userId').val();
+        var level = $('#level').val();
+        var spProduct = $('#spProduct').val();
+        
+        // 필수 입력 사항 체크
+        if (!userId) {
+            alert('유저 ID가 설정되지 않았습니다.');
+            return;
+        }
+        if (!level || level === "구분을 선택하세요.") {
+            alert('구분을 선택해주세요.');
+            return;
+        }
+        if (!spProduct || spProduct === "구매하실 SP상품을 선택하세요.") {
+            alert('구매할 SP상품을 선택해주세요.');
+            return;
+        }
 
         // 폼 데이터 수집
         var formData = {
-            user_id: $('#userId').val(), // userId는 버튼에서 설정한 값
-            level: $('#level').val(),
-            sp_product: $('#spProduct').val(),
-            memo: $('#description').val()
+            user_id: userId,
+            level: level,
+            sp_product: spProduct,
+            memo: $('#description').val() // Description은 필수 입력이 아님
         };
 
         // Ajax 요청
