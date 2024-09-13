@@ -21,7 +21,7 @@
 	
 	<update id="deleteWalletByWalletId" parameterType="long">
 		UPDATE nanodc.wallet
-			SET status='deleted'
+			SET status='active'
 			WHERE wallet_id=#{wallet_id};
 	</update>
 	

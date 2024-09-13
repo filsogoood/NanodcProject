@@ -64,36 +64,30 @@
 										</div>	
 										<div class="tab-pane" id="sendFil_tab" role="tabpanel" aria-expanded="true">
 											<form id="uploadForm_a" method="post" enctype="multipart/form-data">
-											<div class="form-group row">
-												<label class="col-md-3 form-control-label" style="margin-top:5px;"><b>보낼 수량</b></label>
-												<div class="col-md-6">
-													<input id="send_token_amt" class="form-control" type="number"step="any" min="0" oninput="validity.valid||(value='');">
-												</div>
-											</div>
+											 <div class="mb-3">
+							                <label for="final_payment" class="form-label">Liquidity FIL</label>
+							                <input type="text" class="form-control" id="total_amount" name="total_amount">
+							            </div>
+							            <div class="mb-3">
+							                <label for="first_payment" class="form-label">reward FIL</label>
+							                <input type="text" class="form-control" id="reward_fil" name="locked_fil">
+							            </div>
+							            <div class="mb-3">
+							                <label for="first_payment" class="form-label">Locked FIL</label>
+							                <input type="text" class="form-control" id="locked_fil" name="locked_fil">
+							            </div>
+							            <div class="mb-3">
+							                <label for="first_payment" class="form-label">출금가능 FIL</label>
+							                <input type="text" class="form-control" id="ㄷ=enable_fil" name="locked_fil">
+							            </div>
+							            <div class="mb-3">
+							                <label for="second_payment" class="form-label">f4 지갑 주소</label>
+							                <input type="text" class="form-control" id="f4_address" name="f4_address">
+							            </div>
+							            
+							            <button type="button" class="btn btn-primary" id="update_properties">업데이트</button>
+							        </form>
 											
-											<div id="wallet_address_div" class="form-group row">
-												<label class="col-md-3 form-control-label" style="margin-top:5px;"><b id="wallet_address_b">FIL 보유</b></label>
-												<div class="col-md-6 mt-1">
-													<b id="wallet_address_balance_b">0 FIL</b>
-												</div>
-					
-											</div>
-											
-											<div id="user_address_div" class="form-group row" style="display: none;">
-												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b id="user_address_b"></b></label>
-												<div class="col-md-10">
-													<div class="input-group">
-														<input id="user_address_c" class="form-control" type="text" disabled="">
-														<span class="input-group-btn"><button type="button" class="btn btn-secondary"><i class="fa fa-copy"></i></button></span>
-													</div>
-												</div>
-											</div>
-											<div class="form-group row">
-												<div class="col-md-12">
-													<button id="tokenSend-btn" type="button" class="btn btn-primary float-right" >보내기</button>
-												</div>
-											</div>
-											</form>
 										</div> 
 										
 										
