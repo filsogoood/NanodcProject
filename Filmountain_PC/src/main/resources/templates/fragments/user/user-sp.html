@@ -60,20 +60,20 @@
           <div class="col-auto">
             <h1>Reward 현황</h1>
           </div>
-
         </div>               
         
+        <!--
         <div class="row flex-between-center mb-4 g-3">
-                <div class="col-auto">
-                  <p class="text-body-tertiary lh-sm mb-0">Reward 누적</p>
-                </div>
-              </div>
-              <div id="totalRewardChart" class="mb-9" th:attr="dataList=${dataList}" style="min-height:320px;width:100%"></div>
-              <input type="hidden" th:value="${firstDate}" id="firstDate" class="hidden">
-              <input type="hidden" th:value="${lastDate}" id="lastDate" class="hidden">
-              <input type="hidden" th:value="${dataSize}" id="dataSize" class="hidden">
-              <input type="hidden" value="FIL" id="currency" class="hidden">
-              
+	        <div class="col-auto">
+	          <p class="text-body-tertiary lh-sm mb-0">Reward 누적</p>
+	        </div>
+	      </div>
+          <div id="totalRewardChart" class="mb-9" th:attr="dataList=${dataList}" style="min-height:320px;width:100%"></div>
+          <input type="hidden" th:value="${firstDate}" id="firstDate" class="hidden">
+          <input type="hidden" th:value="${lastDate}" id="lastDate" class="hidden">
+          <input type="hidden" th:value="${dataSize}" id="dataSize" class="hidden">
+          <input type="hidden" value="FIL" id="currency" class="hidden">
+         -->     
               
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-9">
           <div class="col" th:each="rewardlist : ${reward_list}">
