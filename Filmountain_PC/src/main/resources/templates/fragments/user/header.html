@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<body>
     <div class="bg-body-emphasis sticky-top landing-navbar header" data-navbar-shadow-on-scroll="data-navbar-shadow-on-scroll" th:fragment="Header(withLoginOptions, loginVO)">
 		<nav class="navbar navbar-top fixed-top navbar-expand-lg" id="navbarTop">
 		    <div class="navbar-logo">
 		
 		      <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTopCollapse" aria-controls="navbarTopCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
-		      <a class="navbar-brand me-1 me-sm-3" href="../index.html">
+		      <a class="navbar-brand me-1 me-sm-3" href="../index">
 		        <div class="d-flex align-items-center">
 		          <div class="d-flex align-items-center">
 		            <img src="/assets/img/logos/nanodc-logo.png" alt="nanodc logo" width="90px;" />
@@ -31,6 +32,7 @@
 		    </div>
 		    <ul class="navbar-nav navbar-nav-icons flex-row" th:if="${withLoginOptions}">
 		      <li class="nav-item dropdown">
+				  <span class="fs-9 hello-name" style="margin: auto 0;">안녕하세요 <span th:text="${userInfoVO.user_name}">000</span>님</span>
 		        <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
 		          <div class="avatar avatar-l ">
 		            <img class="rounded-circle " src="../assets/img/filmountain/profiles/0.png" alt="Profile Icon" />
@@ -64,4 +66,6 @@
 		    </ul>
 		  </nav>
     </div>
+    
+</body>
 </html>
