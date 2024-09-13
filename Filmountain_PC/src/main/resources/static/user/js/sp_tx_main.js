@@ -138,13 +138,14 @@
 					        });
 					    }
         			 $('#deleteWallet_confirm').click(function(){
-						var wallet_id=$('#wallet_delete_option').val();
+						 console.log(user_id);
             			$.ajax({
 			                    type: "POST",
-			                    url: "/deleteWalletByWalletId",
+			                    url: "/addspWallet",
 			                    contentType: "application/json",
 			                    data: JSON.stringify({
-							        wallet_id: wallet_id
+							        user_id: user_id,
+							        sp_address: null
 							    }),
 			                    success: function (data) {
 										$("#detail_product_modal").modal('hide');	 
