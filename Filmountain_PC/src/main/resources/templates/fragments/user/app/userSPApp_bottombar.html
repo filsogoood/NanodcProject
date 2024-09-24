@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<footer class="footer position-absolute" th:fragment="BottomBar" style="background-color: #303030; height:12vh;">
+    <div class="swiper-theme-container" style="height:100%;">
+        <div class="swiper-container theme-slider" data-swiper='{"autoplay":false,"spaceBetween":5,"loop":true,"loopedSlides":5,"slideToClickedSlide":true}' style="height:100%;">
+            <div class="swiper-wrapper align-items-center">
+                <th:block th:each="group : ${dividedList}">
+			    <div class="swiper-slide">
+			        <div class="row d-flex justify-content-center">
+			            <th:block th:each="product : ${group}">
+							<div class="col-4 m-0">
+			                	<img 
+								    style="width:100%; height:10vh;visibility:hidden; background-color: #ffffff;" 
+								    class="me-0 mb-1 bottomProductBtn" 
+								    th:src="@{'/assets/img/filmountain/nanodc/' + ${product.hw_product_id}+'.png'}" 
+								    alt="" 
+								    th:data-product-id="${product.hw_product_id}" >
+			            	</div>
+			            </th:block>
+			        </div>
+			    </div>
+			</th:block>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

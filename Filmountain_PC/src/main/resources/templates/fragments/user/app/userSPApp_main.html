@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+		
+<div class="content p-0 mx-auto" th:fragment="MainContent" style="overflow-x: hidden; width:95%">
+    <div class="container-fluid p-0 m-0" id="userApp_view" style="visibility:hidden;">
+        <div class="d-flex align-items-center">
+            <div class="custom_container">
+  <img class="p-0" id="main_yellow" th:src="${main_bg_src}" alt="main_yellow">
+  <img class="p-0" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="panel" alt="panel">
+  <img class="p-0 panel_buttons" src="/assets/img/filmountain/serverImg/investment1.png" id="panel_investment" alt="panel">
+  <img class="p-0 panel_buttons" src="/assets/img/filmountain/serverImg/reward1.png" id="panel_reward" alt="panel">
+  <img class="p-0 panel_buttons" src="/assets/img/filmountain/serverImg/cash1.png" id="panel_cash" alt="panel">
+  <img class="p-0 panel_buttons" src="/assets/img/filmountain/serverImg/status1.png" id="panel_status" alt="panel">
+  <img class="p-0 panel_buttons" src="/assets/img/filmountain/serverImg/price1.png" id="panel_price" alt="panel">
+  <img class="p-0 panel_buttons_progress" th:src="${progress_src}" id="panel_hw_progress" alt="panel">
+</div>
+ <input type="hidden" th:value="${error}" id="main_error" class="hidden">
+            <!-- Buttons overlay -->
+            <div class="row position-absolute top-50 start-50 translate-middle" style=" z-index: 3;">
+                <div class="col-12 text-center userApp_buttons" id="app_button1" value="investment" style="cursor: pointer;">
+                        <p id="total_investment_fil_main" class="app_text" style=" font-weight: bold; color: white; text-decoration: none;"  th:text="${(investDetailForHw.total_investment_fil).intValue()  + ' 원'}"></p>
+                </div>
+                <div class="col-12 text-center userApp_buttons" id="app_button2" value="reward" style="cursor: pointer;">
+                        <p id="total_reward_fil_main" class="app_text text_fil" style=" font-weight: bold; color: white; text-decoration: none;"  th:text="${investDetailForHw.total_reward_fil}"></p>
+                </div>
+            <!--    <div class="col-12 text-center userApp_buttons" id="app_button3" value="cash" style="cursor: pointer;">
+                        <p id="paid_fil_main" class="app_text text_fil" style=" font-weight: bold; color: white; text-decoration: none;" th:text="${investDetailForHw.total_reward_fil-investDetailForHw.processed_fil-investDetailForHw.paid_fil}">0</p>
+                </div> -->
+                <div class="col-12 text-center userApp_buttons" id="app_button3" value="cash" style="cursor: pointer;">
+                        <p id="paid_fil_main" class="app_text text_fil" style=" font-weight: bold; color: white; text-decoration: none;" th:text="${investDetailForHw.total_reward_fil}">0</p>
+                </div>
+                <div class="col-12 text-center userApp_buttons" id="app_button4" value="status" style="cursor: pointer;">
+                        <p class="app_text" style=" font-weight: bold; color: white; text-decoration: none;">운영중</p>
+                </div>
+                <div class="col-12 text-center userApp_buttons" id="app_button5" value="price" style="cursor: pointer;">
+                    <p class="app_text text_won" style=" font-weight: bold; color: white; text-decoration: none;" th:text="${last} + '원'"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <audio id="bgm" loop>
+			  <source src="/assets/bgm/bgm-1m.mp3" type="audio/mp3">
+			  <audio id="buttonSound" src="/assets/bgm/buttonsound1.wav" preload="auto"></audio>
+			  <audio id="serverOnSound" src="/assets/bgm/serverOnSound.wav" preload="auto"></audio>
+			   <audio class="ding" src="/assets/bgm/ping.mp3" preload="auto"></audio>
+			   <audio class="ding" src="/assets/bgm/ding.wav" preload="auto"></audio>
+			   <audio class="ding" src="/assets/bgm/hook.mp3" preload="auto"></audio>
+			   <audio class="ding" src="/assets/bgm/shotgun.mp3" preload="auto"></audio>
+			</audio>
+        </div>
+    </div>
+</div>
+    
+</html>

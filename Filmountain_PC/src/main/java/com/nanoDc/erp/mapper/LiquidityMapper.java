@@ -13,11 +13,13 @@ public interface LiquidityMapper {
 	public List<LiquidityVO> getLiquidityList();
 	public List<LiquidityVO> getTotalPoolInfo();
 	public List<LiquidityVO> getLiquidityrewardList();
+	public List<LiquidityVO> getLiquidityInfoByUser(int userId);
 	public List<LiquidityVO> selectLiquiditytxByUser(int userId);
 	public List<LiquidityVO> selectLiquidityRewardByUser(int userId);
 	public List<LiquidityVO> selectLiquidityInfotxByUser(int userId);
 	public List<LiquidityVO> findUserContributionByUserId(int userId);
 	public void addNewLPTransaction(LiquidityVO liquidityVO);
 	public void updateLPStatus(LiquidityVO liquidityVO);
+	public void updateLiquidityInfo(LiquidityVO liquidityVO);
 
 }

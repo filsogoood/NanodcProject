@@ -103,6 +103,21 @@ public class UserController {
 		            mav.addObject("loginError", loginError);
 		            return mav;
 		}
+		@GetMapping(value={"/app/login"})
+		  public ModelAndView Applogin(@ModelAttribute("loginError") String loginError,
+		    		@ModelAttribute LoginVO loginVO,
+		    	
+		            HttpServletRequest request) {
+		        ModelAndView mav = new ModelAndView();
+		        HttpSession session = request.getSession();
+		        if(userService.checkSession(request)==true) {
+		        	mav.setViewName("redirect:/app/index");
+		            return mav;
+		        }
+		            mav.setViewName("views/user/app/app_Login");
+		            mav.addObject("loginError", loginError);
+		            return mav;
+		}
 		
 		@GetMapping(value={"/Signup"})
 		  public ModelAndView Signup(@ModelAttribute("loginError") String loginError,
@@ -118,6 +133,20 @@ public class UserController {
 		            mav.setViewName("views/user/userSignup");
 		            return mav;
 		}
+		@GetMapping(value={"/app/Signup"})
+		  public ModelAndView AppSignup(@ModelAttribute("loginError") String loginError,
+		    		@ModelAttribute LoginVO loginVO,
+		    	
+		            HttpServletRequest request) {
+		        ModelAndView mav = new ModelAndView();
+		        HttpSession session = request.getSession();
+		        if(userService.checkSession(request)==true) {
+		        	mav.setViewName("redirect:/app/index");
+		            return mav;
+		        }
+		            mav.setViewName("views/user/userSignup");
+		            return mav;
+		} 
 		
 		@GetMapping("/checkUserEmail")
 		public ResponseEntity<Map<String, Boolean>> checkUserEmail(@RequestParam String user_email) {
@@ -186,6 +215,23 @@ public class UserController {
 	        return "redirect:/login";
 	    }
 		
+		@GetMapping(value={"/app/logout"})
+	    public String Applogout(HttpServletRequest request, HttpServletResponse response) {
+	        HttpSession session = request.getSession();
+	        session.invalidate();
+	        
+	       /* Cookie[] cookies = request.getCookies();
+	        if (cookies != null) {
+	            for (Cookie cookie : cookies) {
+	                if ("nanodc_userApp".equals(cookie.getName())) {
+	                    cookie.setMaxAge(0);
+	                    response.addCookie(cookie);
+	                    break;
+	                }
+	            }
+	        }*/
+	        return "redirect:/app/login";
+	    }
 		
 		 /*로그인 조건부*/
 		 @PostMapping(value={"/user/login.do"})
@@ -241,7 +287,58 @@ public class UserController {
 		        return "redirect:/login";
 		    }
 		 
-		
+		 @PostMapping(value={"/app/login.do"})
+		    private String doAppLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		        LoginVO lvo = new LoginVO();
+		        UserInfoVO userInfoVO = new UserInfoVO(); 
+		        try {
+		            // 입력받은 이메일 암호화
+		            String encryptedEmail = AESUtil.encrypt(loginVO.getId());
+		            userInfoVO.setUser_email(encryptedEmail);
+		        }catch (Exception e) {
+	                 e.printStackTrace();
+	                 userInfoVO.setUser_email("아이디를 확인해주세요");
+	             }
+		        userInfoVO = userInfoMapper.verifyUserInfoVO(userInfoVO);
+		        if (userInfoVO == null) {
+		        	redirect.addFlashAttribute("loginError", "아이디를 확인해주세요");
+		            return "redirect:/app/login";
+		        }
+		        if ("inactive".equals(userInfoVO.getUser_status())) {
+		        	redirect.addFlashAttribute("loginError", "유효하지 않은 아이디입니다.");
+		            return "redirect:/app/login";
+		        }
+		        if ("관리자".equals(userInfoVO.getLevel())) {
+		            redirect.addFlashAttribute("loginError", "관리자 계정입니다");
+		            return "redirect:/admin/login";
+		        }
+		        
+		        HttpSession session = request.getSession();
+		        String rawPw = "";
+		        String encodePw = "";
+		        if (userInfoVO != null) {
+		        	lvo.setId(userInfoVO.getUser_name());
+		        	userInfoVO=userInfoMapper.selectDetailUserInfoByUserId(userInfoVO.getUser_id());
+		            lvo.setUserInfoVO(userInfoVO);
+		            lvo.setLevel(userInfoVO.getLevel());
+		        	rawPw = loginVO.getPassword();
+		            String value = pwEncoder.encode(rawPw);
+		            if (this.pwEncoder.matches((CharSequence)rawPw, encodePw = userInfoMapper.getUserPassword(userInfoVO.getUser_id()))) {
+		                lvo.setPassword("");
+		                 Cookie rememberMeCookie = new Cookie("nanodc_userApp", String.valueOf(userInfoVO.getUser_id()));
+		                 rememberMeCookie.setMaxAge(7 * 24 * 60 * 60); // 30 days
+		                 response.addCookie(rememberMeCookie);
+		                
+		                 
+		                session.setAttribute("user", (Object)lvo);
+		                
+		                return "redirect:/app/index";
+		            }
+		        }
+		        
+		        redirect.addFlashAttribute("loginError", "비밀번호를 확인해주세요");
+		        return "redirect:/login";
+		    }
 				 
 		
 		 //유저앱 버튼 홈 페이지
@@ -273,7 +370,68 @@ public class UserController {
 		        mav.setViewName("views/user/userMain");
 		        return mav;
 		    }
-		
+		 @GetMapping(value={"/app/index"})
+		 public  ModelAndView Appindex(HttpServletRequest request) {
+		    ModelAndView mav = new ModelAndView();
+		    HttpSession session = request.getSession();
+			    if(!userService.checkSession(request)) {
+		        	mav.setViewName("redirect:/login");
+		            return mav;
+		        }
+		        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+		        if (loginVO != null) {
+		            try {
+		                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
+		                loginVO.getUserInfoVO().setUser_email(AESUtil.decrypt(loginVO.getUserInfoVO().getUser_email()));
+		                
+		            } catch (Exception e) {
+		                // 필요한 경우 예외 처리
+		            }
+		        }
+		        
+		        mav.addObject("loginVO", loginVO);
+		        mav.setViewName("views/user/app/userApp_home");
+		        return mav;
+		    }
+		 
+		 @GetMapping(value={"/StorageProvider"})
+		    public ModelAndView StorageProvider(HttpServletRequest request,@RequestParam(required = false) Integer hw_product_id) {
+			 	
+		        ModelAndView mav = new ModelAndView();
+		        HttpSession session = request.getSession();
+		        if(!userService.checkSession(request)) {
+		        	mav.setViewName("redirect:/user/login");
+		            return mav;
+		        }
+		        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+		        if ("관리자".equals(loginVO.getUserInfoVO().getLevel())) {
+			    	 mav.setViewName("redirect:/admin/login");
+			    	 return mav;
+			        }
+		        MainIndexMapper mainIndexMapper = userService.userAppMainInfoBuilder(request, hw_product_id);
+		        String error="";
+		        if(mainIndexMapper.getError().equals("No Investment")) {
+		        	error="No Investment";
+		        }
+		        if (loginVO != null) {
+		            try {
+		                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
+		                loginVO.getUserInfoVO().setUser_email(AESUtil.decrypt(loginVO.getUserInfoVO().getUser_email()));
+		                
+		            } catch (Exception e) {
+		                // 필요한 경우 예외 처리
+		            }
+		        }
+		        mav.addObject("error",error);
+		        mav.addObject("main_bg_src",mainIndexMapper.getMain_bg_src());
+		        mav.addObject("progress_src",mainIndexMapper.getProgress_src());
+		        mav.addObject("dividedList",mainIndexMapper.getDividedList());
+		        mav.addObject("investDetailForHw",mainIndexMapper.getInvestDetailForHw());
+		        mav.addObject("last", filPriceMapper.getLatestFilPrice().getFil_last());
+		        mav.addObject("loginVO", mainIndexMapper.getLoginVO());
+		        mav.setViewName("views/user/app/userSPApp_index");
+		        return mav;
+		    }
 	//유저프로필편집
 	@GetMapping(value={"/profileEdit"})
 	 public  ModelAndView profileEdit(HttpServletRequest request) {

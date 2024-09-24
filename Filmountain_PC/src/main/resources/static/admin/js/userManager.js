@@ -69,6 +69,32 @@ $(document).on('click', '.detail_user', function() {
 									
 			                    }
 			                });
+			                
+			                $.ajax({
+							    type: "POST",
+							    url: "/admin/getLiquidityInfoByUser",
+							    contentType: "application/json",
+							    data: JSON.stringify(user_id), // JSON 형태로 user_id를 보냄
+							    success: function (data) {
+							        // data가 배열인 경우, 첫 번째 객체의 필드를 할당
+							        if (data.length > 0) {
+							            const item = data[0]; // 첫 번째 객체
+							            // 각 필드에 값을 할당
+							            $('#total_amount').val(item.liquidity_amount);
+							            $('#reward_fil').val(item.total_reward);
+							            $('#locked_fil').val(item.locked_fil);
+							            $('#enable_fil').val(item.enable_fil); // 출금가능 필드는 별도 계산이 필요할 수 있음
+							            $('#f4_address').val(item.f4_address);
+							        }
+							    },
+							    error: function (error) {
+							        console.log("Error:", error);
+							    }
+							});
+
+			                
+			                
+			                
 							$('#detail_user_modal').modal('show');
 							
 					    });
@@ -122,7 +148,47 @@ $(document).on('click', '.detail_user', function() {
 			                	});  
 							});
 							
-								
+								$('#update_LiquidityInfo').on('click', function() {
+
+ 						       var total_amount = $('#total_amount').val();
+ 						       var locked_fil = $('#locked_fil').val();
+ 						       var enable_fil = $('#enable_fil').val();
+							  
+							   $.ajax({
+			                    type: "POST",
+			                    url: "/admin/updateLiquidityInfo",
+			                    contentType: "application/json",
+			                    data: JSON.stringify({
+							        user_id  : user_id,
+							        liquidity_amount : total_amount,
+							        locked_fil : locked_fil,
+							        enable_fil : enable_fil
+							        
+							    }),
+			                    success: function (data) {
+									$('#add_user_modal').modal('hide');
+									if(data=='success'){
+										if ($('#alert_header_user').hasClass("bg-danger")) 
+											{
+							            		$('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
+							       		 	} 
+										$('#alert_title_user').text("업데이트 완료");
+										$('#alert_modal_user').modal('show');
+			                        }
+			                        else if(data='failed:session_closed'){	
+										$('#session_alert_user').modal('show');
+									}
+			                        else{
+										if ($('#alert_header_user').hasClass("bg-success")) 
+										{
+								            $('#alert_header_user').removeClass("bg-success").addClass("bg-danger");
+							       		} 			
+							       		 $('#alert_title_user').text("업데이트 실패");
+								            $('#alert_modal_user').modal('show');
+									}
+			                    	}
+			                	});  
+							});
 
 							
 					     $('#user_update_confirm').on('click', function() {     

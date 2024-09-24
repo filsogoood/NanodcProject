@@ -204,6 +204,7 @@ public class AdminController {
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        List<UserInfoVO> userInfoList = this.adminService.selectUserInfoList();
 	        List<HardwareProductVO> productList = this.adminService.getProductList(); 
+
 	        mav.addObject("userInfoList", userInfoList);
 	        mav.setViewName("views/admin/userManager");
 	        mav.addObject("productList", productList);
@@ -502,6 +503,22 @@ public class AdminController {
 	    
 	    return adminService.updateinvestmentUser(hardwareInvestmentVO,request);
 	    }   
+	 
+	 /* 유저 liquidity info 가져오기 */
+	 @ResponseBody
+	    @PostMapping(value={"/getLiquidityInfoByUser"})
+	    public List<LiquidityVO> getLiquidityInfoByUser(@RequestBody int user_id) { 
+		 
+	    	return adminService.getLiquidityInfoByUser(user_id);
+	    }
+	 @ResponseBody  
+	    @PostMapping(value={"/updateLiquidityInfo"})
+	    public String updateLiquidityInfo(@RequestBody LiquidityVO liquidityVO, HttpServletRequest request) {
+	        
+
+	            return adminService.updateLiquidityInfo(liquidityVO,request);
+	       
+	    	}
 	 
 	  
 	    	
