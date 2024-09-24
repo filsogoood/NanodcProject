@@ -1,5 +1,5 @@
 var resizeWebViewCalled = false;
-var href = '/user/'; 
+var href = '/'; 
 var src = "/assets/img/filmountain/";
 var isRunning = false;
 var isClicked = false;
@@ -117,7 +117,7 @@ $(document).ready(function() {
 				return;
 			}
 			isClicked=true;
-			href = '/user/';
+			href = '/';
 			 playButtonSound();
 		if($(clickedObject).attr('id') == 'app_button1'){
 			src +="investment.png";
@@ -249,13 +249,14 @@ $('#power_button')
 		        setTimeout(function() {
 		            $.ajax({
 		                type: "POST",
-		                url: "/user/userAppMainInfoBuilder",
+		                url: "/userAppMainInfoBuilder",
 		                contentType: "application/json",
 		                data: JSON.stringify({ hw_product_id: hw_product_id }),  
 		                success: function (data) {
 							
 							if(data.error=="session closed"){
-								window.location.href = "/user/login";
+								window.location.href = "/login";
+								
 							};
 		                    $btn.fadeTo(100, 1); 
 		                    $('#hw_product_id').val(hw_product_id);

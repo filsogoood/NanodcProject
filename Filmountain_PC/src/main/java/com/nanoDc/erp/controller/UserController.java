@@ -183,7 +183,7 @@ public class UserController {
 	                }
 	            }
 	        }*/
-	        return "redirect:/app/login";
+	        return "redirect:/login";
 	    }
 		
 		
@@ -203,11 +203,11 @@ public class UserController {
 		        userInfoVO = userInfoMapper.verifyUserInfoVO(userInfoVO);
 		        if (userInfoVO == null) {
 		        	redirect.addFlashAttribute("loginError", "아이디를 확인해주세요");
-		            return "redirect:/app/login";
+		            return "redirect:/login";
 		        }
 		        if ("inactive".equals(userInfoVO.getUser_status())) {
 		        	redirect.addFlashAttribute("loginError", "유효하지 않은 아이디입니다.");
-		            return "redirect:/app/login";
+		            return "redirect:/login";
 		        }
 		  
 		        
@@ -235,7 +235,7 @@ public class UserController {
 		        }
 		        
 		        redirect.addFlashAttribute("loginError", "비밀번호를 확인해주세요");
-		        return "redirect:/app/login";
+		        return "redirect:/login";
 		    }
 				 
 		
@@ -270,14 +270,11 @@ public class UserController {
 		        ModelAndView mav = new ModelAndView();
 		        HttpSession session = request.getSession();
 		        if(!userService.checkSession(request)) {
-		        	mav.setViewName("redirect:/user/login");
+		        	mav.setViewName("redirect:/login");
 		            return mav;
 		        }
 		        LoginVO loginVO = (LoginVO)session.getAttribute("user");
-		        if ("관리자".equals(loginVO.getUserInfoVO().getLevel())) {
-			    	 mav.setViewName("redirect:/admin/login");
-			    	 return mav;
-			        }
+		       
 		        MainIndexMapper mainIndexMapper = userService.userAppMainInfoBuilder(request, hw_product_id);
 		        String error="";
 		        if(mainIndexMapper.getError().equals("No Investment")) {
@@ -302,6 +299,17 @@ public class UserController {
 		        mav.setViewName("views/user/app/userSPApp_index");
 		        return mav;
 		    }
+		 @ResponseBody
+		 @PostMapping(value={"/userAppMainInfoBuilder"})
+		 public MainIndexMapper userAppMainInfoBuilder(@RequestBody MainIndexMapper mainIndexMapper, HttpServletRequest request) {
+			 HttpSession session = request.getSession();
+		        if(!userService.checkSession(request)) {
+		        	MainIndexMapper mainIndexMapper_temp = new MainIndexMapper();
+		        	mainIndexMapper_temp.setError("session closed");
+		        	return mainIndexMapper_temp;
+		        }
+		    return userService.userAppMainInfoBuilder(request,mainIndexMapper.getHw_product_id());
+		    }   
 	//유저프로필편집
 	@GetMapping(value={"/profileEdit"})
 	 public  ModelAndView profileEdit(HttpServletRequest request) {
@@ -385,8 +393,75 @@ public class UserController {
 		
 	//유저 sp 대시보드
 	
-        
-        
+		//유저투자
+		@GetMapping(value={"/investment"})
+	    public ModelAndView investment(HttpServletRequest request) {
+	        ModelAndView mav = new ModelAndView();
+	        HttpSession session = request.getSession();
+	        if(!userService.checkSession(request)) {
+	        	mav.setViewName("redirect:/login");
+	            return mav;
+	        }
+	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	        List<HardwareInvestmentVO> investmentList = this.userService.selectInvestmentListForUser(loginVO.getUserInfoVO());
+	        
+	        HardwareProductVO product_detail = hardwareProductMapper.getProductById(loginVO.getUserInfoVO().getHw_product_id()); 
+	        mav.addObject("product_detail",product_detail);
+	        mav.addObject("investmentList", investmentList);
+	        mav.addObject("loginVO", loginVO);
+	        mav.setViewName("views/user/app/userApp-SPinvestment");
+	        return mav;
+	    }
+		//유저 보상
+		@GetMapping(value={"/reward"})
+	    public ModelAndView reward(HttpServletRequest request) {
+	        ModelAndView mav = new ModelAndView();
+	        HttpSession session = request.getSession();
+	        if(!userService.checkSession(request)) {
+	        	mav.setViewName("redirect:/login");
+	            return mav;
+	        }
+	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	        List<HardwareRewardSharingDetailVO> rewardDetailList = userService.selectRewardSharingDetailListByUser(loginVO.getUserInfoVO().getUser_id());
+	        Date lastRewardDate = new Date();
+	        Date firstRewardDate= new Date();
+	        long  interval =0;
+	        List<Double> dataList = new ArrayList<Double>();
+	        if(!rewardDetailList.isEmpty()) {
+	        lastRewardDate = rewardDetailList.get(0).getRegdate();
+	        firstRewardDate = rewardDetailList.get(rewardDetailList.size()-1).getRegdate();
+	        interval = (lastRewardDate.getTime() - firstRewardDate.getTime())/30;
+	        for(long i= firstRewardDate.getTime() + interval;i<lastRewardDate.getTime()+interval;i += interval) {
+	        	double data=0;
+		        for(int j = rewardDetailList.size()-1;j>=0;j--) {
+		        	if(rewardDetailList.get(j).getRegdate().getTime()<=i) {
+		        		data += rewardDetailList.get(j).getReward_fil();
+		        		if(j==0) {
+		        			dataList.add(data);
+			        		break;
+		        		}
+		        	}else {
+		        		dataList.add(data);
+		        		break;
+		        	}
+		        }
+	        }
+
+	        }
+	        
+	        
+	        
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	        userService.userVOsessionUpdate(request);
+	        mav.addObject("dataList",dataList);
+	        mav.addObject("firstDate",dateFormat.format(firstRewardDate));
+	        mav.addObject("lastDate",dateFormat.format(lastRewardDate));
+	        mav.addObject("dataSize",dataList.size());
+	        mav.addObject("rewardDetailList", rewardDetailList);
+	        mav.addObject("loginVO", loginVO);
+	        mav.setViewName("views/user/app/reward");
+	        return mav;
+	    }
  
 	//FIL 가격 현황 페이지
 		@GetMapping(value={"/price"})

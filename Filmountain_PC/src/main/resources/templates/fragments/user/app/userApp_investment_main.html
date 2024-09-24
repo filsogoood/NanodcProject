@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+		<div class="content mt-7" th:fragment="MainContent">
+        <div class="row gx-6 gy-3 mb-4 align-items-center">
+          <div class="col-auto">
+            <h2 class="mb-0">투자현황</h2>
+          </div>
+
+        </div>               
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-9">
+          <div class="col" th:each="investment, iterStat : ${investmentList}">
+            <div class="card h-10" id="investmentChartParent">
+				 <img th:if="${iterStat.index == 0}" th:src="'/uploads/'+${investment.picture_url}" class="card-img-top" alt="...">
+					<div th:if="${iterStat.index == 0}" th:utext="${product_detail.details}" class="p-4"></div>
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5" th:text="${investment.hw_product_name}"></h4>
+                  <div class="hover-actions top-0 end-0 mt-4 me-4">
+                    <button class="btn btn-primary btn-icon flex-shrink-0" data-bs-toggle="modal" data-bs-target="#projectsCardViewModal"><svg class="svg-inline--fa fa-chevron-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path></svg><!-- <span class="fa-solid fa-chevron-right"></span> Font Awesome fontawesome.com --></button>
+                  </div>
+				  </div>
+				<span class="badge badge-phoenix fs-10 mb-4 badge-phoenix-success"
+				      th:if="${investment.hw_product_status eq '운영중'}">운영중</span>
+				<span class="badge badge-phoenix fs-10 mb-4 badge-phoenix-primary"
+				      th:if="${investment.hw_product_status eq '추가모집중'}">추가모집중</span>
+				<span class="badge badge-phoenix fs-10 mb-4 badge-phoenix-warning"
+				      th:if="${investment.hw_product_status eq '설치중'}">설치중</span>
+				<span class="badge badge-phoenix fs-10 mb-4 badge-phoenix-info"
+				      th:if="${investment.hw_product_status eq '투자모집중'}">투자모집중</span>
+				<span class="badge badge-phoenix fs-10 mb-4 badge-phoenix-danger"
+				      th:if="${investment.hw_product_status eq '운영종료'}">운영종료</span>		
+			
+                <div class="d-flex justify-content-between">
+                        <div>
+                          <h5 style="display:none;">투자 금액 : <span class="fw-semibold ms-1" id="hw_invest_fil" th:text="${investment.hw_invest_fil}"></span></h5>
+                        </div>
+                      </div>
+                      <div class="pb-4 pt-3">
+                        <div class="investmentChart" style="height:115px;width:100%;"></div>
+                      </div>
+                      <div>
+						 <div class="d-flex align-items-center mb-2">
+                          <div class="bullet-item bg-success-light me-2"></div>
+                          <h6 class="text-body fw-semibold flex-1 mb-0">총투자 금액</h6>
+                          <h6 class="text-body fw-semibold mb-0" id="total_budget_fil" th:text="${investment.total_budget_fil}"></h6>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                          <div class="bullet-item bg-success me-2"></div>
+                          <h6 class="text-body fw-semibold flex-1 mb-0">투자 금액</h6>
+                          <h6 class="text-body fw-semibold mb-0" id="invest_percent" th:text="${investment.invest_percent}"></h6>
+                        </div>
+                      </div>
+                <div class="d-flex align-items-center mt-4">
+                  <p class="mb-0 fw-bold fs-9">투자일 :<span class="fw-semibold text-body-tertiary text-opactity-85 ms-1" th:text="${#dates.format(investment.hw_reg_date, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+                </div>
+              </div>
+            </div>
+          </div>  
+        </div>	
+      </div>    	
+</html>
