@@ -19,5 +19,7 @@ public interface LiquidityMapper {
 	public List<LiquidityVO> findUserContributionByUserId(int userId);
 	public void addNewLPTransaction(LiquidityVO liquidityVO);
 	public void updateLPStatus(LiquidityVO liquidityVO);
+	public List<LiquidityVO> getLiquidityInfoByUser(int userId);
+	public void updateLiquidityInfo(LiquidityVO liquidityVO);
 
 }

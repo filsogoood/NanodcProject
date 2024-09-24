@@ -134,5 +134,39 @@
 		 SET status = #{status},tx_message = #{tx_message}
 		 Where liquid_id = #{liquid_id}
 	 </update>
+	 <select id="getLiquidityInfoByUser" parameterType="integer" resultType="com.nanoDc.erp.vo.LiquidityVO">
+	    SELECT 
+		    liq.liquidity_amount,
+		    liq.user_id,
+		    liq.enable_fil,
+		    liq.locked_fil,
+		    wal.f4_address,
+		    COALESCE(SUM(rew.reward_amount), 0) AS total_reward
+		FROM Liquidity_info liq
+		INNER JOIN wallet wal ON liq.wallet_id = wal.wallet_id
+		LEFT JOIN Liquidity_reward rew ON liq.user_id = rew.user_id
+		WHERE liq.user_id = #{user_id}
+		GROUP BY liq.liquidity_amount, liq.user_id, liq.enable_fil, liq.locked_fil, wal.f4_address;
+	</select>
+	
+	<update id="updateLiquidityInfo" parameterType="com.nanoDc.erp.vo.LiquidityVO">
+		    UPDATE Liquidity_info
+		    <set>
+		        <!-- liquidity_amount 필드가 NULL이 아닌 경우에만 업데이트 -->
+		        <if test="liquidity_amount != null">
+		            liquidity_amount = #{liquidity_amount},
+		        </if>
+		        <!-- enable_fil 필드가 NULL이 아닌 경우에만 업데이트 -->
+		        <if test="enable_fil != null">
+		            enable_fil = #{enable_fil},
+		        </if>
+		        <!-- locked_fil 필드가 NULL이 아닌 경우에만 업데이트 -->
+		        <if test="locked_fil != null">
+		            locked_fil = #{locked_fil},
+		        </if>
+		    </set>
+		    WHERE user_id = #{user_id};
+</update>
+	 
 
 </mapper>

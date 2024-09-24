@@ -35,6 +35,7 @@ public class LiquidityVO {
 	private BigDecimal total_liquidity_amount;
 	private BigDecimal total_locked_fil;
 	private BigDecimal locked_fil;
+	private BigDecimal enable_fil;
 	
 	public BigDecimal getFil_amount() {
 		return fil_amount; 
@@ -194,6 +195,12 @@ public class LiquidityVO {
 	}
 	public void setLocked_fil(BigDecimal locked_fil) {
 		this.locked_fil = locked_fil;
+	}
+	public BigDecimal getEnable_fil() {
+		return enable_fil;
+	}
+	public void setEnable_fil(BigDecimal enable_fil) {
+		this.enable_fil = enable_fil;
 	}
 	
 
