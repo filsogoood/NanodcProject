@@ -422,6 +422,7 @@ public class UserController {
 	            return mav;
 	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	        
 	        List<HardwareRewardSharingDetailVO> rewardDetailList = userService.selectRewardSharingDetailListByUser(loginVO.getUserInfoVO().getUser_id());
 	        
 	        Date lastRewardDate = new Date();
@@ -449,11 +450,20 @@ public class UserController {
 	        }
 
 	        }
-	        
+	    
 	        
 	        
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	        userService.userVOsessionUpdate(request);
+	        if (loginVO != null) {
+	            try {
+	                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
+	                loginVO.getUserInfoVO().setUser_email(AESUtil.decrypt(loginVO.getUserInfoVO().getUser_email()));
+	                
+	            } catch (Exception e) {
+	                // 필요한 경우 예외 처리
+	            }
+	        }
 	        mav.addObject("dataList",dataList);
 	        mav.addObject("firstDate",dateFormat.format(firstRewardDate));
 	        mav.addObject("lastDate",dateFormat.format(lastRewardDate));
@@ -487,6 +497,15 @@ public class UserController {
 		        for(int i=0;i<filPriceList.size();i++) {
 		        	dataList.add(filPriceList.get(i).getFil_last());
 		        }
+	        }
+	        if (loginVO != null) {
+	            try {
+	                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
+	                loginVO.getUserInfoVO().setUser_email(AESUtil.decrypt(loginVO.getUserInfoVO().getUser_email()));
+	                
+	            } catch (Exception e) {
+	                // 필요한 경우 예외 처리
+	            }
 	        }
 	        userService.userVOsessionUpdate(request);
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");

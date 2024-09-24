@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div class="content mt-7 container-small" th:fragment="MainContent">
+        
+        
+        
+
+
+        
+
+			
+        
+        <!-- 카카오써트 본인 인증 모달 추가 -->
+        
+        <!-- 본인 인증 요청 모달 -->
+		<div class="modal fade" id="identityVerificationRequestModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title text-white">본인 인증 요청</h5>
+		        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+		          <span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p>본인 인증 요청이 접수되었습니다. 인증을 완료 후 확인 버튼을 클릭하세요.</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button id="identityVerificationRequestConfirm" class="btn btn-primary" type="button" data-bs-dismiss="modal">확인</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<!-- 본인 인증 성공 모달 -->
+		<div class="modal fade" id="identityVerificationSuccessModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title text-white">본인 인증 성공</h5>
+		        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+		          <span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p>본인 인증이 성공하였습니다.</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button id="identityVerificationSuccessConfirm" class="btn btn-primary" type="button" data-bs-dismiss="modal">확인</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<!-- 본인 인증 실패 모달 -->
+		<div class="modal fade" id="identityVerificationFailModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title text-white">본인 인증 실패</h5>
+		        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+		          <span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p id="identityVerificationFailMessage">본인 인증이 완료되지 않았습니다. 다시 시도해주세요.</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button id="identityVerificationFailConfirm" class="btn btn-primary" type="button" data-bs-dismiss="modal">확인</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+        
+		<div class="modal fade" id="identityVerificationModal" tabindex="-1" role="dialog">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title text-white">본인 인증</h5>
+		                <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span></button>
+		            </div>
+		            <div class="modal-body">
+		                <div class="mb-2">
+		                    <label class="form-label fs-9" for="verify_name">이름</label>
+		                    <input class="form-control" id="verify_name" type="text" required />
+		                </div>
+		                <div class="mb-2">
+		                    <label class="form-label fs-9" for="verify_birthdate">생년월일</label>
+		                    <input class="form-control" id="verify_birthdate" type="text" placeholder="YYYYMMDD" required />
+		                </div>
+		                <div class="mb-2">
+		                    <label class="form-label fs-9" for="verify_phone">핸드폰 번호</label>
+		                    <input class="form-control" id="verify_phone" type="text" placeholder="‘-’빼고 숫자만 입력" required />
+		                </div>
+		            </div>
+		            <div class="modal-footer">
+		                <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">닫기</button>
+		                <button id="startIdentityVerification" class="btn btn-outline-primary" type="button">본인 인증</button>
+		            </div>
+		        </div>
+		    </div>
+</div>  
+        <div class="modal fade" id="success_alert" tabindex="-1" role="dialog">
+           <div class="modal-dialog">
+             <div class="modal-content">
+               <div class="modal-header bg-success">
+                 <h5 class="modal-title text-white dark__text-gray-1100" id="success_alert_title">성공!</h5>
+                 <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span></button>
+               </div>
+               <div class="modal-footer">
+                 <button class="btn btn-outline-success" type="button" data-bs-dismiss="modal">확인</button>
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="modal fade" id="fail_alert" tabindex="-1" role="dialog">
+           <div class="modal-dialog">
+             <div class="modal-content">
+               <div class="modal-header bg-danger">
+                 <h5 class="modal-title text-white dark__text-gray-1100" id="fail_alert_title">실패</h5>
+                 <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span></button>
+               </div>
+               <div class="modal-footer">
+                 <button class="btn btn-outline-danger" type="button" data-bs-dismiss="modal">확인</button>
+               </div>
+             </div>
+           </div>
+         </div>   
+      <div class="modal fade" id="addNewTransactionPayout_modal" tabindex="-1" role="dialog">
+           <div class="modal-dialog">
+             <div class="modal-content">
+               <div class="modal-header">
+                 <h5 class="modal-title text-white" id="success_alert_title">출금신청</h5>
+                 <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span></button>
+               </div>
+               <div class="modal-body">
+                 <div class="mb-2">
+               
+                   <label class="form-label fs-9" for="basic-form-name">신청 FIL 수량</label>
+               
+                   <input class="form-control" id="new_transaction_fil_amount" type="number"/>
+                 </div>
+                 <div class="mb-2">
+
+                          <label class="form-label fs-9" for="wallet">보낼지갑</label>
+
+                          <select class="form-select mb-1" id="wallet_new_transaction_option">
+                       <option th:each="wallet, iterStat : ${walletList}" 
+                              th:value="${wallet.wallet_id}" 
+                              th:text="${wallet.sp_address}" 
+                              th:selected="${iterStat.index == 0}"></option>
+                  </select>
+                        </div>
+              </div>
+               <div class="modal-footer">
+                 <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">닫기</button>
+                 <button id="addNewTransactionPayout_confirm" class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">신청</button>
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="modal fade" id="walletManager_modal" tabindex="-1" role="dialog">
+           <div class="modal-dialog">
+             <div class="modal-content">
+               <div class="modal-header">
+                 <h5 class="modal-title text-white" id="success_alert_title">지갑관리</h5>
+                 <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9 text-white dark__text-gray-1100"></span></button>
+               </div>
+               <div class="modal-body">
+                 <div class="mb-2">
+               
+                   <label class="form-label fs-9" for="basic-form-name">지갑 추가</label>
+                  <div class="row">
+                     <div class="col-8">
+                        <input class="form-control" id="new_wallet_addr" type="text"/>
+                     </div>
+                     <div class="col-4">
+                        <button class="btn btn-outline-primary" id='addNewWallet_confirm' type="button" data-bs-dismiss="modal">추가</button>   
+                     </div>
+                  </div>
+                   
+                   
+                 </div>
+                 <div class="mb-2">
+                          <label class="form-label fs-9" for="wallet">지갑삭제</label>
+                          <div class="row">
+                     <div class="col-8">
+                         <select class="form-select mb-1" id="wallet_delete_option">
+                             <option th:each="wallet, iterStat : ${walletList}" 
+                                    th:value="${wallet.wallet_id}" 
+                                    th:text="${wallet.sp_address}" 
+                                    th:selected="${iterStat.index == 0}"></option>
+                        </select>
+                     </div>
+                     <div class="col-4">
+                        <button class="btn btn-outline-danger"  id='deleteWallet_confirm' type="button" data-bs-dismiss="modal">삭제</button>   
+                     </div>
+                  </div>
+                        </div>
+				  </div>
+			      <div class="modal-footer">
+			        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+
+		<div class="row gx-6 gy-3 mb-4 align-items-center">
+			<div class="col-auto">
+				 <h1>출금내역</h1>
+			</div>
+		</div>
+		<div class="row justify-content-md-between mt-10 mb-10">
+              <div class="col-sm-5 col-md-4 col-xxl-4 my-3 my-sm-0" style="align-content: center;">
+                <div class="row g-0">
+                  <div class="col-4 col-xl-4" style="width: 100%;">
+                    <div class="d-flex flex-column flex-center align-items-sm-start flex-md-row justify-content-md-between flex-xxl-column p-3 ps-sm-3 ps-md-4 p-md-3 h-100">
+                      <div class="d-flex align-items-center mb-1"><span class="fa-solid fa-square fs-11 me-2 text-primary" data-fa-transform="up-2"></span><span class="mb-0 fs-9 text-body">출금가능FIL</span></div>
+                      <h3 class="fw-semibold ms-xl-3 ms-xxl-0 pe-md-2 pe-xxl-0 mb-0 mb-sm-3" style="display:none;" id="total_reward_fil" th:text="${loginVO.userInfoVO.total_reward_fil - loginVO.userInfoVO.processed_fil - loginVO.userInfoVO.paid_fil}">80</h3>
+                      <div class="d-flex align-items-center mb-1"><span class="fa-solid fa-square fs-11 me-2 text-warning" data-fa-transform="up-2"></span><span class="mb-0 fs-9 text-body">처리중인FIL</span></div>
+                      <h3 class="fw-semibold ms-xl-3 ms-xxl-0 pe-md-2 pe-xxl-0 mb-0 mb-sm-3" id="processed_fil" th:text="${loginVO.userInfoVO.processed_fil}">65</h3>
+                      <div class="d-flex align-items-center mb-1"><span class="fa-solid fa-square fs-11 me-2 text-info" data-fa-transform="up-2"></span><span class="mb-0 fs-9 text-body">출금완료FIL</span></div>
+                      <h3 class="fw-semibold ms-xl-3 ms-xxl-0 pe-md-2 pe-xxl-0 mb-0 mb-sm-3" id="paid_fil" th:text="${loginVO.userInfoVO.paid_fil}">40</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-5 col-md-4 col-xxl-4 my-3 my-sm-0">
+                <div class="position-relative d-flex flex-center mb-sm-4 mb-xl-0 echart-contact-by-source-container mt-sm-7 mt-lg-4 mt-xl-0">
+                  <div class="echart-contact-by-source" style="height:374px; width: 100%;"></div>
+                  <div class="position-absolute rounded-circle bg-primary-subtle top-50 start-50 translate-middle d-flex flex-center" style="height:180px; width:180px;">
+                    <h3 class="mb-0 text-primary-dark fw-bolder" data-label="data-label"></h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col gx-6 gy-3 mb-4 align-items-center col-sm-5 col-md-4 col-xxl-4 my-3 my-sm-0" style="width: 20%; align-content: center;">
+				  <div class="col-auto">
+				    <button class="btn btn-outline-warning m-1" id="addNewTransactionPayout" th:data-user-id="${loginVO.userInfoVO.user_id}"th:data-user-name="${userInfoVO.user_name}" 
+    				th:data-phone-number="${userInfoVO.phone_number}" style="width: 100%;">
+				      <svg class="svg-inline--fa fa-plus me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+				        <path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z">
+				        </path>
+				      </svg>출금신청</button>
+				  </div>
+				  <div class="col-auto">
+				    <button class="btn btn-outline-warning m-1" id="walletManager" th:data-user-ids="${loginVO.userInfoVO.user_id}" style="width: 100%;">
+				      <svg class="svg-inline--fa fa-plus me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+				        <path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z">
+				        </path>
+				      </svg>지갑관리</button>
+				  </div>
+				</div>
+            </div>
+            
+        
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xxl-3 g-3">
+          <div class="col"  th:each="transaction : ${transactionList}">
+            <div class="card h-100 hover-actions-trigger">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <h4 class="mb-2 line-clamp-1 lh-sm flex-1 me-5">FIL 출금</h4>
+                </div><span class="badge badge-phoenix fs-10 mb-2"
+                     th:class="${transaction.status == '출금승인'} ? 'badge badge-phoenix fs-10 mb-4 badge-phoenix-success' : 
+                               (${transaction.status == '출금신청'} ? 'badge badge-phoenix fs-10 mb-4 badge-phoenix-warning' :
+                               (${transaction.status == '출금거절'} ? 'badge badge-phoenix fs-10 mb-4 badge-phoenix-danger' : ''))"
+                     th:text="${transaction.status}">
+                     승인
+               </span>
+                <div class="d-flex align-items-center mb-2"><svg class="svg-inline--fa fa-credit-card me-2 text-body-tertiary fs-9 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="credit-card" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M512 32C547.3 32 576 60.65 576 96V128H0V96C0 60.65 28.65 32 64 32H512zM576 416C576 451.3 547.3 480 512 480H64C28.65 480 0 451.3 0 416V224H576V416zM112 352C103.2 352 96 359.2 96 368C96 376.8 103.2 384 112 384H176C184.8 384 192 376.8 192 368C192 359.2 184.8 352 176 352H112zM240 384H368C376.8 384 384 376.8 384 368C384 359.2 376.8 352 368 352H240C231.2 352 224 359.2 224 368C224 376.8 231.2 384 240 384z"></path></svg><!-- <span class="fa-solid fa-credit-card me-2 text-body-tertiary fs-9 fw-extra-bold"></span> Font Awesome fontawesome.com -->
+                  <p class="fw-bold mb-0 fs-9 lh-1">출금 : <span class="ms-1 text-body-emphasis"  th:text="${transaction.fil_amount}">100 FIL</span></p>
+                </div>
+                <div class="d-flex align-items-center mb-2"><svg class="svg-inline--fa fa-credit-card me-2 text-body-tertiary fs-9 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="credit-card" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M512 32C547.3 32 576 60.65 576 96V128H0V96C0 60.65 28.65 32 64 32H512zM576 416C576 451.3 547.3 480 512 480H64C28.65 480 0 451.3 0 416V224H576V416zM112 352C103.2 352 96 359.2 96 368C96 376.8 103.2 384 112 384H176C184.8 384 192 376.8 192 368C192 359.2 184.8 352 176 352H112zM240 384H368C376.8 384 384 376.8 384 368C384 359.2 376.8 352 368 352H240C231.2 352 224 359.2 224 368C224 376.8 231.2 384 240 384z"></path></svg><!-- <span class="fa-solid fa-credit-card me-2 text-body-tertiary fs-9 fw-extra-bold"></span> Font Awesome fontawesome.com -->
+                  <p class="fw-bold mb-0 text-truncate fs-9 lh-1">
+                지갑 : <a href="https://filfox.info/en/address/f133akvdrqovhrfjqshdnitcns5pz3vhl66cafgaq" class="fw-semibold text-primary ms-1" target="_blank" th:text="${transaction.sp_address}">
+                    f133akvdrqovhrfjqshdnitcns5pz3vhl66cafgaq
+                </a>
+            </p>
+                </div>
+                <div class="d-flex align-items-center mb-4">
+                <svg class="svg-inline--fa fa-credit-card me-2 text-body-tertiary fs-9 fw-extra-bold" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="credit-card" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg="">
+                    <path fill="currentColor" d="M512 32C547.3 32 576 60.65 576 96V128H0V96C0 60.65 28.65 32 64 32H512zM576 416C576 451.3 547.3 480 512 480H64C28.65 480 0 451.3 0 416V224H576V416zM112 352C103.2 352 96 359.2 96 368C96 376.8 103.2 384 112 384H176C184.8 384 192 376.8 192 368C192 359.2 184.8 352 176 352H112zM240 384H368C376.8 384 384 376.8 384 368C384 359.2 376.8 352 368 352H240C231.2 352 224 359.2 224 368C224 376.8 231.2 384 240 384z"></path>
+                </svg>
+                <p class="fw-bold mb-0 text-truncate fs-9 lh-1">
+                    <span th:unless="${transaction.status eq '출금거절'}">
+                        주소 : 
+                        <a th:href="'https://filfox.info/en/message/' + ${transaction.message}" class="fw-semibold text-primary ms-1" target="_blank" th:text="${transaction.message}"></a>
+                    </span>
+                    <span th:if="${transaction.status eq '출금거절'}" style="color: red;">
+                        사유: <span th:style="'color: red; font-size: 12px;'" th:text="${transaction.message}"></span>
+
+                    </span>
+                </p>
+            </div>
+
+                <div class="d-flex align-items-center mt-4">
+                  <p class="mb-0 fw-bold fs-9">신청일 :<span class="fw-semibold text-body-tertiary text-opactity-85 ms-1" th:text="${#dates.format(transaction.reg_date, 'yyyy년 MM월 dd일 HH:mmm:ss')}">   17th Nov. 2020</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>   
+      </div>       
+</html>
