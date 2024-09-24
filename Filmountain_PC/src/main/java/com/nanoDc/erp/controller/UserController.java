@@ -423,6 +423,7 @@ public class UserController {
 	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        List<HardwareRewardSharingDetailVO> rewardDetailList = userService.selectRewardSharingDetailListByUser(loginVO.getUserInfoVO().getUser_id());
+	        
 	        Date lastRewardDate = new Date();
 	        Date firstRewardDate= new Date();
 	        long  interval =0;
