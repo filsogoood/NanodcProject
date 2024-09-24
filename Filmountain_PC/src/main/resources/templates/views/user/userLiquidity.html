@@ -77,11 +77,11 @@
     <!-- ===============================================-->
     <main class="alternate-landing" style="--phoenix-scroll-margin-top: 1.2rem;">
 		<!--TOPBAR  -->      
-		<div th:replace="fragments/user/header :: Header(withLoginOptions=${withLoginOptions}, loginVO=${loginVO})"></div>
+		 <div th:replace="~{fragments/user/app/userIndexApp_topbar :: TopBar}"></div>
 	    <!--MAIN-->
-    	<div th:replace="fragments/user/user-liquidity :: UserLiquidity"></div>
+    	<div th:replace="fragments/user/app/user-liquidity :: UserLiquidity"></div>
 	    <!--FOOTER-->
-	    <div th:replace="fragments/user/footer :: Footer"></div>
+<!--	    <div th:replace="fragments/user/footer :: Footer"></div> -->
       <script>
         var navbarTopStyle = window.config.config.phoenixNavbarTopStyle;
         var navbarTop = document.querySelector('.navbar-top');

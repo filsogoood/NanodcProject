@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html data-navigation-type="horizontal" data-navbar-horizontal-shape="default" lang="en-US" dir="ltr" class="chrome windows fontawesome-i2svg-active fontawesome-i2svg-complete" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<head>
     <meta charset="utf-8">
@@ -34,6 +33,9 @@
     <!-- ===============================================-->
     <!--    Stylesheets-->
     <!-- ===============================================-->
+    
+    
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
@@ -61,8 +63,6 @@
     <link href="vendors/leaflet/leaflet.css" rel="stylesheet">
     <link href="vendors/leaflet.markercluster/MarkerCluster.css" rel="stylesheet">
     <link href="vendors/leaflet.markercluster/MarkerCluster.Default.css" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/user/footer.css">
-    <link rel="stylesheet" href="/assets/css/user/user-liquidity.css">
 
   
   
@@ -77,11 +77,11 @@
     <!-- ===============================================-->
     <main class="alternate-landing" style="--phoenix-scroll-margin-top: 1.2rem;">
 		<!--TOPBAR  -->      
-		<div th:replace="fragments/user/header :: Header(withLoginOptions=${withLoginOptions}, loginVO=${loginVO})"></div>
+		 <div th:replace="~{fragments/user/app/userIndexApp_topbar :: TopBar}"></div>
 	    <!--MAIN-->
-    	<div th:replace="fragments/user/liquidity-main :: LiquidityInfo"></div>
+    	<div th:replace="fragments/user/app/user-liquidity :: UserLiquidity"></div>
 	    <!--FOOTER-->
-	    <div th:replace="fragments/user/footer :: Footer"></div>
+<!--	    <div th:replace="fragments/user/footer :: Footer"></div> -->
       <script>
         var navbarTopStyle = window.config.config.phoenixNavbarTopStyle;
         var navbarTop = document.querySelector('.navbar-top');
@@ -118,6 +118,11 @@
     <script src="/vendors/leaflet.markercluster/leaflet.markercluster.js"></script>
     <script src="/vendors/leaflet.tilelayer.colorfilter/leaflet-tilelayer-colorfilter.min.js"></script>
     <script src="/vendors/swiper/swiper-bundle.min.js"></script>
+    
+    
+    <script src="/user/js/user-stake.js"></script>
+    <script src="/user/js/userApp-liquidity.js"></script>
+    <script src="/user/js/userApp-liquidity_main.js"></script>
 
   
 

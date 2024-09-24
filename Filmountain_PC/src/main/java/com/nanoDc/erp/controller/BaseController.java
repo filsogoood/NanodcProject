@@ -56,7 +56,7 @@ public class BaseController {
 		    		@ModelAttribute LoginVO loginVO,
 		            HttpServletRequest request) {
 		        ModelAndView mav = new ModelAndView();
-		        mav.setViewName("redirect:/index");
+		        mav.setViewName("redirect:/app/index");
 	            return mav;
 
 }

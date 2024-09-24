@@ -87,23 +87,8 @@ public class UserController {
 	 @Value("${upload.directory2}")
 	    private String uploadDirectory2;
 	 	
-	 /*로그인 페이지*/ 
+	 
 		@GetMapping(value={"/login"})
-		  public ModelAndView login(@ModelAttribute("loginError") String loginError,
-		    		@ModelAttribute LoginVO loginVO,
-		    	
-		            HttpServletRequest request) {
-		        ModelAndView mav = new ModelAndView();
-		        HttpSession session = request.getSession();
-		        if(userService.checkSession(request)==true) {
-		        	mav.setViewName("redirect:/index");
-		            return mav;
-		        }
-		            mav.setViewName("views/user/userLogin");
-		            mav.addObject("loginError", loginError);
-		            return mav;
-		}
-		@GetMapping(value={"/app/login"})
 		  public ModelAndView Applogin(@ModelAttribute("loginError") String loginError,
 		    		@ModelAttribute LoginVO loginVO,
 		    	
@@ -118,21 +103,7 @@ public class UserController {
 		            mav.addObject("loginError", loginError);
 		            return mav;
 		}
-		
-		@GetMapping(value={"/Signup"})
-		  public ModelAndView Signup(@ModelAttribute("loginError") String loginError,
-		    		@ModelAttribute LoginVO loginVO,
-		    	
-		            HttpServletRequest request) {
-		        ModelAndView mav = new ModelAndView();
-		        HttpSession session = request.getSession();
-		        if(userService.checkSession(request)==true) {
-		        	mav.setViewName("redirect:/index");
-		            return mav;
-		        }
-		            mav.setViewName("views/user/userSignup");
-		            return mav;
-		}
+	
 		@GetMapping(value={"/app/Signup"})
 		  public ModelAndView AppSignup(@ModelAttribute("loginError") String loginError,
 		    		@ModelAttribute LoginVO loginVO,
@@ -196,24 +167,6 @@ public class UserController {
 		    }
 		}
 		
-		/*로그 아웃 */
-		@GetMapping(value={"/logout"})
-	    public String logout(HttpServletRequest request, HttpServletResponse response) {
-	        HttpSession session = request.getSession();
-	        session.invalidate();
-	        
-	       /* Cookie[] cookies = request.getCookies();
-	        if (cookies != null) {
-	            for (Cookie cookie : cookies) {
-	                if ("nanodc_userApp".equals(cookie.getName())) {
-	                    cookie.setMaxAge(0);
-	                    response.addCookie(cookie);
-	                    break;
-	                }
-	            }
-	        }*/
-	        return "redirect:/login";
-	    }
 		
 		@GetMapping(value={"/app/logout"})
 	    public String Applogout(HttpServletRequest request, HttpServletResponse response) {
@@ -233,59 +186,7 @@ public class UserController {
 	        return "redirect:/app/login";
 	    }
 		
-		 /*로그인 조건부*/
-		 @PostMapping(value={"/user/login.do"})
-		    private String doLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		        LoginVO lvo = new LoginVO();
-		        UserInfoVO userInfoVO = new UserInfoVO(); 
-		        try {
-		            // 입력받은 이메일 암호화
-		            String encryptedEmail = AESUtil.encrypt(loginVO.getId());
-		            userInfoVO.setUser_email(encryptedEmail);
-		        }catch (Exception e) {
-	                 e.printStackTrace();
-	                 userInfoVO.setUser_email("아이디를 확인해주세요");
-	             }
-		        userInfoVO = userInfoMapper.verifyUserInfoVO(userInfoVO);
-		        if (userInfoVO == null) {
-		        	redirect.addFlashAttribute("loginError", "아이디를 확인해주세요");
-		            return "redirect:/login";
-		        }
-		        if ("inactive".equals(userInfoVO.getUser_status())) {
-		        	redirect.addFlashAttribute("loginError", "유효하지 않은 아이디입니다.");
-		            return "redirect:/login";
-		        }
-		        if ("관리자".equals(userInfoVO.getLevel())) {
-		            redirect.addFlashAttribute("loginError", "관리자 계정입니다");
-		            return "redirect:/admin/login";
-		        }
-		        
-		        HttpSession session = request.getSession();
-		        String rawPw = "";
-		        String encodePw = "";
-		        if (userInfoVO != null) {
-		        	lvo.setId(userInfoVO.getUser_name());
-		        	userInfoVO=userInfoMapper.selectDetailUserInfoByUserId(userInfoVO.getUser_id());
-		            lvo.setUserInfoVO(userInfoVO);
-		            lvo.setLevel(userInfoVO.getLevel());
-		        	rawPw = loginVO.getPassword();
-		            String value = pwEncoder.encode(rawPw);
-		            if (this.pwEncoder.matches((CharSequence)rawPw, encodePw = userInfoMapper.getUserPassword(userInfoVO.getUser_id()))) {
-		                lvo.setPassword("");
-		                 Cookie rememberMeCookie = new Cookie("nanodc_userApp", String.valueOf(userInfoVO.getUser_id()));
-		                 rememberMeCookie.setMaxAge(7 * 24 * 60 * 60); // 30 days
-		                 response.addCookie(rememberMeCookie);
-		                
-		                 
-		                session.setAttribute("user", (Object)lvo);
-		                
-		                return "redirect:/index";
-		            }
-		        }
-		        
-		        redirect.addFlashAttribute("loginError", "비밀번호를 확인해주세요");
-		        return "redirect:/login";
-		    }
+		
 		 
 		 @PostMapping(value={"/app/login.do"})
 		    private String doAppLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -308,10 +209,7 @@ public class UserController {
 		        	redirect.addFlashAttribute("loginError", "유효하지 않은 아이디입니다.");
 		            return "redirect:/app/login";
 		        }
-		        if ("관리자".equals(userInfoVO.getLevel())) {
-		            redirect.addFlashAttribute("loginError", "관리자 계정입니다");
-		            return "redirect:/admin/login";
-		        }
+		  
 		        
 		        HttpSession session = request.getSession();
 		        String rawPw = "";
@@ -337,39 +235,11 @@ public class UserController {
 		        }
 		        
 		        redirect.addFlashAttribute("loginError", "비밀번호를 확인해주세요");
-		        return "redirect:/login";
+		        return "redirect:/app/login";
 		    }
 				 
 		
-		 //유저앱 버튼 홈 페이지
-		 @GetMapping(value={"/index"})
-		 public  ModelAndView index(HttpServletRequest request) {
-		    ModelAndView mav = new ModelAndView();
-		    HttpSession session = request.getSession();
-			    
-		        LoginVO loginVO = (LoginVO)session.getAttribute("user");  
-		        if (loginVO != null) {
-		        	UserInfoVO userInfoVO = loginVO.getUserInfoVO();
-		        	 try {
-		        		 userInfoVO.setUser_email(AESUtil.decrypt(userInfoVO.getUser_email()));
-		        		 userInfoVO.setPhone_number(AESUtil.decrypt(userInfoVO.getPhone_number()));
-			            } catch (Exception e) {
-			                
-			                // 필요한 경우 예외 처리
-			            }
-		            mav.addObject("withLoginOptions", true);
-		            mav.addObject("userInfoVO", userInfoVO);
-		        } else {
-		            mav.addObject("withLoginOptions", false);
-		        }
-		        
-		        List<LiquidityVO> totalpoolInfo = this.userService.getTotalPoolInfo();
-		        
-		        
-		        mav.addObject("totalpoolInfo", totalpoolInfo);
-		        mav.setViewName("views/user/userMain");
-		        return mav;
-		    }
+		
 		 @GetMapping(value={"/app/index"})
 		 public  ModelAndView Appindex(HttpServletRequest request) {
 		    ModelAndView mav = new ModelAndView();
@@ -496,58 +366,8 @@ public class UserController {
 	
 	
 	
-	//나노디씨 소개 랜더링
-	@GetMapping(value={"/NanoDC"})
-	 public  ModelAndView NanoDC(HttpServletRequest request) {
-		 ModelAndView mav = new ModelAndView();
-		    HttpSession session = request.getSession();
-			    
-		        LoginVO loginVO = (LoginVO)session.getAttribute("user");  
-		        List<LiquidityVO> totalpoolInfo = this.userService.getTotalPoolInfo();
-		        if (loginVO != null) {
-		        	UserInfoVO userInfoVO = loginVO.getUserInfoVO();
-		        	 try {
-		        		 userInfoVO.setUser_email(AESUtil.decrypt(userInfoVO.getUser_email()));
-		        		 userInfoVO.setPhone_number(AESUtil.decrypt(userInfoVO.getPhone_number()));
-			            } catch (Exception e) {
-			                
-			                // 필요한 경우 예외 처리
-			            }
-		            mav.addObject("withLoginOptions", true);
-		            mav.addObject("userInfoVO",userInfoVO);
-		        } else {
-		            mav.addObject("withLoginOptions", false);
-		        }
-		    mav.addObject("totalpoolInfo", totalpoolInfo);
-	        mav.setViewName("views/user/nanodcMain");
-	        return mav;
-	    }
-		//리퀴디티 소개 랜더링
-	@GetMapping(value={"/Liquidity"})
-	 public  ModelAndView Liquidity(HttpServletRequest request) {
-		 ModelAndView mav = new ModelAndView();
-		    HttpSession session = request.getSession();
-			    
-		        LoginVO loginVO = (LoginVO)session.getAttribute("user");  
-		        List<LiquidityVO> totalpoolInfo = this.userService.getTotalPoolInfo();
-		        if (loginVO != null) {
-		        	UserInfoVO userInfoVO = loginVO.getUserInfoVO();
-		        	 try {
-		        		 userInfoVO.setUser_email(AESUtil.decrypt(userInfoVO.getUser_email()));
-		        		 userInfoVO.setPhone_number(AESUtil.decrypt(userInfoVO.getPhone_number()));
-			            } catch (Exception e) {
-			                
-			                // 필요한 경우 예외 처리
-			            }
-		            mav.addObject("withLoginOptions", true);
-		            mav.addObject("userInfoVO", userInfoVO);
-		        } else {
-		            mav.addObject("withLoginOptions", false);
-		        }
-		    mav.addObject("totalpoolInfo", totalpoolInfo);
-	        mav.setViewName("views/user/liquidityMain");
-	        return mav;
-	    }
+	
+	
 	//유저프로필편집
 	/*@GetMapping(value={"/profileIconEdit"})
 	 public  ModelAndView profileIconEdit(HttpServletRequest request) {
@@ -562,84 +382,12 @@ public class UserController {
 	        mav.setViewName("views/user/userApp_profileIconEdit");
 	        return mav;
 	    }*/
-	//유저 sp 대시보드
-	@GetMapping(value={"/SP_dashboard"})
-    public ModelAndView SP_dashboard(HttpServletRequest request) {
 		
-        ModelAndView mav = new ModelAndView();
-        HttpSession session = request.getSession();
-        if(!userService.checkSession(request)) {
-        	mav.setViewName("redirect:/login");
-            return mav;
-        }
-        
-        LoginVO loginVO = (LoginVO)session.getAttribute("user");
-            
-       
-        List<WalletVO> walletList = this.userService.getWalletListByUser(loginVO.getUserInfoVO().getUser_id());
-        List<TransactionVO> transactionList = this.userService.selectTransactionsByUser(loginVO.getUserInfoVO().getUser_id());
-        List<HardwareProductVO> product_detail = this.userService.getProductListByUserId(loginVO.getUserInfoVO().getUser_id());
-        List<HardwareInvestmentVO> investmentList = this.userService.selectInvestmentListForUser(loginVO.getUserInfoVO());
-        List<HardwareRewardSharingDetailVO> reward_list = this.userService.selectRewardSharingDetailListByUser(loginVO.getUserInfoVO().getUser_id());
-        
-        Date lastRewardDate = new Date();
-        Date firstRewardDate= new Date();
-        long  interval =0;
-        List<Double> dataList = new ArrayList<Double>();
-        if(!reward_list.isEmpty()) {
-        lastRewardDate = reward_list.get(0).getRegdate();
-        firstRewardDate = reward_list.get(reward_list.size()-1).getRegdate();
-        interval = (lastRewardDate.getTime() - firstRewardDate.getTime())/30;
-        for(long i= firstRewardDate.getTime() + interval;i<lastRewardDate.getTime()+interval;i += interval) {
-        	double data=0;
-	        for(int j = reward_list.size()-1;j>=0;j--) {
-	        	if(reward_list.get(j).getRegdate().getTime()<=i) {
-	        		data += reward_list.get(j).getReward_fil();
-	        		if(j==0) {
-	        			dataList.add(data);
-		        		break;
-	        		}
-	        	}else {
-	        		dataList.add(data);
-	        		break;
-	        	}
-	        }
-        }
-
-        }
-   
+	//유저 sp 대시보드
+	
         
         
-        UserInfoVO userInfoVO = loginVO.getUserInfoVO();
-        if (loginVO != null) {
-        	
-        	 try {
-        		 userInfoVO.setUser_email(AESUtil.decrypt(userInfoVO.getUser_email()));
-        		 userInfoVO.setPhone_number(AESUtil.decrypt(userInfoVO.getPhone_number()));
-	            } catch (Exception e) {
-
-	                // 필요한 경우 예외 처리
-	            }
-           
-        }
-        userService.userVOsessionUpdate(request);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        mav.addObject("product_detail",product_detail);
-        mav.addObject("reward_list",reward_list);
-        mav.addObject("dataList",dataList);
-        mav.addObject("firstDate",dateFormat.format(firstRewardDate));
-        mav.addObject("lastDate",dateFormat.format(lastRewardDate));
-        mav.addObject("dataSize",dataList.size());
-        mav.addObject("investmentList", investmentList);
-        mav.addObject("transactionList", transactionList);
-        mav.addObject("walletList", walletList);
-        mav.addObject("loginVO", loginVO);
-        mav.addObject("userInfoVO", userInfoVO);
-        mav.addObject("withLoginOptions", true);
-        mav.setViewName("views/user/userStorageProvider");
-  
-        return mav;
-    }
+ 
 	//FIL 가격 현황 페이지
 		@GetMapping(value={"/price"})
 	    public ModelAndView price(HttpServletRequest request) {
@@ -674,7 +422,7 @@ public class UserController {
 	        mav.setViewName("views/user/price");
 	        return mav;
 	    }
-		/*
+		
 				@GetMapping(value={"/status"})
 			    public ModelAndView status(HttpServletRequest request) {
 			        ModelAndView mav = new ModelAndView();
@@ -692,7 +440,7 @@ public class UserController {
 			        mav.addObject("investDetailForHw", investDetailForHw);
 			        mav.setViewName("views/user/status");
 			        return mav;
-			    }*/
+			    }
 	 
 		@GetMapping(value = {"/Liquidity_Dashboard"})
 		public ModelAndView Liquidity_Dashboard(HttpServletRequest request) {
@@ -737,6 +485,15 @@ public class UserController {
 		            }
 	           
 	        }
+	        if (loginVO != null) {
+	            try {
+	                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
+	                loginVO.getUserInfoVO().setUser_email(AESUtil.decrypt(loginVO.getUserInfoVO().getUser_email()));
+	                
+	            } catch (Exception e) {
+	                // 필요한 경우 예외 처리
+	            }
+	        }
 		    mav.addObject("loginVO", loginVO);
 		    mav.addObject("userInfoVO", userInfoVO);
 		    mav.addObject("LiquiditytxByUser", selectLiquiditytxByUser);
@@ -746,7 +503,7 @@ public class UserController {
 		    mav.addObject("filprice", filprice);
 		    mav.addObject("walletList", walletList);
 
-		    mav.setViewName("views/user/userLiquidity");
+		    mav.setViewName("views/user/app/userLiquidity");
 		    return mav;
 		}
 
