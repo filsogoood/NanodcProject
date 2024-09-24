@@ -41,6 +41,25 @@
     <div th:replace="fragments/user/profileIconEdit_main :: MainContent"></div> 
  
     <div th:replace="fragments/user/footer :: Footer"></div>
+    <script>
+	  function toggleVisibility() {
+	    var element = document.querySelector(".hello-name");
+	    
+	    if (window.innerWidth <= 470) {
+	      element.style.display = "none"; // 가로 470px 이하일 때 숨김
+	    } else {
+	      element.style.display = "inline"; // 가로 470px 이상일 때 다시 보이기
+	    }
+	  }
+	
+	  // 페이지 로드 시 한 번 실행
+	  document.addEventListener('DOMContentLoaded', function() {
+		  toggleVisibility();
+		});
+	
+	  // 창 크기가 변경될 때마다 실행
+	  window.addEventListener('resize', toggleVisibility);
+	</script>
     </main>
     <!-- ===============================================-->
     <!--    End of Main Content-->
