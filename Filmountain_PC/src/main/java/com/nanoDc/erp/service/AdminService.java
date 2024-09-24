@@ -132,6 +132,13 @@ public class AdminService {
 	 public List<LiquidityVO> getLiquidityrewardList() {
 	        return this.liquidityMapper.getLiquidityrewardList();
 	    }
+	 public List<LiquidityVO> getLiquidityInfoByUser(int user_id) {
+	        return this.liquidityMapper.getLiquidityInfoByUser(user_id);
+	    }
+	 public String updateLiquidityInfo(LiquidityVO liquidityVO, HttpServletRequest request) {
+		 liquidityMapper.updateLiquidityInfo(liquidityVO);
+	    	return "success";
+	    }
 	 
 	 public String updateLPStatus(LiquidityVO liquidityVO, HttpServletRequest request) {
 		 liquidityMapper.updateLPStatus(liquidityVO);

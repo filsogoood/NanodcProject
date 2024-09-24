@@ -503,7 +503,20 @@ public class AdminController {
 	    return adminService.updateinvestmentUser(hardwareInvestmentVO,request);
 	    }   
 	 
-	  
+	 @ResponseBody
+	    @PostMapping(value={"/getLiquidityInfoByUser"})
+	    public List<LiquidityVO> getLiquidityInfoByUser(@RequestBody int user_id) { 
+		 
+	    	return adminService.getLiquidityInfoByUser(user_id);
+	    }
+	 @ResponseBody  
+	    @PostMapping(value={"/updateLiquidityInfo"})
+	    public String updateLiquidityInfo(@RequestBody LiquidityVO liquidityVO, HttpServletRequest request) {
+	        
+
+	            return adminService.updateLiquidityInfo(liquidityVO,request);
+	       
+	    	
 	    	
 	    
 	    

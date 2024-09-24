@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 		<div class="content" th:fragment="MainContent">
@@ -70,7 +72,7 @@
 							            </div>
 							            <div class="mb-3">
 							                <label for="first_payment" class="form-label">reward FIL</label>
-							                <input type="text" class="form-control" id="reward_fil" name="locked_fil">
+							                <input type="text" class="form-control" id="reward_fil" name="reward_fil" readonly>
 							            </div>
 							            <div class="mb-3">
 							                <label for="first_payment" class="form-label">Locked FIL</label>
@@ -78,14 +80,14 @@
 							            </div>
 							            <div class="mb-3">
 							                <label for="first_payment" class="form-label">출금가능 FIL</label>
-							                <input type="text" class="form-control" id="ㄷ=enable_fil" name="locked_fil">
+							                <input type="text" class="form-control" id="enable_fil" name="enable_fil">
 							            </div>
 							            <div class="mb-3">
 							                <label for="second_payment" class="form-label">f4 지갑 주소</label>
-							                <input type="text" class="form-control" id="f4_address" name="f4_address">
+							                <input type="text" class="form-control" id="f4_address" name="f4_address" readonly>
 							            </div>
 							            
-							            <button type="button" class="btn btn-primary" id="update_properties">업데이트</button>
+							            <button type="button" class="btn btn-primary" id="update_LiquidityInfo">업데이트</button>
 							        </form>
 											
 										</div> 
@@ -509,3 +511,5 @@
       </div>
  
         </html>
+
+
