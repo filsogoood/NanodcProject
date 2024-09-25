@@ -258,8 +258,10 @@ public class UserController {
 		                // 필요한 경우 예외 처리
 		            }
 		        }
+		        List<LiquidityVO> totalpoolInfo = this.userService.getTotalPoolInfo();
 		        
 		        mav.addObject("loginVO", loginVO);
+		        mav.addObject("totalpoolInfo",totalpoolInfo);
 		        mav.setViewName("views/user/app/userApp_home");
 		        return mav;
 		    }

@@ -18,12 +18,12 @@
     
     <div class="staking-status2 d-flex justify-content-between align-items-center" >
       <div class="expected-apy d-flex flex-column justify-content-center align-items-center" style="flex: 1; height: 100%; text-align: center;">
-        <div><strong class="strong-apy" >2,000</strong></div>
+        <div><strong class="strong-apy"   th:text="${totalpoolInfo[0].total_liquidity_amount}" >2,000</strong><span style="color: rgb(255, 255, 128);" >FIL</span></div>
         <small>LIQUIDITY</small>
       </div>
       <div class="protocol-tvl d-flex flex-column justify-content-center align-items-center" style="flex: 1; height: 100%; text-align: center;">
-        <div><strong style="color: rgb(255, 255, 128);">12.11</strong><span style="color: rgb(255, 255, 128);">%</span></div>
-        <small style="color: rgb(255, 255, 128);">EXPECTED RETURN</small>
+        <div><strong style="color: rgb(255, 255, 128);" th:text="${totalpoolInfo[0].total_locked_fil}">12.11</strong><span style="color: rgb(255, 255, 128);" >FIL</span></div>
+        <small style="color: rgb(255, 255, 128);">Locked FIL</small>
       </div>
     </div>
     
