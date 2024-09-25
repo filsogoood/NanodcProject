@@ -450,6 +450,7 @@ public class UserController {
 	        }
 
 	        }
+	        
 	    
 	        
 	        
@@ -471,6 +472,86 @@ public class UserController {
 	        mav.addObject("rewardDetailList", rewardDetailList);
 	        mav.addObject("loginVO", loginVO);
 	        mav.setViewName("views/user/app/reward");
+	        return mav;
+	    }
+		
+		
+		@GetMapping(value={"/cash"})
+	    public ModelAndView SP_dashboard(HttpServletRequest request) {
+			
+	        ModelAndView mav = new ModelAndView();
+	        HttpSession session = request.getSession();
+	        if(!userService.checkSession(request)) {
+	        	mav.setViewName("redirect:/login");
+	            return mav;
+	        }
+	        
+	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	            
+	       
+	        List<WalletVO> walletList = this.userService.getWalletListByUser(loginVO.getUserInfoVO().getUser_id());
+	        List<TransactionVO> transactionList = this.userService.selectTransactionsByUser(loginVO.getUserInfoVO().getUser_id());
+	        List<HardwareProductVO> product_detail = this.userService.getProductListByUserId(loginVO.getUserInfoVO().getUser_id());
+	        List<HardwareInvestmentVO> investmentList = this.userService.selectInvestmentListForUser(loginVO.getUserInfoVO());
+	        List<HardwareRewardSharingDetailVO> reward_list = this.userService.selectRewardSharingDetailListByUser(loginVO.getUserInfoVO().getUser_id());
+	        
+	        Date lastRewardDate = new Date();
+	        Date firstRewardDate= new Date();
+	        long  interval =0;
+	        List<Double> dataList = new ArrayList<Double>();
+	        if(!reward_list.isEmpty()) {
+	        lastRewardDate = reward_list.get(0).getRegdate();
+	        firstRewardDate = reward_list.get(reward_list.size()-1).getRegdate();
+	        interval = (lastRewardDate.getTime() - firstRewardDate.getTime())/30;
+	        for(long i= firstRewardDate.getTime() + interval;i<lastRewardDate.getTime()+interval;i += interval) {
+	        	double data=0;
+		        for(int j = reward_list.size()-1;j>=0;j--) {
+		        	if(reward_list.get(j).getRegdate().getTime()<=i) {
+		        		data += reward_list.get(j).getReward_fil();
+		        		if(j==0) {
+		        			dataList.add(data);
+			        		break;
+		        		}
+		        	}else {
+		        		dataList.add(data);
+		        		break;
+		        	}
+		        }
+	        }
+
+	        }
+	   
+	        
+	        
+	        UserInfoVO userInfoVO = loginVO.getUserInfoVO();
+	       
+	        
+	        
+	        userService.userVOsessionUpdate(request);
+	        if (loginVO != null) {
+	            try {
+	                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
+	                loginVO.getUserInfoVO().setUser_email(AESUtil.decrypt(loginVO.getUserInfoVO().getUser_email()));
+	                
+	            } catch (Exception e) {
+	                // 필요한 경우 예외 처리
+	            }
+	        }
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	        mav.addObject("product_detail",product_detail);
+	        mav.addObject("reward_list",reward_list);
+	        mav.addObject("dataList",dataList);
+	        mav.addObject("firstDate",dateFormat.format(firstRewardDate));
+	        mav.addObject("lastDate",dateFormat.format(lastRewardDate));
+	        mav.addObject("dataSize",dataList.size());
+	        mav.addObject("investmentList", investmentList);
+	        mav.addObject("transactionList", transactionList);
+	        mav.addObject("walletList", walletList);
+	        mav.addObject("loginVO", loginVO);
+	        mav.addObject("userInfoVO", userInfoVO);
+	        mav.addObject("withLoginOptions", true);
+	        mav.setViewName("views/user/userStorageProvider");
+	  
 	        return mav;
 	    }
  
@@ -498,6 +579,8 @@ public class UserController {
 		        	dataList.add(filPriceList.get(i).getFil_last());
 		        }
 	        }
+	        
+	        userService.userVOsessionUpdate(request);
 	        if (loginVO != null) {
 	            try {
 	                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
@@ -507,14 +590,13 @@ public class UserController {
 	                // 필요한 경우 예외 처리
 	            }
 	        }
-	        userService.userVOsessionUpdate(request);
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	        mav.addObject("firstDate",dateFormat.format(firstDate));
 	        mav.addObject("lastDate",dateFormat.format(lastDate));
 	        mav.addObject("dataList",dataList);
 	        mav.addObject("dataSize",dataList.size());
 	        mav.addObject("loginVO", loginVO);
-	        mav.setViewName("views/user/price");
+	        mav.setViewName("views/user/app/price");
 	        return mav;
 	    }
 		
@@ -531,9 +613,18 @@ public class UserController {
 			        int userId = loginVO.getUserInfoVO().getUser_id();
 			        List<HardwareProductVO> investDetailForHw = hardwareProductMapper.getProductListByUserId(userId);
 			        userService.userVOsessionUpdate(request);
+			        if (loginVO != null) {
+			            try {
+			                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
+			                loginVO.getUserInfoVO().setUser_email(AESUtil.decrypt(loginVO.getUserInfoVO().getUser_email()));
+			                
+			            } catch (Exception e) {
+			                // 필요한 경우 예외 처리
+			            }
+			        }
 			        mav.addObject("loginVO", loginVO);
 			        mav.addObject("investDetailForHw", investDetailForHw);
-			        mav.setViewName("views/user/status");
+			        mav.setViewName("views/user/app/status");
 			        return mav;
 			    }
 	 

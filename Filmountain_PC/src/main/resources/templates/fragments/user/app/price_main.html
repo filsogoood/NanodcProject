@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+		<div class="content mt-7" th:fragment="MainContent">
+			 <nav class="mb-2" aria-label="breadcrumb">
+          
+        </nav>
+        <div class="row gx-6 gy-3 mb-4 align-items-center">
+          <div class="col-auto">
+            <h2 class="mb-0">FIL 가격 현황</h2>
+          </div>
+
+        </div>               
+        
+        <div class="row flex-between-center mb-4 g-3">
+              </div>
+              <div id="totalRewardChart" th:attr="dataList=${dataList}" style="min-height:320px;width:100%"></div>
+                       <input type="hidden" th:value="${firstDate}" id="firstDate" class="hidden">
+              <input type="hidden" th:value="${lastDate}" id="lastDate" class="hidden">
+              <input type="hidden" th:value="${dataSize}" id="dataSize" class="hidden">
+              <input type="hidden" value="원" id="currency" class="hidden">
+ 
+      </div>    	
+</html>
