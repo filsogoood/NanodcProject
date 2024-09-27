@@ -18,11 +18,13 @@
     
     <div class="staking-status2 d-flex justify-content-between align-items-center" >
       <div class="expected-apy d-flex flex-column justify-content-center align-items-center" style="flex: 1; height: 100%; text-align: center;">
-        <div><strong class="strong-apy"   th:text="${totalpoolInfo[0].total_liquidity_amount}" >2,000</strong><span style="color: rgb(255, 255, 128);" >FIL</span></div>
+        <div><strong class="strong-apy"   id="totalLiquidityAmount" 
+					            th:data-amount="${totalpoolInfo[0].total_liquidity_amount}" >2,000</strong></div>
         <small>LIQUIDITY</small>
       </div>
       <div class="protocol-tvl d-flex flex-column justify-content-center align-items-center" style="flex: 1; height: 100%; text-align: center;">
-        <div><strong style="color: rgb(255, 255, 128);" th:text="${totalpoolInfo[0].total_locked_fil}">12.11</strong><span style="color: rgb(255, 255, 128);" >FIL</span></div>
+        <div><strong style="color: rgb(255, 255, 128);" id="totalLodckedFil"
+                  				th:data-amount="${totalpoolInfo[0].total_locked_fil}">12.11</strong><span style="color: rgb(255, 255, 128);" >FIL</span></div>
         <small style="color: rgb(255, 255, 128);">Locked FIL</small>
       </div>
     </div>
@@ -43,5 +45,29 @@
       </div>
     </div>
     -->
+    
+    <script>
+	
+	    document.addEventListener('DOMContentLoaded', function() {
+            // total_liquidity_amount 처리
+            var totalLiquidityAmountElement = document.getElementById('totalLiquidityAmount');
+            if (totalLiquidityAmountElement) {
+                var totalLiquidityAmount = parseFloat(totalLiquidityAmountElement.getAttribute('data-amount'));
+                totalLiquidityAmount = totalLiquidityAmount === 0 ? '0' : Math.floor(totalLiquidityAmount).toLocaleString();
+                totalLiquidityAmountElement.textContent = totalLiquidityAmount + ' FIL';
+            }
+
+            // total_lodcked_fil 처리 (전체 대여 중인 FIL)
+            var totalLodckedFilElement = document.getElementById('totalLodckedFil');
+            if (totalLodckedFilElement) {
+                var totalLodckedFil = parseFloat(totalLodckedFilElement.getAttribute('data-amount'));
+                totalLodckedFil = totalLodckedFil === 0 ? '0' : Math.floor(totalLodckedFil).toLocaleString();
+                totalLodckedFilElement.textContent = totalLodckedFil;
+            }
+
+            
+        });
+	</script>
   </footer>
+  
 </html>
