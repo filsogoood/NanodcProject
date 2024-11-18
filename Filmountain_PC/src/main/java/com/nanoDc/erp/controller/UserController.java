@@ -365,7 +365,7 @@ public class UserController {
 	        return mav;
 	    }
 		//리퀴디티 소개 랜더링
-	@GetMapping(value={"/Liquidity"})
+/*	@GetMapping(value={"/Liquidity"})
 	 public  ModelAndView Liquidity(HttpServletRequest request) {
 		 ModelAndView mav = new ModelAndView();
 		    HttpSession session = request.getSession();
@@ -536,7 +536,7 @@ public class UserController {
 			        return mav;
 			    }*/
 	 
-		@GetMapping(value = {"/Liquidity_Dashboard"})
+	/*	@GetMapping(value = {"/Liquidity_Dashboard"})
 		public ModelAndView Liquidity_Dashboard(HttpServletRequest request) {
 		    ModelAndView mav = new ModelAndView();
 		    HttpSession session = request.getSession();
@@ -590,7 +590,7 @@ public class UserController {
 
 		    mav.setViewName("views/user/userLiquidity");
 		    return mav;
-		}
+		} */
 
 
 		 @GetMapping(value={"/privacyPolicy"})
@@ -713,7 +713,7 @@ public class UserController {
 	    return userService.addNewTransaction(transactionVO);
 	    }   
 	 /* LP송금신청 */
-	 @ResponseBody
+	/* @ResponseBody
 	 @PostMapping(value={"/addNewLPTransaction"})
 	 public String addNewLPTransaction(@RequestBody LiquidityVO liquidityVO, HttpServletRequest request) {
 	    return userService.addNewLPTransaction(liquidityVO);

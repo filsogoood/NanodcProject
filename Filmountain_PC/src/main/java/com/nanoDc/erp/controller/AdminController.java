@@ -321,7 +321,7 @@ public class AdminController {
 	    }
 	 
 	 /*Liquidity manager*/ 
-	 @GetMapping(value={"/liquidityManager"})
+	/* @GetMapping(value={"/liquidityManager"})
 	    public ModelAndView liquidityManager(HttpServletRequest request,Integer init_page) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
@@ -335,9 +335,9 @@ public class AdminController {
 	        mav.setViewName("views/admin/LiquidityManager");
 	        mav.addObject("loginVO",loginVO);
 	        return mav;
-	    }
+	    } */
 	 /*Liquidity manager*/ 
-	 @GetMapping(value={"/liquidityrewardManager"})
+/*	 @GetMapping(value={"/liquidityrewardManager"})
 	    public ModelAndView liquidityrewardManager(HttpServletRequest request,Integer init_page) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
@@ -351,7 +351,7 @@ public class AdminController {
 	        mav.setViewName("views/admin/LiquidityrewardManager");
 	        mav.addObject("loginVO",loginVO);
 	        return mav;
-	    }
+	    } */
 	 /* 계약현황 페이지 */ 
 	 @GetMapping(value = {"agreementManager"})
 	 public ModelAndView agreement_manager(HttpServletRequest request, Integer init_page) {
@@ -509,7 +509,7 @@ public class AdminController {
 		 
 	    	return adminService.getLiquidityInfoByUser(user_id);
 	    }
-	 @ResponseBody  
+	/* @ResponseBody  
 	    @PostMapping(value={"/updateLiquidityInfo"})
 	    public String updateLiquidityInfo(@RequestBody LiquidityVO liquidityVO, HttpServletRequest request) {
 	        
@@ -517,7 +517,7 @@ public class AdminController {
 	            return adminService.updateLiquidityInfo(liquidityVO,request);
 	       
 	    	
-	 }
+	 } */
 	    	
 	    
 	    
@@ -554,11 +554,12 @@ public class AdminController {
 	                    java.nio.file.Files.createDirectories(uploadPath);
 	                }
 
-	                java.nio.file.Path filePath = uploadPath.resolve(hw_product_id+fileName);
+	                java.nio.file.Path filePath = uploadPath.resolve(hw_product_id+"_"+fileName);
 	                file.transferTo(filePath.toFile());
-	                filePathString = "/"+hw_product_id+fileName;
+	                filePathString = "/"+hw_product_id+ "_" +fileName;
 	            } catch (IOException e) {
 	                e.printStackTrace();
+	                return "파일 업로드 중 오류가 발생했습니다.";
 	            }
 	        }else {
 	        	filePathString="no_change";
