@@ -48,7 +48,6 @@ import com.nanoDc.erp.config.AESUtil;
 import com.nanoDc.erp.mapper.FilPriceMapper;
 import com.nanoDc.erp.mapper.HardwareInvestmentMapper;
 import com.nanoDc.erp.mapper.HardwareProductMapper;
-import com.nanoDc.erp.mapper.LiquidityMapper;
 import com.nanoDc.erp.mapper.UserInfoMapper;
 import com.nanoDc.erp.service.UserService;
 import com.nanoDc.erp.vo.AgreementVO;
@@ -57,7 +56,6 @@ import com.nanoDc.erp.vo.FilPriceVO;
 import com.nanoDc.erp.vo.HardwareInvestmentVO;
 import com.nanoDc.erp.vo.HardwareProductVO;
 import com.nanoDc.erp.vo.HardwareRewardSharingDetailVO;
-import com.nanoDc.erp.vo.LiquidityVO;
 import com.nanoDc.erp.vo.LoginVO;
 import com.nanoDc.erp.vo.MainIndexMapper;
 import com.nanoDc.erp.vo.TransactionVO;
@@ -81,8 +79,6 @@ public class UserController {
 	 @Autowired
 	    private PasswordEncoder pwEncoder;
 	 @Autowired
-	 	private LiquidityMapper liquidityMapper;
-	 @Autowired
 		private AESUtil aESUtil;
 	 @Value("${upload.directory2}")
 	    private String uploadDirectory2;
@@ -96,7 +92,7 @@ public class UserController {
 		        ModelAndView mav = new ModelAndView();
 		        HttpSession session = request.getSession();
 		        if(userService.checkSession(request)==true) {
-		        	mav.setViewName("redirect:/app/index");
+		        	mav.setViewName("redirect:/StorageProvider");
 		            return mav;
 		        }
 		            mav.setViewName("views/user/app/app_Login");
@@ -112,7 +108,7 @@ public class UserController {
 		        ModelAndView mav = new ModelAndView();
 		        HttpSession session = request.getSession();
 		        if(userService.checkSession(request)==true) {
-		        	mav.setViewName("redirect:/app/index");
+		        	mav.setViewName("redirect:/StorageProvider");
 		            return mav;
 		        }
 		            mav.setViewName("views/user/userSignup");
@@ -230,7 +226,7 @@ public class UserController {
 		                 
 		                session.setAttribute("user", (Object)lvo);
 		                
-		                return "redirect:/app/index";
+		                return "redirect:/StorageProvider";
 		            }
 		        }
 		        
@@ -240,31 +236,7 @@ public class UserController {
 				 
 		
 		
-		 @GetMapping(value={"/app/index"})
-		 public  ModelAndView Appindex(HttpServletRequest request) {
-		    ModelAndView mav = new ModelAndView();
-		    HttpSession session = request.getSession();
-			    if(!userService.checkSession(request)) {
-		        	mav.setViewName("redirect:/login");
-		            return mav;
-		        }
-		        LoginVO loginVO = (LoginVO)session.getAttribute("user");
-		        if (loginVO != null) {
-		            try {
-		                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
-		                loginVO.getUserInfoVO().setUser_email(AESUtil.decrypt(loginVO.getUserInfoVO().getUser_email()));
-		                
-		            } catch (Exception e) {
-		                // 필요한 경우 예외 처리
-		            }
-		        }
-		        List<LiquidityVO> totalpoolInfo = this.userService.getTotalPoolInfo();
-		        
-		        mav.addObject("loginVO", loginVO);
-		        mav.addObject("totalpoolInfo",totalpoolInfo);
-		        mav.setViewName("views/user/app/userApp_home");
-		        return mav;
-		    }
+		
 		 
 		 @GetMapping(value={"/StorageProvider"})
 		    public ModelAndView StorageProvider(HttpServletRequest request,@RequestParam(required = false) Integer hw_product_id) {
@@ -534,6 +506,8 @@ public class UserController {
 	            try {
 	                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
 	                loginVO.getUserInfoVO().setUser_email(AESUtil.decrypt(loginVO.getUserInfoVO().getUser_email()));
+	                loginVO.getUserInfoVO().setPhone_number(AESUtil.decrypt(loginVO.getUserInfoVO().getPhone_number()));
+	                userInfoVO.setPhone_number(AESUtil.decrypt(loginVO.getUserInfoVO().getPhone_number()));
 	                
 	            } catch (Exception e) {
 	                // 필요한 경우 예외 처리
@@ -630,71 +604,7 @@ public class UserController {
 			        return mav;
 			    }
 	 
-		@GetMapping(value = {"/Liquidity_Dashboard"})
-		public ModelAndView Liquidity_Dashboard(HttpServletRequest request) {
-		    ModelAndView mav = new ModelAndView();
-		    HttpSession session = request.getSession();
-
-		    if (!userService.checkSession(request)) {
-		        mav.setViewName("redirect:/login");
-		        return mav;
-		    }
-
-		    LoginVO loginVO = (LoginVO) session.getAttribute("user");
-		    mav.addObject("withLoginOptions", true);
-		    mav.addObject("userName", loginVO.getUserInfoVO().getUser_name());
-
-		    int userId = loginVO.getUserInfoVO().getUser_id();
-		    List<WalletVO> walletList = this.userService.getWalletListByUser(userId);
-		    List<LiquidityVO> selectLiquiditytxByUser = userService.selectLiquiditytxByUser(userId);
-		    List<LiquidityVO> selectLiquidityRewardByUser = userService.selectLiquidityRewardByUser(userId);
-		    List<LiquidityVO> selectLiquidityInfotxByUser = userService.selectLiquidityInfotxByUser(userId);
-		    List<LiquidityVO> findUserContributionByUserId = userService.findUserContributionByUserId(userId);
-		    int filprice = filPriceMapper.getLatestFilPrice().getFil_last();
-
-		    for (LiquidityVO liquidity : selectLiquiditytxByUser) {
-		        BigDecimal filAmount = liquidity.getFil_amount();
-		        
-		        if (filAmount != null) {
-		            // 불필요한 소수점 이하 0 제거
-		            filAmount = filAmount.stripTrailingZeros();
-		            // 소수점 이하가 없는 경우 정수로 출력되도록 toPlainString() 사용
-		            liquidity.setFil_amount(new BigDecimal(filAmount.toPlainString()));
-		        }
-		    }
-		    UserInfoVO userInfoVO = loginVO.getUserInfoVO();
-	        if (loginVO != null) {
-	        	
-	        	 try {
-	        		 userInfoVO.setUser_email(AESUtil.decrypt(userInfoVO.getUser_email()));
-	        		 userInfoVO.setPhone_number(AESUtil.decrypt(userInfoVO.getPhone_number()));
-		            } catch (Exception e) {
-		                // 필요한 경우 예외 처리
-		            }
-	           
-	        }
-	        if (loginVO != null) {
-	            try {
-	                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
-	                loginVO.getUserInfoVO().setUser_email(AESUtil.decrypt(loginVO.getUserInfoVO().getUser_email()));
-	                
-	            } catch (Exception e) {
-	                // 필요한 경우 예외 처리
-	            }
-	        }
-		    mav.addObject("loginVO", loginVO);
-		    mav.addObject("userInfoVO", userInfoVO);
-		    mav.addObject("LiquiditytxByUser", selectLiquiditytxByUser);
-		    mav.addObject("LiquidityRewardByUser", selectLiquidityRewardByUser);
-		    mav.addObject("LiquidityInfotxByUser", selectLiquidityInfotxByUser);
-		    mav.addObject("findUserContributionByUserId", findUserContributionByUserId);
-		    mav.addObject("filprice", filprice);
-		    mav.addObject("walletList", walletList);
-
-		    mav.setViewName("views/user/app/userLiquidity");
-		    return mav;
-		}
-
+		
 
 		 @GetMapping(value={"/privacyPolicy"})
 		 public  ModelAndView privacyPolicy(HttpServletRequest request) {
@@ -815,12 +725,7 @@ public class UserController {
 	        transactionVO.setHw_product_id(loginVO.getUserInfoVO().getHw_product_id());
 	    return userService.addNewTransaction(transactionVO);
 	    }   
-	 /* LP송금신청 */
-	 @ResponseBody
-	 @PostMapping(value={"/addNewLPTransaction"})
-	 public String addNewLPTransaction(@RequestBody LiquidityVO liquidityVO, HttpServletRequest request) {
-	    return userService.addNewLPTransaction(liquidityVO);
-	    }   
+	
 	 /* 유저지갑추가 */
 	 @ResponseBody
 	 @PostMapping(value={"/addspWallet"})

@@ -16,7 +16,8 @@
 					user_id = $(this).data('user-id');
 					user_name = $(this).data('user-name');
         			phone_number = $(this).data('phone-number')
-        			// console.log(user_name);
+        			
+        			// console.log(phone_number);
         			//console.log(user_id);
         			
         			if (total_reward_fil == 0){
