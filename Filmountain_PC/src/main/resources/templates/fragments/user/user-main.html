@@ -4,53 +4,63 @@
 	<div class="main-container">
 		
 		<div class="modal fade" id="verticallyCentered" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
-		  <div class="modal-dialog modal-dialog-centered">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="verticallyCenteredModalLabel">구매신청서</h5>
-		        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9"></span></button>
-		      </div>
-		      <div class="modal-body">
-		        <form id="purchaseForm">
-					 <input type="hidden" id="userId" name="userId">
-				    <div class="mb-3">
-				        <label class="form-label" for="level">구분</label>
-				        <select class="form-select" id="level" name="level" aria-label="Default select example">
-				            <option selected="selected">구분을 선택하세요.</option>
-				            <option value="총판">총판</option>
-				            <option value="대리점">대리점</option>
-				            <option value="SP">SP</option>
-				        </select>
-				    </div>
-				
-				    <div class="mb-3">
-				        <label class="form-label" for="spProduct">구매 SP상품</label>
-				        <select class="form-select" id="spProduct" name="spProduct" aria-label="Default select example">
-				            <option selected="selected">구매하실 SP상품을 선택하세요.</option>
-				            <option value="NanoDC2p">NANODC2P</option>
-				            <option value="NanoDC4p">NANODC4P</option>
-				            <option value="NanoDC6p">NANODC6P</option>
-				        </select>
-				    </div>
-				
-				    <div class="mb-3">
-				        <label class="form-label" for="basic-form-textarea">Description</label>
-				        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Description"></textarea>
-				    </div>
-				
-				    <button class="btn btn-primary" id="confirm_application"type="submit">Submit</button>
-				</form>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="verticallyCenteredModalLabel">구매신청서</h5>
+        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+          <span class="fas fa-times fs-9"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="purchaseForm">
+          <input type="hidden" id="userId" name="userId">
 
-		      </div>
-		      <!--
-		      <div class="modal-footer">
-		        <button class="btn btn-primary" type="button">Okay</button>
-		        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Cancel</button>
-		      </div>
-		      -->
-		    </div>
-		  </div>
-		</div>
+          <!-- SP상품 선택 -->
+          <div class="mb-3">
+            <label class="form-label" for="spProduct">구매 SP상품</label>
+            <select class="form-select" id="spProduct" name="spProduct" aria-label="Default select example" onchange="toggleQuantityInput()">
+              <option selected="selected">구매하실 상품을 선택하세요.</option>
+              <option value="NanoDC2p">NANODC2P</option>
+              <option value="NanoDC4p">NANODC4P</option>
+              <option value="NanoDC6p">NANODC6P</option>
+              <option value="20TB">NANODC 20T HDD</option>
+            </select>
+          </div>
+
+          <!-- 갯수 입력 필드 -->
+          <div class="mb-3" id="quantityInput" style="display: none;">
+            <label class="form-label" for="quantity">갯수 입력</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" min="1" placeholder="갯수를 입력하세요.">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="basic-form-textarea">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Description"></textarea>
+          </div>
+
+          <button class="btn btn-primary" id="confirm_application" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 특정 상품 선택 시 '갯수 입력' 필드 표시/숨김
+  function toggleQuantityInput() {
+    const productSelect = document.getElementById("spProduct");
+    const quantityInput = document.getElementById("quantityInput");
+
+    // '20TB' 선택 시 필드를 표시, 다른 경우 숨김
+    if (productSelect.value === "20TB") {
+      quantityInput.style.display = "block";
+    } else {
+      quantityInput.style.display = "none";
+    }
+  }
+</script>
+
 		
 		
 		<!--
@@ -116,6 +126,70 @@
           </div>
         </div>
       </section>
+      	<section class="pt-10" id="blog">
+	        <div class="container-small px-lg-7 px-xxl-3">
+	          <div class="text-center mb-5 mb-8">
+	            <h5 class="text-warning-dark mb-3">SP PRODUCTS</h5>
+	            <h1 class="mb-2">SP 상품</h1>
+	          </div>
+	          <div class="row gx-3 gy-7">
+	            <div class="col-lg-4">
+	              <div class="blog-card">
+					  <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_yb.png" alt="" />
+						<span class="badge text-bg-warning mb-2 mt-4">2PiB</span>
+		                <h4 class="mb-3 pe-sm-5 lh-lg">RAW 2PiB<br />QAP 20PiB</h4>
+		                <h3>2억 원<span class="fs-8">(부가세 별도)</span></h3>
+	              </div>
+	            </div>
+	            <div class="col-lg-4">
+	              <div class="blog-card">
+					  <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_og.png" alt="" />						
+						<span class="badge text-bg-warning mb-2 mt-4">4PiB</span>
+		                <h4 class="mb-3 pe-sm-5 lh-lg">RAW 4PiB<br />QAP 40PiB</h4>
+		                <h3>3억 원<span class="fs-8">(부가세 별도)</span></h3>
+	              </div>
+	            </div>
+	            <div class="col-lg-4">
+	              <div class="blog-card">
+					  <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_wb.png" alt="" />					
+						<span class="badge text-bg-warning mb-2 mt-4">6PiB</span>
+		                <h4 class="mb-3 pe-sm-5 lh-lg">RAW 6PiB<br />QAP 60PiB</h4>
+		                <h3>5억 원<span class="fs-8">(부가세 별도)</span></h3>
+	              </div>
+	            </div>
+	             
+	            </div>
+	          </div>
+	        </div>
+	        <!-- end of .container-->
+	
+	    </section>
+	    
+	    
+	    <section class="pt-10" id="blog">
+	        <div class="container-small px-lg-7 px-xxl-3">
+	          <div class="text-center mb-5 mb-8">
+	         
+	          </div>
+	          <div class="row gx-3 gy-7">
+	           
+	            <div class="col-lg-4">
+	              <div class="blog-card">
+					  <img class="w-100 rounded-3" src="/assets/img/thumb/nanoDDD.png" alt="" />						
+						<span class="badge text-bg-warning mb-2 mt-4">20TB</span>
+		                <h4 class="mb-3 pe-sm-5 lh-lg"><br />20TB</h4>
+		                <h3>300만원<span class="fs-8">(부가세 별도)</span></h3>
+	              </div>
+	            </div>
+	            
+	             
+	            </div>
+	          </div>
+	        </div>
+	        <!-- end of .container-->
+	
+	    </section>
+	    
       
       <div class="container-small px-lg-7 px-xxl-3">
           <div class="row flex-between-center px-xl-11 mb-10 mb-md-9">
@@ -154,36 +228,20 @@
     <!-- 자바스크립트 경고창 및 리다이렉트 함수 -->
 	<script>
 		
-	    function showLoginAlert() {
-	        alert("로그인이 필요합니다.");  // 경고창 띄우기
-	        window.location.href = "/login";  // 로그인 페이지로 리다이렉트
-	    }
+	    
+
+        function showLoginAlert() {
+            alert("로그인이 필요합니다.");
+            window.location.href = "/login";
+        }
 	
-	    document.addEventListener('DOMContentLoaded', function() {
-            // total_liquidity_amount 처리
-            var totalLiquidityAmountElement = document.getElementById('totalLiquidityAmount');
-            if (totalLiquidityAmountElement) {
-                var totalLiquidityAmount = parseFloat(totalLiquidityAmountElement.getAttribute('data-amount'));
-                totalLiquidityAmount = totalLiquidityAmount === 0 ? '0' : Math.floor(totalLiquidityAmount).toLocaleString();
-                totalLiquidityAmountElement.textContent = totalLiquidityAmount + ' FIL';
-            }
+	   
+            
 
-            // total_lodcked_fil 처리 (전체 대여 중인 FIL)
-            var totalLodckedFilElement = document.getElementById('totalLodckedFil');
-            if (totalLodckedFilElement) {
-                var totalLodckedFil = parseFloat(totalLodckedFilElement.getAttribute('data-amount'));
-                totalLodckedFil = totalLodckedFil === 0 ? '0' : Math.floor(totalLodckedFil).toLocaleString();
-                totalLodckedFilElement.textContent = totalLodckedFil + ' FIL';
-            }
+        
 
-            // available_fil 처리 (전체 대여 가능한 FIL)
-            var availableFilElement = document.getElementById('availableFil');
-            if (availableFilElement) {
-                var availableFil = parseFloat(availableFilElement.getAttribute('data-amount'));
-                availableFil = availableFil === 0 ? '0' : Math.floor(availableFil).toLocaleString();
-                availableFilElement.textContent = availableFil + ' FIL';
-            }
-        });
+        
+        
 	</script>
 </main>
 

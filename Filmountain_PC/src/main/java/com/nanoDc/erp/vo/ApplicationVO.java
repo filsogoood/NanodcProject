@@ -13,6 +13,7 @@ public class ApplicationVO {
     private String user_email;
     private String phone_number;
     private String level;
+    private int hdd_amount;
     
 
     // Getters and Setters
@@ -97,6 +98,14 @@ public class ApplicationVO {
 
 	public void setLevel(String level) {
 		this.level = level;
+	}
+
+	public int getHdd_amount() {
+		return hdd_amount;
+	}
+
+	public void setHdd_amount(int hdd_amount) {
+		this.hdd_amount = hdd_amount;
 	}
 
 

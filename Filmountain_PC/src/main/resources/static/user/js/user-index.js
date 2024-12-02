@@ -13,6 +13,7 @@ $(document).ready(function () {
         var userId = $('#userId').val();
         var level = $('#level').val();
         var spProduct = $('#spProduct').val();
+        var hdd_amount = $('#quantity').val();
         
         // 필수 입력 사항 체크
         if (!userId) {
@@ -31,10 +32,14 @@ $(document).ready(function () {
         // 폼 데이터 수집
         var formData = {
             user_id: userId,
-            level: level,
             sp_product: spProduct,
             memo: $('#description').val() // Description은 필수 입력이 아님
         };
+        // 갯수 입력 필드 값 확인 및 추가
+		var hddAmount = $('#quantity').val(); // '갯수 입력' 필드 값
+		if (hddAmount && hddAmount.trim() !== "") { // null, undefined, 빈 문자열 체크
+		    formData.hdd_amount = hddAmount; // 값이 있으면 추가
+		}
 
         // Ajax 요청
          $.ajax({
@@ -54,7 +59,11 @@ $(document).ready(function () {
             }
         });
     });
+    
 });
+
+
+
 
 
 
