@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <main class="main" th:fragment="Main">
+    <style>
+        .blog-card img {
+            width: 100%;
+            height: 300px; /* 모든 이미지의 높이를 300px로 통일 */
+            object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너를 채움 */
+            border-radius: 0.5rem;
+        }
+
+        .blog-card {
+            height: 100%; /* 카드 전체 높이를 동일하게 맞춤 */
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
     <div class="main-container">
         
         <div class="modal fade" id="verticallyCentered" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
@@ -86,15 +100,15 @@
             </div>
         </section>
 
-        <section class="pt-10" id="blog">
+		<section class="pt-10" id="blog">
             <div class="container-small px-lg-7 px-xxl-3">
                 <div class="text-center mb-5 mb-8">
                     <h5 class="text-warning-dark mb-3">SP PRODUCTS</h5>
                     <h1 class="mb-2">SP 상품</h1>
                 </div>
-                <!-- 상단 3개 제품 행 -->
+                <!-- 모든 제품을 한 줄에 표시 -->
                 <div class="row gx-3 gy-7">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="blog-card">
                             <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_yb.png" alt="" />
                             <span class="badge text-bg-warning mb-2 mt-4">2PiB</span>
@@ -102,7 +116,7 @@
                             <h3>2억 원<span class="fs-8">(부가세 별도)</span></h3>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="blog-card">
                             <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_og.png" alt="" />
                             <span class="badge text-bg-warning mb-2 mt-4">4PiB</span>
@@ -110,7 +124,7 @@
                             <h3>3억 원<span class="fs-8">(부가세 별도)</span></h3>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="blog-card">
                             <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_wb.png" alt="" />
                             <span class="badge text-bg-warning mb-2 mt-4">6PiB</span>
@@ -118,11 +132,7 @@
                             <h3>5억 원<span class="fs-8">(부가세 별도)</span></h3>
                         </div>
                     </div>
-                </div>
-
-                <!-- 하단 20TB 제품 행 - 중앙 정렬 -->
-                <div class="row gx-3 gy-7 mt-4 justify-content-center">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="blog-card">
                             <img class="w-100 rounded-3" src="/assets/img/thumb/nanoDDD.png" alt="" />
                             <span class="badge text-bg-warning mb-2 mt-4">20TB</span>
