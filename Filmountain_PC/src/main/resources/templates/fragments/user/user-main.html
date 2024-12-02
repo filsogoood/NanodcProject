@@ -1,248 +1,186 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <main class="main" th:fragment="Main">
-	<div class="main-container">
-		
-		<div class="modal fade" id="verticallyCentered" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="verticallyCenteredModalLabel">구매신청서</h5>
-        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
-          <span class="fas fa-times fs-9"></span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="purchaseForm">
-          <input type="hidden" id="userId" name="userId">
-
-          <!-- SP상품 선택 -->
-          <div class="mb-3">
-            <label class="form-label" for="spProduct">구매 SP상품</label>
-            <select class="form-select" id="spProduct" name="spProduct" aria-label="Default select example" onchange="toggleQuantityInput()">
-              <option selected="selected">구매하실 상품을 선택하세요.</option>
-              <option value="NanoDC2p">NANODC2P</option>
-              <option value="NanoDC4p">NANODC4P</option>
-              <option value="NanoDC6p">NANODC6P</option>
-              <option value="20TB">NANODC 20T HDD</option>
-            </select>
-          </div>
-
-          <!-- 갯수 입력 필드 -->
-          <div class="mb-3" id="quantityInput" style="display: none;">
-            <label class="form-label" for="quantity">갯수 입력</label>
-            <input type="number" class="form-control" id="quantity" name="quantity" min="1" placeholder="갯수를 입력하세요.">
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label" for="basic-form-textarea">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Description"></textarea>
-          </div>
-
-          <button class="btn btn-primary" id="confirm_application" type="submit">Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  // 특정 상품 선택 시 '갯수 입력' 필드 표시/숨김
-  function toggleQuantityInput() {
-    const productSelect = document.getElementById("spProduct");
-    const quantityInput = document.getElementById("quantityInput");
-
-    // '20TB' 선택 시 필드를 표시, 다른 경우 숨김
-    if (productSelect.value === "20TB") {
-      quantityInput.style.display = "block";
-    } else {
-      quantityInput.style.display = "none";
-    }
-  }
-</script>
-
-		
-		
-		<!--
-		<section class="py-0" style="height: 700px;">
-	        <div class="bg-holder" style="background-image:url(assets/img/bg/main-bg.png);background-position:center;background-size:40%;">
-	        </div>
-	
-	        <div class="container-lg position-relative">
-	          <div class="row flex-center">
-	            <div class="col-12 col-sm-9 col-xl-7 px-4 px-xxl-6 text-center pt-10" style="margin-top: 200px">
-	              <h1 class="display-3 fw-bolder lh-sm mb-4">간편하게 참여하는 NANODC LIQUIDITY</h1>
-	              <p class="mb-10" style="font-size: 24px;">지속 가능한 수익을 창출해보세요.</p>
-	            </div>
-	          </div>
-	        </div>
-	      </section>
-		<section class="pt-13 pb-0" id="feature">
-		-->
-		
-	<section class="pb-3 overflow-hidden bg-body" id="home">
-        <div class="hero-header-container-alternate position-relative">
-          <div class="container-small px-lg-7 px-xxl-3">
-            <div class="row align-items-center">
-              <div class="col-12 col-lg-6 pt-10 pb-2 position-relative z-5 text-center text-lg-start">
-                <h1 class="fs-4 fs-md-2 fs-xl-3 fw-black mb-4">혁신적인 4차산업<br />프렌차이즈<br />4나노데이터센터</h1>
-                <p class="mb-5 pe-xl-10" style="text-align: left;">Super High Performance Server Solution Providing for the 4th Generation Business Success!</p>
-                <div class="row gx-3 gy-7 justify-content-center">
-					<div class="text-center text-warning-dark" style="width: 30%;">
-						<h2 class="text-warning-dark">4</h2>
-						<p class="fs-9">OPERATING NANODC</p>
-					</div>
-					<div class="text-center text-warning-dark" style="width: 30%;">
-						<h2 class="text-warning-dark">2</h2>
-						<p class="fs-9">PLANNED DC</p>
-					</div>
-					<div class="text-center text-warning-dark" style="width: 30%;">
-						<h2 class="text-warning-dark">12PiB</h2>
-						<p class="fs-9">RAW POWER</p>
-					</div>
-				</div>
-              </div>
-              <div class="col-12 col-lg-auto d-none d-lg-block">
-                <div class="hero-image-container position-absolute h-100 end-0 d-flex align-items-center">
-                  <div class="position-relative text-center">
-					  
-					  <img class="w-100 d-dark-none rounded-2" src="/assets/img/bg/nanodc-bg.png" alt="hero-header" />
-					  <img class="w-100 d-light-none rounded-2" src="/assets/img/bg/nanodc-bg.png" alt="hero-header" />
-					  <!--
-						  
-					  <img class="position-absolute end-0 hero-image-container-bg" src="/assets/img/bg/nanodc-3d-icon.png" alt="" />
-					  <div class="position-absolute end-0 hero-image-container-overlay" style="transform: skewY(-8deg)"></div>
-					  <img class="w-100 d-light-none rounded-2 hero-image-shadow" src="../../assets/img/bg/bg-35.png" alt="hero-header" />
-					  -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="container-small px-md-8 mb-8 d-lg-none">
-            <div class="position-relative">
-              <img class="img-fluid ms-auto d-light-none rounded-2 hero-image-shadow" src="/assets/img/bg/nanodc-bg.png" alt="hero-header"/>
-            </div>
-          </div>
-        </div>
-      </section>
-      	<section class="pt-10" id="blog">
-	        <div class="container-small px-lg-7 px-xxl-3">
-	          <div class="text-center mb-5 mb-8">
-	            <h5 class="text-warning-dark mb-3">SP PRODUCTS</h5>
-	            <h1 class="mb-2">SP 상품</h1>
-	          </div>
-	          <div class="row gx-3 gy-7">
-	            <div class="col-lg-4">
-	              <div class="blog-card">
-					  <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_yb.png" alt="" />
-						<span class="badge text-bg-warning mb-2 mt-4">2PiB</span>
-		                <h4 class="mb-3 pe-sm-5 lh-lg">RAW 2PiB<br />QAP 20PiB</h4>
-		                <h3>2억 원<span class="fs-8">(부가세 별도)</span></h3>
-	              </div>
-	            </div>
-	            <div class="col-lg-4">
-	              <div class="blog-card">
-					  <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_og.png" alt="" />						
-						<span class="badge text-bg-warning mb-2 mt-4">4PiB</span>
-		                <h4 class="mb-3 pe-sm-5 lh-lg">RAW 4PiB<br />QAP 40PiB</h4>
-		                <h3>3억 원<span class="fs-8">(부가세 별도)</span></h3>
-	              </div>
-	            </div>
-	            <div class="col-lg-4">
-	              <div class="blog-card">
-					  <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_wb.png" alt="" />					
-						<span class="badge text-bg-warning mb-2 mt-4">6PiB</span>
-		                <h4 class="mb-3 pe-sm-5 lh-lg">RAW 6PiB<br />QAP 60PiB</h4>
-		                <h3>5억 원<span class="fs-8">(부가세 별도)</span></h3>
-	              </div>
-	            </div>
-	             
-	            </div>
-	          </div>
-	        </div>
-	        <!-- end of .container-->
-	
-	    </section>
-	    
-	    
-	    <section class="pt-10" id="blog">
-	        <div class="container-small px-lg-7 px-xxl-3">
-	          <div class="text-center mb-5 mb-8">
-	         
-	          </div>
-	          <div class="row gx-3 gy-7">
-	           
-	            <div class="col-lg-4">
-	              <div class="blog-card">
-					  <img class="w-100 rounded-3" src="/assets/img/thumb/nanoDDD.png" alt="" />						
-						<span class="badge text-bg-warning mb-2 mt-4">20TB</span>
-		                <h4 class="mb-3 pe-sm-5 lh-lg"><br />20TB</h4>
-		                <h3>300만원<span class="fs-8">(부가세 별도)</span></h3>
-	              </div>
-	            </div>
-	            
-	             
-	            </div>
-	          </div>
-	        </div>
-	        <!-- end of .container-->
-	
-	    </section>
-	    
-      
-      <div class="container-small px-lg-7 px-xxl-3">
-          <div class="row flex-between-center px-xl-11 mb-10 mb-md-9">
-            <div class="col-md-6 order-1 order-md-0 text-center text-md-start">
-              <h4 class="mb-3">SP(Storage Provider)</h4>
-              <p class="mb-5">탈중앙화된 스토리지 제공자로, 서로 분산된 지리적 환경에서 데이터를 나눠 저장하여 사용자들은 데이터가 삭제될 걱정없이 데이터를 저장합니다.</p>
-              <!-- 로그인된 사용자에게만 모달을 띄우는 버튼 -->
-				<button class="btn btn-warning me-1 mb-1 btn-lg"
-				   th:if="${withLoginOptions}" 
-				   data-bs-toggle="modal" 
-				   id="purchaseButton"
-				   data-bs-target="#verticallyCentered"
-				   th:data-user-id="${userInfoVO.user_id}">
-				   구매신청<i class="fa-solid fa-angle-right ms-2"></i>
-				</button>
-				
-				<!-- 로그인되지 않은 사용자에게 경고창을 띄우고 로그인 페이지로 이동시키는 버튼 -->
-				<button class="btn btn-warning me-1 mb-1 btn-lg"
-				   th:unless="${withLoginOptions}" 
-				   href="javascript:void(0);" 
-				   onclick="showLoginAlert()">
-				   구매신청
-				</button>
-
-            </div>
-            <div class="col-md-5 mb-5 mb-md-0 text-center"><img class="w-75 w-md-100 d-dark-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" /><img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" /></div>
-          </div>
-        </div>
+    <div class="main-container">
         
-       
-        <!-- end of .container-->
-       
-		
+        <div class="modal fade" id="verticallyCentered" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="verticallyCenteredModalLabel">구매신청서</h5>
+                        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                            <span class="fas fa-times fs-9"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="purchaseForm">
+                            <input type="hidden" id="userId" name="userId">
+
+                            <!-- SP상품 선택 -->
+                            <div class="mb-3">
+                                <label class="form-label" for="spProduct">구매 SP상품</label>
+                                <select class="form-select" id="spProduct" name="spProduct" aria-label="Default select example" onchange="toggleQuantityInput()">
+                                    <option selected="selected">구매하실 상품을 선택하세요.</option>
+                                    <option value="NanoDC2p">NANODC2P</option>
+                                    <option value="NanoDC4p">NANODC4P</option>
+                                    <option value="NanoDC6p">NANODC6P</option>
+                                    <option value="20TB">NANODC 20T HDD</option>
+                                </select>
+                            </div>
+
+                            <!-- 갯수 입력 필드 -->
+                            <div class="mb-3" id="quantityInput" style="display: none;">
+                                <label class="form-label" for="quantity">갯수 입력</label>
+                                <input type="number" class="form-control" id="quantity" name="quantity" min="1" placeholder="갯수를 입력하세요.">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-form-textarea">Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Description"></textarea>
+                            </div>
+
+                            <button class="btn btn-primary" id="confirm_application" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="pb-3 overflow-hidden bg-body" id="home">
+            <div class="hero-header-container-alternate position-relative">
+                <div class="container-small px-lg-7 px-xxl-3">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-lg-6 pt-10 pb-2 position-relative z-5 text-center text-lg-start">
+                            <h1 class="fs-4 fs-md-2 fs-xl-3 fw-black mb-4">혁신적인 4차산업<br />프렌차이즈<br />4나노데이터센터</h1>
+                            <p class="mb-5 pe-xl-10" style="text-align: left;">Super High Performance Server Solution Providing for the 4th Generation Business Success!</p>
+                            <div class="row gx-3 gy-7 justify-content-center">
+                                <div class="text-center text-warning-dark" style="width: 30%;">
+                                    <h2 class="text-warning-dark">4</h2>
+                                    <p class="fs-9">OPERATING NANODC</p>
+                                </div>
+                                <div class="text-center text-warning-dark" style="width: 30%;">
+                                    <h2 class="text-warning-dark">2</h2>
+                                    <p class="fs-9">PLANNED DC</p>
+                                </div>
+                                <div class="text-center text-warning-dark" style="width: 30%;">
+                                    <h2 class="text-warning-dark">12PiB</h2>
+                                    <p class="fs-9">RAW POWER</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-auto d-none d-lg-block">
+                            <div class="hero-image-container position-absolute h-100 end-0 d-flex align-items-center">
+                                <div class="position-relative text-center">
+                                    <img class="w-100 d-dark-none rounded-2" src="/assets/img/bg/nanodc-bg.png" alt="hero-header" />
+                                    <img class="w-100 d-light-none rounded-2" src="/assets/img/bg/nanodc-bg.png" alt="hero-header" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-small px-md-8 mb-8 d-lg-none">
+                    <div class="position-relative">
+                        <img class="img-fluid ms-auto d-light-none rounded-2 hero-image-shadow" src="/assets/img/bg/nanodc-bg.png" alt="hero-header"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pt-10" id="blog">
+            <div class="container-small px-lg-7 px-xxl-3">
+                <div class="text-center mb-5 mb-8">
+                    <h5 class="text-warning-dark mb-3">SP PRODUCTS</h5>
+                    <h1 class="mb-2">SP 상품</h1>
+                </div>
+                <!-- 상단 3개 제품 행 -->
+                <div class="row gx-3 gy-7">
+                    <div class="col-lg-4">
+                        <div class="blog-card">
+                            <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_yb.png" alt="" />
+                            <span class="badge text-bg-warning mb-2 mt-4">2PiB</span>
+                            <h4 class="mb-3 pe-sm-5 lh-lg">RAW 2PiB<br />QAP 20PiB</h4>
+                            <h3>2억 원<span class="fs-8">(부가세 별도)</span></h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog-card">
+                            <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_og.png" alt="" />
+                            <span class="badge text-bg-warning mb-2 mt-4">4PiB</span>
+                            <h4 class="mb-3 pe-sm-5 lh-lg">RAW 4PiB<br />QAP 40PiB</h4>
+                            <h3>3억 원<span class="fs-8">(부가세 별도)</span></h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog-card">
+                            <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_wb.png" alt="" />
+                            <span class="badge text-bg-warning mb-2 mt-4">6PiB</span>
+                            <h4 class="mb-3 pe-sm-5 lh-lg">RAW 6PiB<br />QAP 60PiB</h4>
+                            <h3>5억 원<span class="fs-8">(부가세 별도)</span></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 하단 20TB 제품 행 - 중앙 정렬 -->
+                <div class="row gx-3 gy-7 mt-4 justify-content-center">
+                    <div class="col-lg-4">
+                        <div class="blog-card">
+                            <img class="w-100 rounded-3" src="/assets/img/thumb/nanoDDD.png" alt="" />
+                            <span class="badge text-bg-warning mb-2 mt-4">20TB</span>
+                            <h4 class="mb-3 pe-sm-5 lh-lg"><br />20TB</h4>
+                            <h3>300만원<span class="fs-8">(부가세 별도)</span></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container-small px-lg-7 px-xxl-3">
+            <div class="row flex-between-center px-xl-11 mb-10 mb-md-9">
+                <div class="col-md-6 order-1 order-md-0 text-center text-md-start">
+                    <h4 class="mb-3">SP(Storage Provider)</h4>
+                    <p class="mb-5">탈중앙화된 스토리지 제공자로, 서로 분산된 지리적 환경에서 데이터를 나눠 저장하여 사용자들은 데이터가 삭제될 걱정없이 데이터를 저장합니다.</p>
+                    <!-- 로그인된 사용자에게만 모달을 띄우는 버튼 -->
+                    <button class="btn btn-warning me-1 mb-1 btn-lg"
+                        th:if="${withLoginOptions}" 
+                        data-bs-toggle="modal" 
+                        id="purchaseButton"
+                        data-bs-target="#verticallyCentered"
+                        th:data-user-id="${userInfoVO.user_id}">
+                        구매신청<i class="fa-solid fa-angle-right ms-2"></i>
+                    </button>
+
+                    <!-- 로그인되지 않은 사용자에게 경고창을 띄우고 로그인 페이지로 이동시키는 버튼 -->
+                    <button class="btn btn-warning me-1 mb-1 btn-lg"
+                        th:unless="${withLoginOptions}" 
+                        href="javascript:void(0);" 
+                        onclick="showLoginAlert()">
+                        구매신청
+                    </button>
+                </div>
+                <div class="col-md-5 mb-5 mb-md-0 text-center">
+                    <img class="w-75 w-md-100 d-dark-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" />
+                    <img class="w-75 w-md-100 d-light-none" src="../assets/img/icons/server-storage-icon.png" alt="서버 스토리지 모양" />
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <!-- 자바스크립트 경고창 및 리다이렉트 함수 -->
-	<script>
-		
-	    
+
+    <script>
+        function toggleQuantityInput() {
+            const productSelect = document.getElementById("spProduct");
+            const quantityInput = document.getElementById("quantityInput");
+
+            if (productSelect.value === "20TB") {
+                quantityInput.style.display = "block";
+            } else {
+                quantityInput.style.display = "none";
+            }
+        }
 
         function showLoginAlert() {
             alert("로그인이 필요합니다.");
             window.location.href = "/login";
         }
-	
-	   
-            
-
-        
-
-        
-        
-	</script>
+    </script>
 </main>
-
 </html>
