@@ -14,16 +14,14 @@ $(document).ready(function () {
         var level = $('#level').val();
         var spProduct = $('#spProduct').val();
         var hdd_amount = $('#quantity').val();
+        var memo = $('#description').val()
         
         // 필수 입력 사항 체크
         if (!userId) {
             alert('유저 ID가 설정되지 않았습니다.');
             return;
         }
-        if (!level || level === "구분을 선택하세요.") {
-            alert('구분을 선택해주세요.');
-            return;
-        }
+       
         if (!spProduct || spProduct === "구매하실 SP상품을 선택하세요.") {
             alert('구매할 SP상품을 선택해주세요.');
             return;
@@ -33,12 +31,11 @@ $(document).ready(function () {
         var formData = {
             user_id: userId,
             sp_product: spProduct,
-            memo: $('#description').val() // Description은 필수 입력이 아님
+            message: memo // Description은 필수 입력이 아님
         };
-        // 갯수 입력 필드 값 확인 및 추가
-		var hddAmount = $('#quantity').val(); // '갯수 입력' 필드 값
-		if (hddAmount && hddAmount.trim() !== "") { // null, undefined, 빈 문자열 체크
-		    formData.hdd_amount = hddAmount; // 값이 있으면 추가
+        // 갯수 입력 필드 값 확인 및 추가 // '갯수 입력' 필드 값
+		if (hdd_amount && hdd_amount.trim() !== "") { // null, undefined, 빈 문자열 체크
+		    formData.hdd_amount = hdd_amount; // 값이 있으면 추가
 		}
 
         // Ajax 요청

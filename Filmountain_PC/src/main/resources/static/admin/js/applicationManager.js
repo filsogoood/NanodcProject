@@ -10,8 +10,9 @@ $(document).ready(function() {
         user_id = $(this).data('id');
         tel = $(this).data('tel');
         email = $(this).data('email');
-        level = $(this).data('level');
+
         sp_product = $(this).data('sp-product');
+        console.log(sp_product);
         console.log(application_id);
         console.log(user_id);
 		
@@ -23,8 +24,7 @@ $(document).ready(function() {
                     user_id: user_id,
                     contract_status: "신규계약",
                     process:"전자서명 진행중",
-                    product: sp_product,
-                    level:level
+                    sp_product: sp_product,
                 }),
                 success: function (data) {
                     if (data == 'success') {
