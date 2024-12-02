@@ -88,7 +88,6 @@ public class AdminService {
 	        return userInfoList;
 	    }
 
-
 	 public List<HardwareProductVO> getProductList() {
 	        return this.productMapper.getProductList();
 	    }
