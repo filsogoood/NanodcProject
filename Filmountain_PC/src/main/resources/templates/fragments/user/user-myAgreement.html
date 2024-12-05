@@ -26,50 +26,85 @@
 			</div>
             
 			<!-- 계약 현황 -->
-			<div class="container mt-5">
-				<div class="col-auto">
-					<h2 class="mb-3">계약 현황</h2>
-					<div class="form-group mb-3">
-						<div class="table-responsive">
-							<table class="table table-bordered" id="agreementTable">
-								<tbody>
-									<tr th:each="agreement : ${agreements}">
-										<td class="step" data-step="1">
-											<span class="step-label">전자서명 진행중<i data-feather="check" class="check-icon"></i></span>
-											<a th:if="${agreement.process == '전자서명 진행중'}" th:href="@{/contract}" class="button-inline">전자계약서 작성</a>
-											<a th:if="${agreement.process != '전자서명 진행중'}" th:href="@{'https://service.nanodc.info/docs/' + ${agreement.user_id} + '_contract.pdf'}" class="button-inline">계약서 PDF 다운로드</a>
-										</td>
-									</tr>
-									
-									<tr>
-										<td class="step" data-step="3">
-											<span class="step-label">계약금 입금 확인중<i data-feather="check" class="check-icon"></i></span>
-										</td>
-									</tr>
-									<tr>
-										<td class="step" data-step="4">
-											<span class="step-label">중도금 입금 확인중<i data-feather="check" class="check-icon"></i></span>
-										</td>
-									</tr>
-									<tr>
-										<td class="step" data-step="5">
-											<span class="step-label">잔금 입금 확인중<i data-feather="check" class="check-icon"></i></span>
-										</td>
-									</tr>
-									<tr>
-										<td class="step" data-step="6">
-											<span class="step-label">계약완료<i data-feather="check" class="check-icon"></i></span>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							
-							<!-- 숨겨진 데이터 -->
-							<div id="hiddenData" class="hidden" th:each="agreement : ${agreements}" th:data-process="${agreement.process}"></div>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="container mt-5">
+    <div class="col-auto">
+        <h2 class="mb-3">계약 현황</h2>
+        <div class="form-group mb-3">
+            <div class="table-responsive">
+                <!-- 계약이 없을 경우 메시지 -->
+                <div th:if="${agreements == null or agreements.isEmpty()}">
+                    <p>현재 진행중인 계약이 없습니다.</p>
+                </div>
+
+                <!-- 계약이 있을 경우 테이블 출력 -->
+                <table th:if="${agreements != null and !agreements.isEmpty()}" class="table table-bordered" id="agreementTable">
+                    <tbody>
+                        <!-- 데이터 반복 -->
+                        <tr th:each="agreement : ${agreements}">
+                            <!-- 전자서명 진행중 -->
+                            <td class="step" data-step="1">
+                                <span class="step-label">전자서명 진행중
+                                    <i data-feather="check" class="check-icon"></i>
+                                </span>
+                                <a th:if="${agreement.process == '전자서명 진행중'}"
+								   th:href="${agreement.sp_product == 'NANODC 20T HDD' ? '/hdd_contract' : '/contract'}"
+								   class="button-inline">
+								    전자계약서 작성
+								</a>
+
+                                <a th:if="${agreement.process != '전자서명 진행중'}" 
+                                   th:href="@{'https://service.nanodc.info/docs/' + ${agreement.user_id} + '_contract.pdf'}" 
+                                   class="button-inline">계약서 PDF 다운로드</a>
+                            </td>
+                        </tr>
+
+                        <!-- 계약금 입금 확인중 -->
+                        <tr>
+                            <td class="step" data-step="2">
+                                <span class="step-label">계약금 입금 확인중
+                                    <i data-feather="check" class="check-icon"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        
+
+                        <!-- 중도금 입금 확인중 (NANODC 20T HDD는 제외) -->
+                        <tr th:if="${agreements[0].sp_product != 'NANODC 20T HDD'}">
+                            <td class="step" data-step="3">
+                                <span class="step-label">중도금 입금 확인중
+                                    <i data-feather="check" class="check-icon"></i>
+                                </span>
+                            </td>
+                        </tr>
+
+                        <!-- 잔금 입금 확인중 (NANODC 20T HDD는 제외) -->
+                        <tr th:if="${agreements[0].sp_product != 'NANODC 20T HDD'}">
+                            <td class="step" data-step="4">
+                                <span class="step-label">잔금 입금 확인중
+                                    <i data-feather="check" class="check-icon"></i>
+                                </span>
+                            </td>
+                        </tr>
+
+                        <!-- 계약완료 -->
+                        <tr>
+                            <td class="step" data-step="5">
+                                <span class="step-label">계약완료
+                                    <i data-feather="check" class="check-icon"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- 숨겨진 데이터 -->
+                <div id="hiddenData" class="hidden" th:each="agreement : ${agreements}" th:data-process="${agreement.process}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 		</div>
         
     </div>

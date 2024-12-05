@@ -38,4 +38,6 @@
         SET status = #{status}
         WHERE application_id = #{application_id}
     </update>
+    
+    
 </mapper>

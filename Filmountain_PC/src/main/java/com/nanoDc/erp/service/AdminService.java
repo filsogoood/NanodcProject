@@ -134,6 +134,11 @@ public class AdminService {
 	 public List<LiquidityVO> getLiquidityInfoByUser(int user_id) {
 	        return this.liquidityMapper.getLiquidityInfoByUser(user_id);
 	    }
+	 
+	 public boolean isContractCompleted(int user_id) {
+		    // Mapper에서 반환된 값이 0이면 true, 그렇지 않으면 false 반환
+		    return this.agreementMapper.check_contract(user_id) == 0;
+		}
 	 public String updateLiquidityInfo(LiquidityVO liquidityVO, HttpServletRequest request) {
 		 liquidityMapper.updateLiquidityInfo(liquidityVO);
 	    	return "success";
@@ -330,7 +335,43 @@ public class AdminService {
 			    
 			  //**>>>>>  새로운 계약 삽입 <<<<<**//
 			    public String insertAgreement(AgreementVO agreementVO, HttpServletRequest request) {
-				 	agreementMapper.insertAgreementProcess(agreementVO);
+				// 	agreementMapper.insertAgreementProcess(agreementVO);
+				 	 if ("NanoDC2p".equals(agreementVO.getSp_product())) {
+		                 agreementVO.setSupply_price(200000000);
+		                 agreementVO.setFirst_payment(50000000);
+		                 agreementVO.setSecond_payment(100000000);
+		                 agreementVO.setLast_payment(50000000);
+		                 agreementVO.setFinal_payment(200000000);
+		     	    	agreementVO.setProcess("전자서명 진행중");
+		     	    	agreementMapper.insertAgreementProcess(agreementVO);
+		             }
+		             else if ("NanoDC4p".equals(agreementVO.getSp_product())) {
+		                 agreementVO.setSupply_price(300000000);
+		                 agreementVO.setFirst_payment(100000000);
+		                 agreementVO.setSecond_payment(100000000);
+		                 agreementVO.setLast_payment(100000000);
+		                 agreementVO.setFinal_payment(300000000);
+		     	    	agreementVO.setProcess("전자서명 진행중");
+		     	    	agreementMapper.insertAgreementProcess(agreementVO);
+		             }
+		             else if ("NanoDC6p".equals(agreementVO.getSp_product())) {
+		                 agreementVO.setSupply_price(600000000);
+		                 agreementVO.setFirst_payment(200000000);
+		                 agreementVO.setSecond_payment(200000000);
+		                 agreementVO.setLast_payment(200000000);
+		                 agreementVO.setFinal_payment(600000000);
+		     	    	agreementVO.setProcess("전자서명 진행중");
+		     	    	agreementMapper.insertAgreementProcess(agreementVO);
+		             }
+		             else if ("NANODC 20T HDD".equals(agreementVO.getSp_product())) {
+		                 agreementVO.setSupply_price(3000000);
+		                 agreementVO.setFirst_payment(0);
+		                 agreementVO.setSecond_payment(0);
+		                 agreementVO.setLast_payment(0);
+		                 agreementVO.setFinal_payment(3000000*(agreementVO.getHdd_amount()));
+		     	    	agreementVO.setProcess("전자서명 진행중");
+		     	    	agreementMapper.insertAgreementProcess(agreementVO);
+		             }
 			    	return "success";
 			    }
 			    
@@ -339,6 +380,8 @@ public class AdminService {
 				 	agreementMapper.updateAgreement(agreementVO);
 			    	return "success";
 			    }
+			    
+			    
 	 
 	    
 	 

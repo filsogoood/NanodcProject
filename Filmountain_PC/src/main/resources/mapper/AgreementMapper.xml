@@ -4,9 +4,9 @@
 <mapper namespace="com.nanoDc.erp.mapper.AgreementMapper">
 	<insert id="insertAgreementProcess" parameterType="com.nanoDc.erp.vo.AgreementVO">
 	    INSERT INTO agreement_process
-	    (user_id, contract_status,process,reg_date,sp_product)
+	    (user_id, contract_status,process,supply_price,first_payment,second_payment,last_payment,final_payment,hdd_amount,reg_date,sp_product)
 	    VALUES
-	    (#{user_id}, #{contract_status}, #{process},NOW(),#{sp_product})
+	    (#{user_id}, #{contract_status}, #{process}, #{supply_price}, #{first_payment}, #{second_payment}, #{last_payment}, #{final_payment},#{hdd_amount},NOW(),#{sp_product})
 	</insert>
 	<update id="updateAgreement" parameterType="com.nanoDc.erp.vo.AgreementVO">
 	    UPDATE agreement_process
@@ -98,7 +98,8 @@
 	        ap.second_payment,
 	        ap.last_payment,
 	        ap.sp_product,
-	        ap.level
+	        ap.level,
+	        ap.hdd_amount
 	    FROM 
 	        agreement_process ap
 	    JOIN
@@ -133,6 +134,12 @@
 				SET auth_status = #{auth_status}, process = "계약금 입금 확인중"
 				WHERE user_id = #{user_id}
 	    </update>
+<select id="check_contract" parameterType="integer" resultType="int">
+	    SELECT COUNT(*)
+			FROM agreement_process
+			WHERE user_id = #{user_id} 
+			  AND process != '계약완료';
 
+	</select>
 	
 </mapper>

@@ -38,7 +38,7 @@
                                     <option value="NanoDC2p">NANODC2P</option>
                                     <option value="NanoDC4p">NANODC4P</option>
                                     <option value="NanoDC6p">NANODC6P</option>
-                                    <option value="20TB">NANODC 20T HDD</option>
+                                    <option value="NANODC 20T HDD">NANODC 20T HDD</option>
                                 </select>
                             </div>
 
@@ -59,6 +59,19 @@
                 </div>
             </div>
         </div>
+        <script>
+			function toggleQuantityInput() {
+            const productSelect = document.getElementById("spProduct");
+            const quantityInput = document.getElementById("quantityInput");
+
+            if (productSelect.value === "NANODC 20T HDD") {
+                quantityInput.style.display = "block";
+            } else {
+                quantityInput.style.display = "none";
+            }
+        }
+        </script>
+			
 
         <section class="pb-3 overflow-hidden bg-body" id="home">
             <div class="hero-header-container-alternate position-relative">
@@ -129,14 +142,14 @@
                             <img class="w-100 rounded-3" src="/assets/img/thumb/nanodc_wb.png" alt="" />
                             <span class="badge text-bg-warning mb-2 mt-4">6PiB</span>
                             <h4 class="mb-3 pe-sm-5 lh-lg">RAW 6PiB<br />QAP 60PiB</h4>
-                            <h3>5억 원<span class="fs-8">(부가세 별도)</span></h3>
+                            <h3>6억 원<span class="fs-8">(부가세 별도)</span></h3>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="blog-card">
                             <img class="w-100 rounded-3" src="/assets/img/thumb/nanoDDD.png" alt="" />
                             <span class="badge text-bg-warning mb-2 mt-4">20TB</span>
-                            <h4 class="mb-3 pe-sm-5 lh-lg"><br />20TB</h4>
+                            <h4 class="mb-3 pe-sm-5 lh-lg">NANODC 20T HDD X1<br />20TB</h4>
                             <h3>300만원<span class="fs-8">(부가세 별도)</span></h3>
                         </div>
                     </div>
@@ -176,16 +189,7 @@
     </div>
 
     <script>
-        function toggleQuantityInput() {
-            const productSelect = document.getElementById("spProduct");
-            const quantityInput = document.getElementById("quantityInput");
-
-            if (productSelect.value === "20TB") {
-                quantityInput.style.display = "block";
-            } else {
-                quantityInput.style.display = "none";
-            }
-        }
+        
 
         function showLoginAlert() {
             alert("로그인이 필요합니다.");

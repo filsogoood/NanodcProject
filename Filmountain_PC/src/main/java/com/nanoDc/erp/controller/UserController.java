@@ -669,6 +669,44 @@ public class UserController {
 		     mav.setViewName("views/user/contract_view");
 		     return mav;
 		 }
+		 
+		 @GetMapping(value={"/hdd_contract"})
+		 public ModelAndView hdd_contract(HttpServletRequest request) {
+		     ModelAndView mav = new ModelAndView();
+		     HttpSession session = request.getSession();
+		     if (!userService.checkSession(request)) {
+		         mav.setViewName("redirect:/login");
+		         return mav;
+		     }
+		     
+		     LoginVO loginVO = (LoginVO) session.getAttribute("user");
+		     if (loginVO != null && loginVO.getUserInfoVO() != null) {
+		         int userId = loginVO.getUserInfoVO().getUser_id();
+		         List<AgreementVO> agreements = userService.getAgreementsByUserId(userId);
+		         for (AgreementVO agreement : agreements) {
+		             if ("true".equals(agreement.getAuth_status())) {
+		                 mav.setViewName("redirect:/user/agreement");
+		                 return mav;
+		             }
+		         }
+		         mav.addObject("loginVO", loginVO);
+		         mav.addObject("agreements", agreements);
+		         LocalDate currentDate = LocalDate.now();
+		         DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyyMMdd");
+		         String formattedDate1 = currentDate.format(formatter1);
+		         mav.addObject("currentDate", formattedDate1);
+
+		         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy년 M월 d일");
+		         String formattedDate2 = currentDate.format(formatter2);
+		         mav.addObject("formattedDate", formattedDate2);
+		     } else {
+		         mav.setViewName("redirect:/login");
+		         return mav;
+		     }
+		     
+		     mav.setViewName("views/user/hdd_contract_view");
+		     return mav;
+		 }
 	 
 	 /*유저 프로필 편집 기능 */
 	 @ResponseBody
@@ -734,6 +772,11 @@ public class UserController {
 	 @ResponseBody
 	 @PostMapping(value={"/insertApplication"})
 	 public String insertApplication(@RequestBody ApplicationVO applicationVO, HttpServletRequest request) {
+		 int userID = applicationVO.getUser_id();
+		 if (!userService.isContractCompleted(userID)) {
+	            // 진행 중인 계약이 있으면 실패 메시지 반환
+	            return "failed:contract_in_progress";
+	        }
 	    return userService.insertApplication(applicationVO,request);
 	    }  
 	 

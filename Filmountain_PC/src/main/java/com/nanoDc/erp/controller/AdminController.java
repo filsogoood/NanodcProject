@@ -689,6 +689,12 @@ public class AdminController {
 	            return "failed:session_closed";
 	        }
 	        
+	        int userID = agreementVO.getUser_id();
+	        if (!adminService.isContractCompleted(userID)) {
+	            // 진행 중인 계약이 있으면 실패 메시지 반환
+	            return "failed:contract_in_progress";
+	        }
+	        
 	        return adminService.insertAgreement(agreementVO, request);
 	    }
 

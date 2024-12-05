@@ -41,10 +41,10 @@ public class KakaoauthServiceController {
             identity.setReceiverHP(kakaocertService.encrypt(receiverHP));
             identity.setReceiverName(kakaocertService.encrypt(receiverName));
             identity.setReceiverBirthday(kakaocertService.encrypt(receiverBirthday));
-            identity.setReqTitle("본인인증 요청 메시지 제목");
-            identity.setExtraMessage(kakaocertService.encrypt("본인인증 커스텀 메시지"));
+            identity.setReqTitle("NANODC 본인인증 요청");
+            identity.setExtraMessage(kakaocertService.encrypt("본인인증 요청"));
             identity.setExpireIn(1000);
-            identity.setToken(kakaocertService.encrypt("본인인증 요청 원문"));
+            identity.setToken(kakaocertService.encrypt("본인인증 요청"));
             identity.setAppUseYN(false);
         } catch (Exception e) {
             logger.error("Error encrypting identity information", e);

@@ -79,7 +79,7 @@
                                 <td th:text="${item.user_name}" class="name align-middle fw-semibold text-body-highlight ps-2"></td>
                                 <td th:text="${item.phone_number}" class="tel align-middle fw-semibold text-body-highlight"></td>
                                 <td th:text="${item.user_email}" class="email align-middle fw-semibold text-body-highlight"></td>
-                                <td th:text="${item.hdd_amount}" class="level align-middle fw-semibold text-body-highlight"></td>
+                                <td th:text="${item.hdd_amount}" class="amount align-middle fw-semibold text-body-highlight"></td>
                                 <td th:text="${item.sp_product}" class="sp_product align-middle fw-semibold text-body-highlight"></td>
                                 <td th:text="${item.message}" class="message align-middle fw-semibold text-body-highlight"></td>
                                  <td class="text-end pe-0">
@@ -87,7 +87,8 @@
 						            type="button" 
 						            th:data-application-id="${item.application_id}" 
                                         th:data-id="${item.user_id}"
-                                        th:data-sp-product="${item.sp_product}" >승인</button>
+                                        th:data-sp-product="${item.sp_product}"
+                                        th:data-hdd-amount="${item.hdd_amount}"  >승인</button>
 						        </td>
                             </tr>
                             <!-- 기본 템플릿 -->

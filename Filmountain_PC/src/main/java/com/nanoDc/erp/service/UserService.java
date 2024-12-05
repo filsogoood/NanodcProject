@@ -230,6 +230,11 @@ public class UserService {
 		this.applicationMapper.insertApplication(applicationVO);
     	return "success";
     }	
+	
+	public boolean isContractCompleted(int user_id) {
+	    // Mapper에서 반환된 값이 0이면 true, 그렇지 않으면 false 반환
+	    return this.agreementMapper.check_contract(user_id) == 0;
+	}
 	 
 	 
 }

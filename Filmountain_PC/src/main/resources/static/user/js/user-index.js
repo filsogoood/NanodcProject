@@ -40,21 +40,31 @@ $(document).ready(function () {
 
         // Ajax 요청
          $.ajax({
-            url: '/insertApplication', // 서버의 엔드포인트
-            method: 'POST',
-            contentType: 'application/json', // Content-Type을 JSON으로 설정
-            data: JSON.stringify(formData),
-            success: function (response) {
-                alert('구매 신청이 완료되었습니다.');
-                // 필요한 경우 모달을 닫음
-                $('#verticallyCentered').modal('hide');
-                location.reload(); // 페이지 새로고침
-            },
-            error: function (error) {
-                alert('구매 신청 중 오류가 발생했습니다.');
-                console.log(error);
-            }
-        });
+			    url: '/insertApplication', // 서버의 엔드포인트
+			    method: 'POST',
+			    contentType: 'application/json', // Content-Type을 JSON으로 설정
+			    data: JSON.stringify(formData),
+			    success: function (response) {
+			        if (response === 'success') {
+			            alert('구매 신청이 완료되었습니다.');
+			            // 필요한 경우 모달을 닫음
+			            $('#verticallyCentered').modal('hide');
+			            location.reload(); // 페이지 새로고침
+			        } else if (response === 'failed:contract_in_progress') {
+			            alert('진행 중인 계약이 있어 구매 신청이 불가능합니다.');
+			        } else if (response === 'failed:session_closed') {
+			            alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+			            location.href = '/login'; // 로그인 페이지로 리다이렉트
+			        } else {
+			            alert('구매 신청에 실패했습니다. 관리자에게 문의하세요.');
+			        }
+			    },
+			    error: function (error) {
+			        alert('구매 신청 중 오류가 발생했습니다.');
+			        console.log(error);
+			    }
+			});
+
     });
     
 });
