@@ -14,29 +14,8 @@
 </head>
 
 <body>
-    <section>
-        <div class="content-wrapper" id="sec01-content-wrapper">
-            <div class="contract-number">
-                <span th:text="${currentDate + agreements[0].process_id + '20T'}"></span>
-            </div>
-            <div class="title">
-                <p class="title-txt">나노데이터센터20T 스토리지 구매 및 관리 계약서</p>
-
-             <!--   <img src="/assets/img/contract_img/nanodc2p.png" alt="나노디씨20T 로고" /> -->
-                <!-- 추후 20TB 로고 나오면 수정 -->
-            </div>
-            <div class="date">
-                <p><span th:text="${formattedDate}"></span></p>
-            </div>
-            <div class="contractor">
-                <p>계약자 <span class="contractor-name" th:text="${loginVO.userInfoVO.user_name}"></span>
-                   <input type="hidden" id="user-id" th:value="${loginVO.userInfoVO.user_id}" /></p>
-                <img src="/assets/img/contract_img/zetacube_logo.png">
-            </div>
-        </div>
-    </section>
-    
-    <style>
+	
+	    <style>
 .title .title-txt {
     font-size: 1.75rem;
     margin-bottom: 5px;
@@ -47,8 +26,210 @@
     font-size: 1rem;
     margin: 0;
 }
+
+section {
+    width: 60%;
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th, .table-container td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.count-20t {
+    font-weight: bold;
+    text-align: left;
+    font-size: 24px;
+}
+
+	.seal-1 {
+		margin-right: 225px
+	}
+
+@media (max-width: 768px) {
+	
+	.title .title-txt {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+	
+	.small-date {
+		margin-bottom: 20px;
+	}
+	
+	.signature {
+		font-size: 0.7rem;
+	}
+	
+	.content {
+		font-size: 0.6rem;
+	}
+	
+	p {
+		font-size: 0.7rem;
+	}
+	
+	th {
+		font-size: 0.6rem;
+	}
+	
+	td {
+		font-size: 0.6rem;
+	}
+	
+    section {
+        width: 100%;
+    }
+    
+            img.resize-40 {
+            width: 40%;
+            height: auto;
+        }
+
+    .content-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .table-title {
+		font-size: 0.8rem;
+	}
+	
+    .table-container table .table-title-20tb {
+        font-size: 0.7rem;
+    }
+
+    .title-txt {
+        font-size: 0.8em;
+        text-align: center;
+    }
+    
+.table-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.table-container table {
+    width: 150%;  
+    display: table;
+    overflow-x: auto;
+}
+
+    .form-control.dynamic-width {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #signButton {
+        width: 100%;
+        padding: 10px;
+        font-size: 1em;
+    }
+
+    .footer-line p, .contract-number p, .date p, .contractor p {
+        text-align: center;
+    }
+
+    body {
+        font-size: 14px;
+    }
+
+    .contract-date, .signatory, .signature p {
+        font-size: 0.9em;
+    }
+
+    .contract-content p {
+        line-height: 1.5;
+    }
+
+    .administrator {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .administrator img {
+        display: block;
+        margin: 0 auto 10px auto;
+    }
+
+    .administrator p {
+        margin: 5px 0; 
+    }
+    
+    	.count-20t{
+		font-size: 12px;
+	}
+
+    .signature {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .buyer, .administrator {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .contract-number-text {
+		margin-top: 2rem;
+	}
+	
+    .contract-content .contract-h1 {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+    }
+    
+    .seal-1 {
+		margin-right: 0px;
+		margin-left: 0px;
+		left: 170px;
+	}
+
+}
+
    </style>
 
+	
+    <section>
+        <div class="content-wrapper" id="sec01-content-wrapper">
+            <div class="contract-number" style="margin-top: 60px;">
+                <span  th:text="${currentDate + agreements[0].process_id + '20T'}"></span>
+            </div>
+            <div class="title" style="margin-top: 100px;">
+                <p class="title-txt">나노데이터센터20T 스토리지 구매 및 관리 계약서</p>
+
+             <!--   <img src="/assets/img/contract_img/nanodc2p.png" alt="나노디씨20T 로고" /> -->
+                <!-- 추후 20TB 로고 나오면 수정 -->
+                
+            </div>
+            <div class="date">
+                <p><span th:text="${formattedDate}"></span></p>
+            </div>
+            <div class="contractor" >
+                <p>계약자 <span class="contractor-name" th:text="${loginVO.userInfoVO.user_name}"></span>
+                   <input type="hidden" id="user-id" th:value="${loginVO.userInfoVO.user_id}" /></p>
+                <img src="/assets/img/contract_img/zetacube_logo.png">
+            </div>
+        </div>
+    </section>
+    
     <section>
         <div class="content-wrapper" id="sec02-content-wrapper">
             <div class="header-line">
@@ -59,7 +240,7 @@
                 <table>
     <tr>
         <th colspan="2" class="title">
-            <div class="title-txt" style="margin-bottom: 5px;">NANODC20T 스토리지 구매 및 관리 계약서</div>
+            <div class="title-txt table-title-20tb" style="margin-bottom: 5px;">NANODC20T 스토리지 구매 및 관리 계약서</div>
             <p class="contract-number" style="margin: 0;">계약번호 : <span th:text="${currentDate + agreements[0].process_id + '20T'}"></span>
         </th>
     </tr>
@@ -106,7 +287,7 @@
                     </tr>
                     <tr>
                         <th colspan="1">구매상품</th>
-                  <td colspan="1" style="font-size: 24px; font-weight: bold; text-align: left;">
+<td colspan="1" class="count-20t">
     NANODC20T (<span th:text="${agreements[0].hdd_amount}">0</span>) EA
 </td>
                     </tr>
@@ -120,7 +301,7 @@
                                         <tr class="contract-footer">
                         <td colspan="2">
                             <p>본 계약의 체결 사실을 증명하기 위해 계약서를 작성하여 각각 그 적법한 대표자가 서명 날인한 후 각자 보관하기로 한다.</p>
-                            <img src="/assets/img/contract_img/company-seal.png" alt="직인" />
+                            <img src="/assets/img/contract_img/company-seal.png" class="seal-1" alt="직인" />
                             <p class="contract-date" th:text="${formattedDate}"></p>
                             <p class="signatory">주식회사 제타큐브 대표이사 이 부 연</p>
                             <p>주소: 경기도 부천시 소사구 양지로 237 광양프런티어밸리 5차 지식산업센터 1079호<br>전화: 02-1644-3096 팩스: 02-2088-4655 e-Mail : allen@zetacube.net</p>
@@ -153,7 +334,7 @@
             </div>
             <div class="contract-content-wrapper">
                 <div class="contract-content">
-               <h1>NANODC20T 스토리지 구매 및 관리 계약서</h1>
+               <h1 class="contract-h1">NANODC20T 스토리지 구매 및 관리 계약서</h1>
                     <p class="intro-text">
                         <input type="text" class="form-control dynamic-width" placeholder="계약자명">(이하 "구매자"라 한다)와 주식회사
                         제타큐브 (이하 "공급사"라 한다)은 NANODC 20T 스토리지 (나노 데이터 센터 이하 "스토리지"이라 한다)을 구매/공급/유지/관리함에 있어 다음과 같은 조건으로 제품
