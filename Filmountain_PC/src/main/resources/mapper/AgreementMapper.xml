@@ -4,9 +4,9 @@
 <mapper namespace="com.nanoDc.erp.mapper.AgreementMapper">
 	<insert id="insertAgreementProcess" parameterType="com.nanoDc.erp.vo.AgreementVO">
 	    INSERT INTO agreement_process
-	    (user_id, contract_status,process,supply_price,first_payment,second_payment,last_payment,final_payment,hdd_amount,reg_date,sp_product)
+	    (user_id, contract_status,process,supply_price,first_payment,second_payment,last_payment,final_payment,hdd_amount,reg_date,sp_product,contract_number)
 	    VALUES
-	    (#{user_id}, #{contract_status}, #{process}, #{supply_price}, #{first_payment}, #{second_payment}, #{last_payment}, #{final_payment},#{hdd_amount},NOW(),#{sp_product})
+	    (#{user_id}, #{contract_status}, #{process}, #{supply_price}, #{first_payment}, #{second_payment}, #{last_payment}, #{final_payment},#{hdd_amount},NOW(),#{sp_product},#{contract_number})
 	</insert>
 	<update id="updateAgreement" parameterType="com.nanoDc.erp.vo.AgreementVO">
 	    UPDATE agreement_process
@@ -70,6 +70,7 @@
 	        ap.second_payment,
 	        ap.last_payment,        
 	        ap.level,
+	        ap.contract_number,
 	        ui.user_name,
 	        ap.sp_product
 	        
@@ -99,7 +100,8 @@
 	        ap.last_payment,
 	        ap.sp_product,
 	        ap.level,
-	        ap.hdd_amount
+	        ap.hdd_amount,
+	        ap.contract_number
 	    FROM 
 	        agreement_process ap
 	    JOIN
@@ -140,6 +142,11 @@
 			WHERE user_id = #{user_id} 
 			  AND process != '계약완료';
 
+	</select>
+	
+	<select id="get_last_contract_id" resultType="integer">
+	    SELECT COALESCE(MAX(process_id), 0) AS process_id
+	    FROM agreement_process;
 	</select>
 	
 </mapper>

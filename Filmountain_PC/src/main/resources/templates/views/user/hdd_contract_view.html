@@ -17,7 +17,7 @@
     <section>
         <div class="content-wrapper" id="sec01-content-wrapper">
             <div class="contract-number">
-                <span th:text="${currentDate + agreements[0].process_id + '20T'}"></span>
+                <span th:text="${agreements[0].contract_number}"></span>
             </div>
             <div class="title">
                 <p class="title-txt">나노데이터센터20T 스토리지 구매 및 관리 계약서</p>
@@ -60,7 +60,7 @@
     <tr>
         <th colspan="2" class="title">
             <div class="title-txt" style="margin-bottom: 5px;">NANODC20T 스토리지 구매 및 관리 계약서</div>
-            <p class="contract-number" style="margin: 0;">계약번호 : <span th:text="${currentDate + agreements[0].process_id + '20T'}"></span>
+            <p class="contract-number" style="margin: 0;">계약번호 : <span th:text="${agreements[0].contract_number}"></span>
         </th>
     </tr>
                     <tr>
@@ -77,7 +77,7 @@
         <!-- 전화 -->
         <p>
             전 화: 
-            <input type="text" class="form-control dynamic-width" 
+            <input type="number" class="form-control dynamic-width" 
                    placeholder="010-1234-5678" 
                    value="" />
         </p>

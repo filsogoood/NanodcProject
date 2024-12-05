@@ -83,8 +83,8 @@
 							
 							        <form id="agreements_form" >
 							            <div class="mb-3">
-							                <label for="system_location" class="form-label">주소</label>
-							                <input type="text"   class="form-control" id="system_location" name="system_location">
+							                <label for="system_location" class="form-label">계약번호</label>
+							                <input type="text"   class="form-control" id="contract_number" name="system_location" readonly>
 							            </div>
 							            <div class="mb-3">
 							                <label for="supply_price" class="form-label">가격</label>
@@ -212,7 +212,7 @@
 							            type="button" 
 							            th:data-user-id="${item.user_id}" 
 							            th:data-process="${item.process}"
-							            th:data-system-location="${item.system_location}"
+							            th:data-contract-number="${item.contract_number}"
 							            th:data-final-payment="${item.final_payment}"
 							            th:data-supply-discount-price="${item.supply_discount_price}"
 							            th:data-supply-price="${item.supply_price}"

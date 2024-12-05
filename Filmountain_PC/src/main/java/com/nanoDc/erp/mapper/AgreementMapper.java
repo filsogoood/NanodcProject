@@ -15,4 +15,5 @@ public interface AgreementMapper {
 	public void updateContract_info(AgreementVO AgreementVO);
 	void updateAuthStatus(@Param("user_id") int userId, @Param("auth_status") String authStatus);
 	public int check_contract(int user_id);
+	public int get_last_contract_id();
 }

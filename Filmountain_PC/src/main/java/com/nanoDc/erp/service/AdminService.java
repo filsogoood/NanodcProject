@@ -1,6 +1,8 @@
 package com.nanoDc.erp.service;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -336,6 +338,7 @@ public class AdminService {
 			  //**>>>>>  새로운 계약 삽입 <<<<<**//
 			    public String insertAgreement(AgreementVO agreementVO, HttpServletRequest request) {
 				// 	agreementMapper.insertAgreementProcess(agreementVO);
+			    	int last_id = agreementMapper.get_last_contract_id() + 1;
 				 	 if ("NanoDC2p".equals(agreementVO.getSp_product())) {
 		                 agreementVO.setSupply_price(200000000);
 		                 agreementVO.setFirst_payment(50000000);
@@ -343,15 +346,21 @@ public class AdminService {
 		                 agreementVO.setLast_payment(50000000);
 		                 agreementVO.setFinal_payment(200000000);
 		     	    	agreementVO.setProcess("전자서명 진행중");
+		     	    	String currentDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		     	       String contractNumber = currentDate + last_id + "2P";
+		     	       agreementVO.setContract_number(contractNumber);
 		     	    	agreementMapper.insertAgreementProcess(agreementVO);
 		             }
 		             else if ("NanoDC4p".equals(agreementVO.getSp_product())) {
-		                 agreementVO.setSupply_price(300000000);
+		                 agreementVO.setSupply_price(400000000);
 		                 agreementVO.setFirst_payment(100000000);
-		                 agreementVO.setSecond_payment(100000000);
+		                 agreementVO.setSecond_payment(200000000);
 		                 agreementVO.setLast_payment(100000000);
 		                 agreementVO.setFinal_payment(300000000);
 		     	    	agreementVO.setProcess("전자서명 진행중");
+		     	    	String currentDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+			     	       String contractNumber = currentDate + last_id + "4P";
+			     	       agreementVO.setContract_number(contractNumber);
 		     	    	agreementMapper.insertAgreementProcess(agreementVO);
 		             }
 		             else if ("NanoDC6p".equals(agreementVO.getSp_product())) {
@@ -361,6 +370,9 @@ public class AdminService {
 		                 agreementVO.setLast_payment(200000000);
 		                 agreementVO.setFinal_payment(600000000);
 		     	    	agreementVO.setProcess("전자서명 진행중");
+		     	    	String currentDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+			     	       String contractNumber = currentDate + last_id + "6P";
+			     	       agreementVO.setContract_number(contractNumber);
 		     	    	agreementMapper.insertAgreementProcess(agreementVO);
 		             }
 		             else if ("NANODC 20T HDD".equals(agreementVO.getSp_product())) {
@@ -370,6 +382,9 @@ public class AdminService {
 		                 agreementVO.setLast_payment(0);
 		                 agreementVO.setFinal_payment(3000000*(agreementVO.getHdd_amount()));
 		     	    	agreementVO.setProcess("전자서명 진행중");
+		     	    	String currentDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+			     	       String contractNumber = currentDate + last_id + "20T";
+			     	       agreementVO.setContract_number(contractNumber);
 		     	    	agreementMapper.insertAgreementProcess(agreementVO);
 		             }
 			    	return "success";

@@ -25,6 +25,7 @@ public class AgreementVO {
     private String sp_product;
     private String level;
     private int hdd_amount;
+    private String contract_number;
     // Getters and Setters
     public int getProcess_id() {
         return process_id;
@@ -178,6 +179,14 @@ public class AgreementVO {
 
 	public void setHdd_amount(int hdd_amount) {
 		this.hdd_amount = hdd_amount;
+	}
+
+	public String getContract_number() {
+		return contract_number;
+	}
+
+	public void setContract_number(String contract_number) {
+		this.contract_number = contract_number;
 	}
 
 	

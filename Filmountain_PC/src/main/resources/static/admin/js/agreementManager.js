@@ -28,7 +28,7 @@ $(document).ready(function() {
     $(document).on('click', '.detail-agreement-button', function() {
         UserId = $(this).data('user-id');
         process = $(this).data('process');
-        systemLocation = $(this).data('system-location');
+        contract_number = $(this).data('contract-number');
         finalPayment = $(this).data('final-payment');
         supplyDiscountPrice = $(this).data('supply-discount-price');
         supplyPrice = $(this).data('supply-price');
@@ -38,7 +38,7 @@ $(document).ready(function() {
         console.log(formatNumberWithCommas(supplyPrice));
 
         // 폼 필드에 값 설정
-        $('#system_location').val(systemLocation);
+        $('#contract_number').val(contract_number);
         $('#final_payment').val(formatNumberWithCommas(finalPayment));
         $('#supply_discount_price').val(supplyDiscountPrice);
         $('#supply_price').val(formatNumberWithCommas(supplyPrice));
