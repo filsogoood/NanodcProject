@@ -113,7 +113,7 @@ $(document).ready(function() {
 
 			    
 $(document).ready(function() {
-		    const signButton = document.getElementById('signButton');
+    const signButton = document.getElementById('signButton');
     const isVerified = signButton.getAttribute('data-is-verified') === '1';
 
     signButton.addEventListener('click', function() {
@@ -122,18 +122,51 @@ $(document).ready(function() {
             window.location.href = '/myAgreement';
         } else {
             const user_id = $('#user-id').val().trim();
+            
+            // 원래 스타일 저장
+            const sections = document.querySelectorAll('section');
+            const originalSectionStyles = [];
+            sections.forEach((section) => {
+                originalSectionStyles.push(section.style.width);
+                section.style.width = '100%';
+            });
 
-            // PDF 생성 및 업로드 코드...
+            // seal 클래스들의 원래 스타일 저장
+            const seal1 = document.querySelector('.seal-1');
+            const seal2 = document.querySelector('.seal-2');
+            const originalSeal1Style = seal1 ? seal1.style.marginRight : '';
+            const originalSeal2Style = seal2 ? seal2.style.marginRight : '';
+
+            // seal 클래스들의 margin 제거
+            if (seal1) seal1.style.marginRight = '0';
+            if (seal2) seal2.style.marginRight = '0';
+
             const opt = {
                 margin: [0, 0, 0, 0],
                 filename: `${user_id}_contract.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                html2canvas: { 
+                    scale: 2, 
+                    useCORS: true
+                },
+                jsPDF: { 
+                    unit: 'mm', 
+                    format: 'a4', 
+                    orientation: 'portrait'
+                }
             };
 
             const element = document.body;
             html2pdf().from(element).set(opt).toPdf().get('pdf').then(function(pdf) {
+                // 모든 원래 스타일 복원
+                sections.forEach((section, index) => {
+                    section.style.width = originalSectionStyles[index];
+                });
+
+                // seal 클래스들의 원래 스타일 복원
+                if (seal1) seal1.style.marginRight = originalSeal1Style;
+                if (seal2) seal2.style.marginRight = originalSeal2Style;
+
                 var pdfBlob = pdf.output('blob');
                 var formData = new FormData();
                 formData.append('file', pdfBlob, `${user_id}_contract.pdf`);
@@ -161,7 +194,7 @@ $(document).ready(function() {
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log('AJAX error: ', textStatus, errorThrown);
-                        alert('PDF 업로드 중 오류가 발생했습니다.');
+                        alert('PDF 업로드 중 오류가 발생했습니다.'); 
                     }
                 });
             });
