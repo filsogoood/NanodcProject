@@ -43,6 +43,15 @@ img {
     text-align: left;
 }
 
+	.seal-1 {
+		margin-right: 225px
+	}
+	
+	.seal-2 {
+    margin-right: 185px;
+}
+
+
 @media (max-width: 768px) {
 	.small-date {
 		margin-bottom: 20px;
@@ -144,7 +153,7 @@ img {
     }
 
     .administrator p {
-        margin: 5px 0;
+        margin: 5px 0; 
     }
 
     .signature {
@@ -157,6 +166,17 @@ img {
         width: 100%;
         text-align: center;
     }
+    
+        .seal-1 {
+		margin-right: 0px;
+		margin-left: 0px;
+		left: 170px;
+	}
+	
+	.seal-2 {
+		left: 150px;
+		right: 0px;
+	}
 }
 
 	</style>
@@ -252,7 +272,7 @@ img {
                     <tr class="contract-footer">
                         <td colspan="2">
                             <p>본 계약의 체결 사실을 증명하기 위해 계약서 2통을 작성하여 각각 그 적법한<br>대표자가 서명 날인한 후 각 1통씩을 보관하기로 한다.</p>
-                            <img src="/assets/img/contract_img/company-seal.png" alt="직인" class="seal" />
+                            <img src="/assets/img/contract_img/company-seal.png" alt="직인" class="seal-1" />
                             <p class="contract-date" th:text="${formattedDate}"></p>
                             <p class="signatory">주식회사 제타큐브 대표이사 이 부 연</p>
                             <p>주소: 경기도 부천시 소사구 양지로 237 광양프런티어밸리 5차 지식산업센터 1079호<br>전화: 02-1644-3096 팩스: 02-2088-4655 e-Mail : allen@zetacube.net</p>
@@ -616,7 +636,7 @@ img {
                      <button id="signButton" class="cert-button" data-is-verified="${isVerified}">서명하기</button>
                 </div>
                 <div class="administrator">
-                    <img src="/assets/img/contract_img/company-seal.png" alt="회사직인" class="seal" />
+                    <img src="/assets/img/contract_img/company-seal.png" alt="회사직인" class="seal-2" />
                     <p>“관리자”</p>
                     <p>주 소 : 경기도 부천시 소사구 양지로 237 광양프런티어밸리 5차 1078, 1079호</p>
                     <br />

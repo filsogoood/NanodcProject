@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.barocert.BarocertException;
 import com.barocert.kakaocert.KakaocertService;
+import com.barocert.kakaocert.identity.IdentityResult;
 import com.barocert.kakaocert.sign.Sign;
 import com.barocert.kakaocert.sign.SignReceipt;
 import com.barocert.kakaocert.sign.SignStatus;
@@ -92,6 +93,7 @@ public class KakaoAgreementService {
         Map<String, Object> response = new HashMap<>();
 
         try {
+        	
             // Request sign and store session attributes
             SignReceipt result = kakaocertService.requestSign(clientCode, sign);
             session.setAttribute("receiptID", result.getReceiptID());
@@ -125,14 +127,17 @@ public class KakaoAgreementService {
         Map<String, Object> response = new HashMap<>();
         try {
             SignResult result = kakaocertService.verifySign(clientCode, receiptID);
+     
+            System.out.println("receiptID" + receiptID);
+
             if (result.getState() == 1) { // Signed state
                 Integer userId = (Integer) session.getAttribute("user_id");
                 if (userId == null) {
                     throw new NullPointerException("user_id is null in session");
                 }
-
+                String signature = result.getSignedData();
                 // Update the database column auth_status = 1
-                agreementMapper.updateAuthStatus(userId, "1");
+                agreementMapper.updateAuthStatus(userId, "1",signature,receiptID);
                 response.put("result", true);
                 response.put("verification", result);
             } else {
@@ -145,7 +150,9 @@ public class KakaoAgreementService {
         } catch (BarocertException ke) {
             response.put("result", false);
             response.put("error", ke.getMessage());
+            System.err.println("BarocertException Response: " + response);
         }
+        System.out.println("Final Response: " + response);
         return response;
     }
 
@@ -167,7 +174,7 @@ public class KakaoAgreementService {
             }
 
             // Update the database column auth_status = 1
-            agreementMapper.updateAuthStatus(userId, "1");
+        //    agreementMapper.updateAuthStatus(userId, "1");
             response.put("result", true);
         } catch (NullPointerException e) {
             response.put("result", false);

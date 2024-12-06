@@ -26,6 +26,8 @@ public class AgreementVO {
     private String level;
     private int hdd_amount;
     private String contract_number;
+    private String signature;
+    private String receiptID;
     // Getters and Setters
     public int getProcess_id() {
         return process_id;
@@ -187,6 +189,22 @@ public class AgreementVO {
 
 	public void setContract_number(String contract_number) {
 		this.contract_number = contract_number;
+	}
+
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
+	public String getReceiptID() {
+		return receiptID;
+	}
+
+	public void setReceiptID(String receiptID) {
+		this.receiptID = receiptID;
 	}
 
 	

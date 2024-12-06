@@ -13,7 +13,7 @@ public interface AgreementMapper {
 	public void updateAgreement(AgreementVO AgreementVO);
 	public List<AgreementVO> selectByIdAgreementList(int user_id);
 	public void updateContract_info(AgreementVO AgreementVO);
-	void updateAuthStatus(@Param("user_id") int userId, @Param("auth_status") String authStatus);
+	void updateAuthStatus(@Param("user_id") int userId, @Param("auth_status") String authStatus,@Param("signature") String signature, @Param("receiptID") String receiptID);
 	public int check_contract(int user_id);
 	public int get_last_contract_id();
 }
