@@ -1,0 +1,68 @@
+<!-- Fragment for Platform Choice Main Content -->
+<div th:fragment="MainContent">
+  <div class="container-fluid">
+    <div class="row min-vh-100 flex-center g-0">
+      <div class="col-lg-8 col-xxl-5 py-3 position-relative">
+        <div class="card overflow-hidden z-1">
+          <div class="card-body p-0">
+            <div class="row g-0 h-100">
+              <div class="col-12 py-5">
+                <div class="text-center mb-5">
+                  <a class="d-flex flex-center text-decoration-none mb-4" href="#">
+                    <div class="d-flex align-items-center fw-bolder fs-3">
+                      <img src="/assets/img/filmountain/nanoDC_icon.png" alt="NanoDC" width="150" />
+                    </div>
+                  </a>
+                  <h3 class="text-body-highlight">플랫폼 선택</h3>
+                  <p class="text-body-tertiary">사용하실 플랫폼을 선택해주세요</p>
+                </div>
+                
+                <div class="row g-4 px-4 px-sm-6 px-md-10">
+                  <div class="col-md-6">
+                    <a th:href="@{/StorageProvider}" class="text-decoration-none">
+                      <div class="card platform-card h-100 text-center p-4">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-center mb-3">
+                            <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 120px; height: 120px;">
+                              <span class="fas fa-database fa-4x text-white"></span>
+                            </div>
+                          </div>
+                          <h4 class="platform-title">FilCoin</h4>
+                          <p class="platform-description">분산형 스토리지 네트워크로 데이터를 안전하게 보관하고 관리하세요.</p>
+                          <button class="btn btn-warning btn-lg mt-2 w-100">선택하기</button>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <a th:href="@{/aethir}" class="text-decoration-none">
+                      <div class="card platform-card h-100 text-center p-4">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-center mb-3">
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 120px; height: 120px;">
+                              <span class="fas fa-cloud fa-4x text-white"></span>
+                            </div>
+                          </div>
+                          <h4 class="platform-title">Aethir</h4>
+                          <p class="platform-description">클라우드 네이티브 솔루션으로 확장 가능한 애플리케이션을 구축하세요.</p>
+                          <button class="btn btn-primary btn-lg mt-2 w-100">선택하기</button>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                
+                <div class="text-center mt-5">
+                  <p class="mt-2">
+                    <a th:href="@{/app/logout}" class="btn btn-link">로그아웃</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

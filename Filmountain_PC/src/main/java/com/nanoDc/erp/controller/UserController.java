@@ -184,57 +184,144 @@ public class UserController {
 		
 		
 		 
-		 @PostMapping(value={"/app/login.do"})
-		    private String doAppLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		        LoginVO lvo = new LoginVO();
-		        UserInfoVO userInfoVO = new UserInfoVO(); 
-		        try {
-		            // 입력받은 이메일 암호화
-		            String encryptedEmail = AESUtil.encrypt(loginVO.getId());
-		            userInfoVO.setUser_email(encryptedEmail);
-		        }catch (Exception e) {
-	                 e.printStackTrace();
-	                 userInfoVO.setUser_email("아이디를 확인해주세요");
-	             }
-		        userInfoVO = userInfoMapper.verifyUserInfoVO(userInfoVO);
-		        if (userInfoVO == null) {
-		        	redirect.addFlashAttribute("loginError", "아이디를 확인해주세요");
-		            return "redirect:/login";
-		        }
-		        if ("inactive".equals(userInfoVO.getUser_status())) {
-		        	redirect.addFlashAttribute("loginError", "유효하지 않은 아이디입니다.");
-		            return "redirect:/login";
-		        }
-		  
-		        
-		        HttpSession session = request.getSession();
-		        String rawPw = "";
-		        String encodePw = "";
-		        if (userInfoVO != null) {
-		        	lvo.setId(userInfoVO.getUser_name());
-		        	userInfoVO=userInfoMapper.selectDetailUserInfoByUserId(userInfoVO.getUser_id());
-		            lvo.setUserInfoVO(userInfoVO);
-		            lvo.setLevel(userInfoVO.getLevel());
-		        	rawPw = loginVO.getPassword();
-		            String value = pwEncoder.encode(rawPw);
-		            if (this.pwEncoder.matches((CharSequence)rawPw, encodePw = userInfoMapper.getUserPassword(userInfoVO.getUser_id()))) {
-		                lvo.setPassword("");
-		                 Cookie rememberMeCookie = new Cookie("nanodc_userApp", String.valueOf(userInfoVO.getUser_id()));
-		                 rememberMeCookie.setMaxAge(7 * 24 * 60 * 60); // 30 days
-		                 response.addCookie(rememberMeCookie);
-		                
-		                 
-		                session.setAttribute("user", (Object)lvo);
-		                
-		                return "redirect:/StorageProvider";
-		            }
-		        }
-		        
-		        redirect.addFlashAttribute("loginError", "비밀번호를 확인해주세요");
+//		 @PostMapping(value={"/app/login.do"})
+//		    private String doAppLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		        LoginVO lvo = new LoginVO();
+//		        UserInfoVO userInfoVO = new UserInfoVO(); 
+//		        try {
+//		            // 입력받은 이메일 암호화
+//		            String encryptedEmail = AESUtil.encrypt(loginVO.getId());
+//		            userInfoVO.setUser_email(encryptedEmail);
+//		        }catch (Exception e) {
+//	                 e.printStackTrace();
+//	                 userInfoVO.setUser_email("아이디를 확인해주세요");
+//	             }
+//		        userInfoVO = userInfoMapper.verifyUserInfoVO(userInfoVO);
+//		        if (userInfoVO == null) {
+//		        	redirect.addFlashAttribute("loginError", "아이디를 확인해주세요");
+//		            return "redirect:/login";
+//		        }
+//		        if ("inactive".equals(userInfoVO.getUser_status())) {
+//		        	redirect.addFlashAttribute("loginError", "유효하지 않은 아이디입니다.");
+//		            return "redirect:/login";
+//		        }
+//		  
+//		        
+//		        HttpSession session = request.getSession();
+//		        String rawPw = "";
+//		        String encodePw = "";
+//		        if (userInfoVO != null) {
+//		        	lvo.setId(userInfoVO.getUser_name());
+//		        	userInfoVO=userInfoMapper.selectDetailUserInfoByUserId(userInfoVO.getUser_id());
+//		            lvo.setUserInfoVO(userInfoVO);
+//		            lvo.setLevel(userInfoVO.getLevel());
+//		        	rawPw = loginVO.getPassword();
+//		            String value = pwEncoder.encode(rawPw);
+//		            if (this.pwEncoder.matches((CharSequence)rawPw, encodePw = userInfoMapper.getUserPassword(userInfoVO.getUser_id()))) {
+//		                lvo.setPassword("");
+//		                 Cookie rememberMeCookie = new Cookie("nanodc_userApp", String.valueOf(userInfoVO.getUser_id()));
+//		                 rememberMeCookie.setMaxAge(7 * 24 * 60 * 60); // 30 days
+//		                 response.addCookie(rememberMeCookie);
+//		                
+//		                 
+//		                session.setAttribute("user", (Object)lvo);
+//		                
+//		                return "redirect:/StorageProvider";
+//		            }
+//		        }
+//		        
+//		        redirect.addFlashAttribute("loginError", "비밀번호를 확인해주세요");
+//		        return "redirect:/login";
+//		    }
+				 
+		@PostMapping(value={"/app/login.do"})
+		private String doAppLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		    LoginVO lvo = new LoginVO();
+		    UserInfoVO userInfoVO = new UserInfoVO(); 
+		    try {
+		        // 입력받은 이메일 암호화
+		        String encryptedEmail = AESUtil.encrypt(loginVO.getId());
+		        userInfoVO.setUser_email(encryptedEmail);
+		    } catch (Exception e) {
+		         e.printStackTrace();
+		         userInfoVO.setUser_email("아이디를 확인해주세요");
+		    }
+		    userInfoVO = userInfoMapper.verifyUserInfoVO(userInfoVO);
+		    if (userInfoVO == null) {
+		        redirect.addFlashAttribute("loginError", "아이디를 확인해주세요");
 		        return "redirect:/login";
 		    }
-				 
-		
+		    if ("inactive".equals(userInfoVO.getUser_status())) {
+		        redirect.addFlashAttribute("loginError", "유효하지 않은 아이디입니다.");
+		        return "redirect:/login";
+		    }
+
+		    HttpSession session = request.getSession();
+		    String rawPw = "";
+		    String encodePw = "";
+		    if (userInfoVO != null) {
+		        lvo.setId(userInfoVO.getUser_name());
+		        userInfoVO=userInfoMapper.selectDetailUserInfoByUserId(userInfoVO.getUser_id());
+		        lvo.setUserInfoVO(userInfoVO);
+		        lvo.setLevel(userInfoVO.getLevel());
+		        rawPw = loginVO.getPassword();
+		        String value = pwEncoder.encode(rawPw);
+		        if (this.pwEncoder.matches((CharSequence)rawPw, encodePw = userInfoMapper.getUserPassword(userInfoVO.getUser_id()))) {
+		            lvo.setPassword("");
+		            Cookie rememberMeCookie = new Cookie("nanodc_userApp", String.valueOf(userInfoVO.getUser_id()));
+		            rememberMeCookie.setMaxAge(7 * 24 * 60 * 60); // 7일
+		            response.addCookie(rememberMeCookie);
+		            
+		            session.setAttribute("user", (Object)lvo);
+		            
+		            // 기존 코드:
+		            // return "redirect:/StorageProvider";
+		            
+		            // 수정된 코드: 플랫폼 선택 페이지로 리다이렉트
+		            return "redirect:/platform-choice";
+		        }
+		    }
+		    
+		    redirect.addFlashAttribute("loginError", "비밀번호를 확인해주세요");
+		    return "redirect:/login";
+		}
+
+		// 추가: 플랫폼 선택 페이지 매핑
+		@GetMapping(value={"/platform-choice"})
+		public ModelAndView platformChoice(HttpServletRequest request) {
+		    ModelAndView mav = new ModelAndView();
+		    HttpSession session = request.getSession();
+		    
+		    if(!userService.checkSession(request)) {
+		        mav.setViewName("redirect:/login");
+		        return mav;
+		    }
+		    
+		    LoginVO loginVO = (LoginVO)session.getAttribute("user");
+		    mav.addObject("loginVO", loginVO);
+		    mav.setViewName("views/user/app/platform_choice");
+		    return mav;
+		}
+
+		// Aethir 플랫폼 페이지 매핑 (기본 골격)
+		@GetMapping(value={"/aethir"})
+		public ModelAndView aethirPlatform(HttpServletRequest request) {
+		    ModelAndView mav = new ModelAndView();
+		    HttpSession session = request.getSession();
+		    
+		    if(!userService.checkSession(request)) {
+		        mav.setViewName("redirect:/login");
+		        return mav;
+		    }
+		    
+		    LoginVO loginVO = (LoginVO)session.getAttribute("user");
+		    mav.addObject("loginVO", loginVO);
+		    
+		    // 아직 Aethir 플랫폼 페이지가 없으므로 임시로 공통 페이지로 연결
+		    // 추후 Aethir 전용 대시보드 페이지를 만들면 해당 뷰로 변경
+		    mav.setViewName("views/user/app/aethir_dashboard");
+		    return mav;
+		}
 		
 		
 		 

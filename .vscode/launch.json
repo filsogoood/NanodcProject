@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-NanoDcErpApplication<Filmountain_PC>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.nanoDc.erp.NanoDcErpApplication",
+            "projectName": "Filmountain_PC",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
