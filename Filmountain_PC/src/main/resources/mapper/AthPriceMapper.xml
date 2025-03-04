@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanoDc.erp.mapper.AthPriceMapper">
+	<insert id="addNewAthPrice" parameterType="com.nanoDc.erp.vo.AthPriceVO">
+		INSERT INTO nanodc.ath_price
+		(ath_last, reg_date)
+		VALUES(#{ath_last}, NOW())
+	</insert>
+	<select id="getAthPriceDataForMonth" resultType="com.nanoDc.erp.vo.AthPriceVO">
+		SELECT ath_price_id, ath_last, reg_date
+		FROM nanodc.ath_price
+		WHERE reg_date >= CURDATE() - INTERVAL 1 MONTH
+		ORDER BY reg_date
+	</select>
+	
+	<select id="getLatestAthPrice" resultType="com.nanoDc.erp.vo.AthPriceVO">
+		SELECT ath_price_id, ath_last, reg_date
+		FROM nanodc.ath_price
+		ORDER BY reg_date DESC
+		LIMIT 1
+	</select>
+	
+</mapper>
