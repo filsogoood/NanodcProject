@@ -45,6 +45,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nanoDc.erp.config.AESUtil;
+import com.nanoDc.erp.mapper.AthPriceMapper;
 import com.nanoDc.erp.mapper.FilPriceMapper;
 import com.nanoDc.erp.mapper.HardwareInvestmentMapper;
 import com.nanoDc.erp.mapper.HardwareProductMapper;
@@ -52,6 +53,7 @@ import com.nanoDc.erp.mapper.UserInfoMapper;
 import com.nanoDc.erp.service.UserService;
 import com.nanoDc.erp.vo.AgreementVO;
 import com.nanoDc.erp.vo.ApplicationVO;
+import com.nanoDc.erp.vo.AthPriceVO;
 import com.nanoDc.erp.vo.FilPriceVO;
 import com.nanoDc.erp.vo.HardwareInvestmentVO;
 import com.nanoDc.erp.vo.HardwareProductVO;
@@ -67,19 +69,30 @@ import com.nanoDc.erp.vo.WalletVO;
 public class UserController {
 	
 	 @Autowired
-	    private UserService userService;
+	 private UserService userService;
+	 
 	 @Autowired
-	    private UserInfoMapper userInfoMapper;
+	 private UserInfoMapper userInfoMapper;
+	 
 	 @Autowired
-	 	private HardwareInvestmentMapper hardwareInvestmentMapper;
+	 private HardwareInvestmentMapper hardwareInvestmentMapper;
+	 
 	 @Autowired
-	 	private HardwareProductMapper hardwareProductMapper;
+	 private HardwareProductMapper hardwareProductMapper;
+	 
 	 @Autowired
-	 	private FilPriceMapper filPriceMapper;
+	 private FilPriceMapper filPriceMapper;
+	 
 	 @Autowired
-	    private PasswordEncoder pwEncoder;
+	 private PasswordEncoder pwEncoder;
+	 
 	 @Autowired
-		private AESUtil aESUtil;
+	 private AESUtil aESUtil;
+	 
+	 @Autowired
+	 private AthPriceMapper athPriceMapper;
+	 
+	 
 	 @Value("${upload.directory2}")
 	    private String uploadDirectory2;
 	 	
@@ -356,6 +369,7 @@ public class UserController {
 		        mav.addObject("dividedList",mainIndexMapper.getDividedList());
 		        mav.addObject("investDetailForHw",mainIndexMapper.getInvestDetailForHw());
 		        mav.addObject("last", filPriceMapper.getLatestFilPrice().getFil_last());
+		        mav.addObject("ath_last", athPriceMapper.getLatestAthPrice().getAth_last());
 		        mav.addObject("loginVO", mainIndexMapper.getLoginVO());
 		        mav.setViewName("views/user/app/userSPApp_index");
 		        return mav;
@@ -629,6 +643,7 @@ public class UserController {
 	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        List<FilPriceVO> filPriceList = filPriceMapper.getFilPriceDataForMonth();
+	        List<AthPriceVO> athPriceList = athPriceMapper.getAthPriceDataForMonth();
 	        
 	        Date lastDate = new Date();
 	        Date firstDate= new Date();
@@ -641,6 +656,18 @@ public class UserController {
 		        for(int i=0;i<filPriceList.size();i++) {
 		        	dataList.add(filPriceList.get(i).getFil_last());
 		        }
+	        }
+	        
+	        Date athLastDate = new Date();
+	        Date athFirstDate = new Date();
+	        List<Integer> athDataList = new ArrayList<Integer>();
+	        
+	        if(!athPriceList.isEmpty()) {
+	            athLastDate = athPriceMapper.getLatestAthPrice().getReg_date();
+	            athFirstDate = athPriceList.get(0).getReg_date();
+	            for(int i=0; i<athPriceList.size(); i++) {
+	                athDataList.add(athPriceList.get(i).getAth_last());
+	            }
 	        }
 	        
 	        userService.userVOsessionUpdate(request);
@@ -660,6 +687,13 @@ public class UserController {
 	        mav.addObject("dataSize",dataList.size());
 	        mav.addObject("loginVO", loginVO);
 	        mav.setViewName("views/user/app/price");
+	        
+	        mav.addObject("athDataList", athDataList);
+	        mav.addObject("athFirstDate", dateFormat.format(athFirstDate));
+	        mav.addObject("athLastDate", dateFormat.format(athLastDate));
+	        mav.addObject("athDataSize", athDataList.size());
+	        mav.addObject("ath_last", athPriceMapper.getLatestAthPrice().getAth_last());
+	        
 	        return mav;
 	    }
 		

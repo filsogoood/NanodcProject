@@ -1,54 +1,555 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 		
-<div class="content p-0 mx-auto" th:fragment="MainContent" style="overflow-x: hidden; width:95%">
-    <div class="container-fluid p-0 m-0" id="userApp_view" style="visibility:hidden;">
-        <div class="d-flex align-items-center">
-            <div class="custom_container">
-  <img class="p-0" id="main_yellow" th:src="${main_bg_src}" alt="main_yellow">
-  <img class="p-0" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" id="panel" alt="panel">
-  <img class="p-0 panel_buttons" src="/assets/img/filmountain/serverImg/investment1.png" id="panel_investment" alt="panel">
-  <img class="p-0 panel_buttons" src="/assets/img/filmountain/serverImg/reward1.png" id="panel_reward" alt="panel">
-  <img class="p-0 panel_buttons" src="/assets/img/filmountain/serverImg/cash1.png" id="panel_cash" alt="panel">
-  <img class="p-0 panel_buttons" src="/assets/img/filmountain/serverImg/status1.png" id="panel_status" alt="panel">
-  <img class="p-0 panel_buttons" src="/assets/img/filmountain/serverImg/price1.png" id="panel_price" alt="panel">
-  <img class="p-0 panel_buttons_progress" th:src="${progress_src}" id="panel_hw_progress" alt="panel">
-</div>
- <input type="hidden" th:value="${error}" id="main_error" class="hidden">
-            <!-- Buttons overlay -->
-            <div class="row position-absolute top-50 start-50 translate-middle" style=" z-index: 3;">
-                <div class="col-12 text-center userApp_buttons" id="app_button1" value="investment" style="cursor: pointer;">
-                        <p id="total_investment_fil_main" class="app_text" style=" font-weight: bold; color: white; text-decoration: none;"  th:text="${(investDetailForHw.total_investment_fil).intValue()  + ' 원'}"></p>
+<div class="content main-content" th:fragment="MainContent">
+    <style>
+        /* 모바일 웹뷰 최적화 메인 콘텐츠 스타일 */
+        .main-content {
+            padding: 70px 0 70px 0; /* 상단바와 하단바 고려한 패딩 */
+            background-color: #0f172a;
+            min-height: 100vh;
+        }
+
+        .dashboard-wrapper {
+            padding: 12px;
+        }
+
+        /* 투자 리스트 디자인 */
+        .investment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .investment-card {
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .investment-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .investment-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .investment-title-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .investment-icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-right: 16px;
+            background-color: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .investment-details {
+            flex: 1;
+        }
+
+        .investment-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f8fafc;
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .investment-summary {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: rgba(248, 250, 252, 0.7);
+        }
+
+        .investment-amount {
+            font-weight: 500;
+            color: #3b82f6;
+        }
+
+        .toggle-icon {
+            color: #f8fafc;
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.open {
+            transform: rotate(180deg);
+        }
+
+        .investment-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0;
+            margin-top: 0;
+        }
+
+        .investment-content.open {
+            max-height: 500px; /* 충분히 큰 값으로 설정 */
+            padding-top: 16px;
+            margin-top: 8px;
+            border-top: 1px solid rgba(248, 250, 252, 0.1);
+        }
+
+        .monthly-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .monthly-item {
+            background-color: rgba(15, 23, 42, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .month-label {
+            font-size: 14px;
+            color: rgba(248, 250, 252, 0.8);
+        }
+
+        .month-value {
+            font-weight: 500;
+            color: #3b82f6;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            margin-left: 10px;
+        }
+
+        .error-message {
+            display: none;
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 16px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* 오디오 요소 - 기능은 유지하되 화면에서 숨김 */
+        .audio-elements {
+            display: none;
+        }
+    </style>
+
+    <div class="container-fluid app-container" id="userApp_view" style="visibility:hidden;">
+        <div class="dashboard-wrapper">
+            <!-- 투자 리스트 -->
+<!-- 투자 리스트 -->
+<div class="investment-list">
+    <!-- 투자 항목 1 -->
+    <div class="investment-card" id="investment_item_1">
+        <div class="investment-header" onclick="toggleContent('investment_content_1')">
+            <div class="investment-title-section">
+                <div class="investment-icon">
+                    <img src="/assets/img/thumb/fil.png" alt="Fil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                 </div>
-                <div class="col-12 text-center userApp_buttons" id="app_button2" value="reward" style="cursor: pointer;">
-                        <p id="total_reward_fil_main" class="app_text text_fil" style=" font-weight: bold; color: white; text-decoration: none;"  th:text="${investDetailForHw.total_reward_fil}"></p>
+                <div class="investment-details">
+                    <h3 class="investment-title">
+                        NanoDC 4pib
+                        <span class="status-badge">활성</span>
+                    </h3>
+                    <div class="investment-summary">
+                        <span class="investment-amount">600 FIL</span>
+                        <span class="investment-type"> - Reward</span>
+                    </div>
                 </div>
-            <!--    <div class="col-12 text-center userApp_buttons" id="app_button3" value="cash" style="cursor: pointer;">
-                        <p id="paid_fil_main" class="app_text text_fil" style=" font-weight: bold; color: white; text-decoration: none;" th:text="${investDetailForHw.total_reward_fil-investDetailForHw.processed_fil-investDetailForHw.paid_fil}">0</p>
-                </div> -->
-                <div class="col-12 text-center userApp_buttons" id="app_button3" value="cash" style="cursor: pointer;">
-                        <p id="paid_fil_main" class="app_text text_fil" style=" font-weight: bold; color: white; text-decoration: none;" th:text="${investDetailForHw.total_reward_fil}">0</p>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon" id="toggle_icon_1"></i>
+        </div>
+        <div class="investment-content" id="investment_content_1">
+            <div class="monthly-list">
+                <div class="monthly-item">
+                    <span class="month-label">2025년 1월</span>
+                    <span class="month-value">100 FIL</span>
                 </div>
-                <div class="col-12 text-center userApp_buttons" id="app_button4" value="status" style="cursor: pointer;">
-                        <p class="app_text" style=" font-weight: bold; color: white; text-decoration: none;">운영중</p>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 2월</span>
+                    <span class="month-value">100 FIL</span>
                 </div>
-                <div class="col-12 text-center userApp_buttons" id="app_button5" value="price" style="cursor: pointer;">
-                    <p class="app_text text_won" style=" font-weight: bold; color: white; text-decoration: none;" th:text="${last} + '원'"></p>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 3월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 4월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 5월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 6월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 7월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 8월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 9월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 10월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 11월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 12월</span>
+                    <span class="month-value">100 FIL</span>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <audio id="bgm" loop>
-			  <source src="/assets/bgm/bgm-1m.mp3" type="audio/mp3">
-			  <audio id="buttonSound" src="/assets/bgm/buttonsound1.wav" preload="auto"></audio>
-			  <audio id="serverOnSound" src="/assets/bgm/serverOnSound.wav" preload="auto"></audio>
-			   <audio class="ding" src="/assets/bgm/ping.mp3" preload="auto"></audio>
-			   <audio class="ding" src="/assets/bgm/ding.wav" preload="auto"></audio>
-			   <audio class="ding" src="/assets/bgm/hook.mp3" preload="auto"></audio>
-			   <audio class="ding" src="/assets/bgm/shotgun.mp3" preload="auto"></audio>
-			</audio>
+    </div>
+    
+    <!-- 투자 항목 2 -->
+    <div class="investment-card" id="investment_item_2">
+        <div class="investment-header" onclick="toggleContent('investment_content_2')">
+            <div class="investment-title-section">
+                <div class="investment-icon">
+                    <img src="/assets/img/thumb/fil.png" alt="Fil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+                <div class="investment-details">
+                    <h3 class="investment-title">
+                        Liqidity
+                        <span class="status-badge">활성</span>
+                    </h3>
+                    <div class="investment-summary">
+                        <span class="investment-amount">850 FIL</span>
+                        <span class="investment-type"> - Reward</span>
+                    </div>
+                </div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon" id="toggle_icon_2"></i>
+        </div>
+        <div class="investment-content" id="investment_content_2">
+            <div class="monthly-list">
+                <div class="monthly-item">
+                    <span class="month-label">2025년 1월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 2월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 3월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 4월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 5월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 6월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 7월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 8월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 9월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 10월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 11월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 12월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+            </div>
         </div>
     </div>
+    
+    <!-- 투자 항목 3 -->
+    <div class="investment-card" id="investment_item_3">
+        <div class="investment-header" onclick="toggleContent('investment_content_3')">
+            <div class="investment-title-section">
+                <div class="investment-icon">
+                    <img src="/assets/img/thumb/aethir.png" alt="Aethir" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+                <div class="investment-details">
+                    <h3 class="investment-title">
+                        3090 X 2
+                        <span class="status-badge">활성</span>
+                    </h3>
+                    <div class="investment-summary">
+                        <span class="investment-amount">1200 FIL</span>
+                        <span class="investment-type"> - Reward</span>
+                    </div>
+                </div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon" id="toggle_icon_3"></i>
+        </div>
+        <div class="investment-content" id="investment_content_3">
+            <div class="monthly-list">
+                <div class="monthly-item">
+                    <span class="month-label">2025년 1월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 2월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 3월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 4월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 5월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 6월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 7월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 8월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 9월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 10월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 11월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 12월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 투자 항목 4 -->
+    <div class="investment-card" id="investment_item_4">
+        <div class="investment-header" onclick="toggleContent('investment_content_4')">
+            <div class="investment-title-section">
+                <div class="investment-icon">
+                    <img src="/assets/img/thumb/aethir.png" alt="Aethir" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+                <div class="investment-details">
+                    <h3 class="investment-title">
+                        Liqidity
+                        <span class="status-badge">활성</span>
+                    </h3>
+                    <div class="investment-summary">
+                        <span class="investment-amount">720 FIL</span>
+                        <span class="investment-type"> - Reward</span>
+                    </div>
+                </div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon" id="toggle_icon_4"></i>
+        </div>
+        <div class="investment-content" id="investment_content_4">
+            <div class="monthly-list">
+                <div class="monthly-item">
+                    <span class="month-label">2025년 1월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 2월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 3월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 4월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 5월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 6월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 7월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 8월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 9월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 10월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 11월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+                <div class="monthly-item">
+                    <span class="month-label">2025년 12월</span>
+                    <span class="month-value">100 FIL</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            
+            <!-- 에러 메시지 -->
+            <div class="error-message" id="error-message">
+                투자 정보를 찾을 수 없습니다. 관리자에게 문의하세요.
+            </div>
+            
+            <!-- 오류 상태 히든 필드 -->
+            <input type="hidden" th:value="${error}" id="main_error" class="hidden">
+        </div>
+        
+        <!-- 오디오 요소 -->
+        <div class="audio-elements">
+            <audio id="buttonSound" src="/assets/bgm/buttonsound1.wav" preload="auto"></audio>
+        </div>
+    </div>
+
+    <script>
+        // 메인 콘텐츠 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            // 리스트 표시 애니메이션
+            showDashboard();
+            
+            // 에러 확인
+            checkForErrors();
+        });
+        
+        // 대시보드 표시 애니메이션
+        function showDashboard() {
+            const dashboard = document.getElementById('userApp_view');
+            if (dashboard) {
+                dashboard.style.visibility = 'visible';
+                dashboard.style.opacity = '0';
+                
+                setTimeout(() => {
+                    dashboard.style.transition = 'opacity 0.3s ease';
+                    dashboard.style.opacity = '1';
+                }, 100);
+            }
+        }
+        
+        // 투자 콘텐츠 토글
+        function toggleContent(contentId) {
+            const content = document.getElementById(contentId);
+            const iconId = 'toggle_icon_' + contentId.split('_').pop();
+            const icon = document.getElementById(iconId);
+            
+            // 버튼 사운드 재생
+            playButtonSound();
+            
+            // 콘텐츠 토글
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.classList.remove('open');
+            } else {
+                content.classList.add('open');
+                icon.classList.add('open');
+            }
+        }
+        
+        // 버튼 사운드 재생
+        function playButtonSound() {
+            const buttonSound = document.getElementById('buttonSound');
+            if (buttonSound) {
+                buttonSound.currentTime = 0;
+                buttonSound.play().catch(err => console.warn('오디오 재생 실패:', err));
+            }
+        }
+        
+        // 에러 확인
+        function checkForErrors() {
+            const errorInput = document.getElementById('main_error');
+            
+            if (errorInput && errorInput.value) {
+                const errorMessage = document.getElementById('error-message');
+                const errorValue = errorInput.value;
+                
+                if (errorValue === 'No Investment' && errorMessage) {
+                    errorMessage.style.display = 'block';
+                } else if (errorValue === 'session closed') {
+                    window.location.href = '/login';
+                }
+            }
+        }
+    </script>
 </div>
     
 </html>
