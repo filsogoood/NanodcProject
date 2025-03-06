@@ -1,174 +1,320 @@
 <!DOCTYPE html>
-<html data-navigation-type="horizontal" data-navbar-horizontal-shape="default" lang="en-US" dir="ltr" class="chrome windows fontawesome-i2svg-active fontawesome-i2svg-complete" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	<head>
+<html data-navigation-type="horizontal" data-navbar-horizontal-shape="default" lang="en-US" dir="ltr" 
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-    <!-- ===============================================-->
-    <!--    Document Title-->
-    <!-- ===============================================-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>NanoDC</title>
 
-
-    <!-- ===============================================-->
-    <!--    Favicons-->
-    <!-- ===============================================-->
-	</style><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
-    
+    <!-- 파비콘 -->
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/filmountain/nanoDC_icon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/filmountain/nanoDC_icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="/assets/img/filmountain/nanoDC_icon.png">
-    <link rel="manifest" href="/assets/img/favicons/manifest.json">
-    <meta name="msapplication-TileImage" content="/assets/img/filmountain/nanoDC_icon.png">
-    <meta name="theme-color" content="#ffffff">
-    <script src="/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="/vendors/simplebar/simplebar.min.js"></script>
-    <script src="/assets/js/config.js"></script>
-    <script>
-      document.documentElement.setAttribute('data-navigation-type', 'horizontal');
-    </script>
+    <meta name="theme-color" content="#111827">
 
-
-    <!-- ===============================================-->
-    <!--    Stylesheets-->
-    <!-- ===============================================-->
+    <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
-    <link href="/vendors/simplebar/simplebar.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-    <link href="/assets/css/theme-rtl.min.css" type="text/css" rel="stylesheet" id="style-rtl" disabled="true">
-    <link href="/assets/css/theme.min.css" type="text/css" rel="stylesheet" id="style-default">
-    <link href="/assets/css/user-rtl.min.css" type="text/css" rel="stylesheet" id="user-style-rtl" disabled="true">
-    <link href="/assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default">
-    <link href="/vendors/swiper/swiper-bundle.min.css" rel="stylesheet" />
-    <script>
-      var phoenixIsRTL = window.config.config.phoenixIsRTL;
-      if (phoenixIsRTL) {
-        var linkDefault = document.getElementById('style-default');
-        var userLinkDefault = document.getElementById('user-style-default');
-        linkDefault.setAttribute('disabled', true);
-        userLinkDefault.setAttribute('disabled', true);
-        document.querySelector('html').setAttribute('dir', 'rtl');
-      } else {
-        var linkRTL = document.getElementById('style-rtl');
-        var userLinkRTL = document.getElementById('user-style-rtl');
-        linkRTL.setAttribute('disabled', true);
-        userLinkRTL.setAttribute('disabled', true);
-      }
-    </script>
-    <link href="/vendors/leaflet/leaflet.css" rel="stylesheet">
-    <link href="/vendors/leaflet.markercluster/MarkerCluster.css" rel="stylesheet">
-    <link href="/vendors/leaflet.markercluster/MarkerCluster.Default.css" rel="stylesheet">
-  <style>
-    .custom_container {
-      position: relative;
-      width: 100%;
-      height: 95vh;
-     
-      overflow: hidden; /* Ensure that the container doesn't expand to fit its contents */
-    }
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 기본 스타일 -->
+    <style>
+        /* 글로벌 스타일 */
+        :root {
+            /* 색상 변수 */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: rgba(248, 250, 252, 0.7);
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            
+            /* 그라디언트 */
+            --gradient-blue: linear-gradient(135deg, #3b82f6, #2dd4bf);
+            --gradient-purple: linear-gradient(135deg, #8b5cf6, #ec4899);
+            
+            /* 간격 */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 24px;
+            
+            /* 테두리 반경 */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 리셋 스타일 */
+        a {
+            text-decoration: none;
+            color: inherit;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        button {
+            background: none;
+            border: none;
+            font: inherit;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* 스크롤바 스타일 */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 3px;
+        }
+        
+        /* 모바일 최적화 레이아웃 */
+        .main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        /* 로딩 인디케이터 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+        }
+        
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-blue);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Touch 효과를 위한 스타일 */
+        .touch-ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            pointer-events: none;
+            animation: ripple-effect 0.6s linear;
+        }
+        
+        @keyframes ripple-effect {
+            to {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
 
-    #main_yellow {
-      width: 100%;
-      height: 75vh;
-      display: block;
-      margin: auto;
-      margin-top: 13vh;
-      margin-bottom: 10vh;
-      position: absolute;
-      z-index: 1; /* Set a lower z-index for main_yellow to place it below investment.png */
-    }
+<body>
+    <!-- 로딩 인디케이터 -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
 
-    #panel {
-      width: 100%;
-      height: 75vh;
-      display: block;
-      margin: auto;
-      margin-top: 13vh;
-      margin-bottom: 10vh;
-      position: absolute;
-      z-index: 2; /* Set a higher z-index for investment.png to place it above main_yellow */
-    }
-    .panel_buttons {
-      width: 100%;
-      height: 75vh;
-      display: block;
-      margin: auto;
-      margin-top: 13vh;
-      margin-bottom: 10vh;
-      position: absolute;
-      z-index: 3; /* Set a higher z-index for investment.png to place it above main_yellow */
-    }
-    .panel_buttons_progress {
-      width: 100%;
-      height: 75vh;
-      display: block;
-      margin: auto;
-      margin-top: 13vh;
-      margin-bottom: 10vh;
-      position: absolute;
-      z-index: 3; /* Set a higher z-index for investment.png to place it above main_yellow */
-    }
-  </style>
-  
-  
-  
-  </head>
-
-
-  <body>
-
-    <!-- ===============================================-->
-    <!--    Main Content-->
-    <!-- ===============================================-->
+    <!-- 메인 컨테이너 -->
     <main class="main" id="top">
-		<!--TOPBAR  -->
-      <div th:replace="~{fragments/user/app/userSPApp_topbar :: TopBar}"></div>
-      <!--MainContent-->
-      <div th:replace="~{fragments/user/app/userSPApp_main :: MainContent}"></div> 
-      <div th:replace="~{fragments/user/app/userSPApp_bottombar :: BottomBar}"></div>   
-      <script>
-        var navbarTopStyle = window.config.config.phoenixNavbarTopStyle;
-        var navbarTop = document.querySelector('.navbar-top');
-        if (navbarTopStyle === 'darker') {
-          navbarTop.setAttribute('data-navbar-appearance', 'darker');
-        }
-        var navbarVerticalStyle = window.config.config.phoenixNavbarVerticalStyle;
-        var navbarVertical = document.querySelector('.navbar-vertical');
-        if (navbarVertical && navbarVerticalStyle === 'darker') {
-          navbarVertical.setAttribute('data-navbar-appearance', 'darker');
-        }
-      </script>
+        <!-- 상단바 -->
+        <div th:replace="~{fragments/user/app/userSPApp_topbar :: TopBar}"></div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div th:replace="~{fragments/user/app/userSPApp_main :: MainContent}"></div> 
+        
+        <!-- 하단바 -->
+        <div th:replace="~{fragments/user/app/userSPApp_bottombar :: BottomBar}"></div>
     </main>
-    <!-- ===============================================-->
-    <!--    End of Main Content-->
-    <!-- ===============================================-->
-    <!-- ===============================================-->
-    <!--    JavaScripts-->
-    <!-- ===============================================-->
-    <script src="/vendors/popper/popper.min.js"></script>
+
+    <!-- 기본 라이브러리 -->
     <script src="/vendors/jquery/jquery.min.js"></script>
-    <script src="/vendors/jquery-easing/jquery.easing.min.js"></script> 
-    <script src="/vendors/bootstrap/bootstrap.min.js"></script>
-    <script src="/vendors/anchorjs/anchor.min.js"></script>
-    <script src="/vendors/is/is.min.js"></script>
-    <script src="/vendors/fontawesome/all.min.js"></script>
-    <script src="/vendors/lodash/lodash.min.js"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-    <script src="/vendors/list.js/list.min.js"></script>
-    <script src="/vendors/feather-icons/feather.min.js"></script>
-    <script src="/vendors/dayjs/dayjs.min.js"></script>
-    <script src="/vendors/echarts/echarts.min.js"></script>
-    <script src="/assets/js/phoenix.js"></script>
-    <script src="/vendors/leaflet/leaflet.js"></script>
-    <script src="/vendors/leaflet.markercluster/leaflet.markercluster.js"></script>
-    <script src="/vendors/leaflet.tilelayer.colorfilter/leaflet-tilelayer-colorfilter.min.js"></script>
+    
+    <!-- 모바일 최적화 기본 스크립트 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 페이지 로드 완료 시 로딩 인디케이터 숨기기
+            setTimeout(function() {
+                const loadingOverlay = document.getElementById('loading-overlay');
+                if (loadingOverlay) {
+                    loadingOverlay.classList.add('hidden');
+                }
+            }, 500);
+            
+            // 터치 리플 효과 추가
+            setupTouchRippleEffect();
+            
+            // 모바일 상황에서의 페이지 최적화
+            optimizeForMobile();
+        });
+        
+        // 터치 리플 효과 설정
+        function setupTouchRippleEffect() {
+            const touchElements = document.querySelectorAll('.touch-ripple');
+            
+            touchElements.forEach(element => {
+                element.addEventListener('touchstart', createRippleEffect);
+                element.addEventListener('mousedown', createRippleEffect);
+            });
+            
+            function createRippleEffect(e) {
+                const element = this;
+                
+                // 기존 리플 제거
+                const existingRipples = element.querySelectorAll('.ripple');
+                existingRipples.forEach(ripple => ripple.remove());
+                
+                // 새로운 리플 생성
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                
+                element.appendChild(ripple);
+                
+                // 리플 위치 및 크기 계산
+                const rect = element.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                
+                let x, y;
+                if (e.type === 'touchstart') {
+                    x = e.touches[0].clientX - rect.left;
+                    y = e.touches[0].clientY - rect.top;
+                } else {
+                    x = e.clientX - rect.left;
+                    y = e.clientY - rect.top;
+                }
+                
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                // 애니메이션 완료 후 제거
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            }
+        }
+        
+        // 모바일 최적화 설정
+        function optimizeForMobile() {
+            // 폼 요소에 자동 줌 방지
+            const inputs = document.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.style.fontSize = '16px';
+            });
+            
+            // iOS 및 모바일 사파리에서 고무줄 스크롤 효과 방지
+            document.body.addEventListener('touchmove', function(e) {
+                if (e.target.closest('.scrollable-area')) return;
+                if (document.body.scrollTop <= 0 && window.pageYOffset <= 0) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            // 스크롤 이벤트 처리 - 모바일에서 상단바/하단바 숨김 처리
+            let lastScrollTop = 0;
+            let scrollThreshold = 50;
+            
+            window.addEventListener('scroll', function() {
+                const st = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // 스크롤 방향 감지
+                if (Math.abs(lastScrollTop - st) <= scrollThreshold) return;
+                
+                const navbar = document.querySelector('.navbar-top');
+                const bottombar = document.querySelector('.bottom-bar');
+                
+                if (st > lastScrollTop && st > 60) {
+                    // 아래로 스크롤 - 바 숨기기
+                    if (navbar) navbar.style.transform = 'translateY(-100%)';
+                    if (bottombar) bottombar.style.transform = 'translateY(100%)';
+                } else {
+                    // 위로 스크롤 - 바 표시
+                    if (navbar) navbar.style.transform = 'translateY(0)';
+                    if (bottombar) bottombar.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = st <= 0 ? 0 : st;
+            }, { passive: true });
+        }
+        
+        // 페이지가 처음 로드된 후 버튼 사운드 한 번 로드해서 캐싱
+        function preloadSounds() {
+            const buttonSound = document.getElementById('buttonSound');
+            if (buttonSound) {
+                buttonSound.volume = 0;
+                buttonSound.play().then(() => {
+                    buttonSound.pause();
+                    buttonSound.currentTime = 0;
+                    buttonSound.volume = 1;
+                }).catch(err => {
+                    console.warn('오디오 프리로드 실패:', err);
+                });
+            }
+        }
+        
+        // 페이지 로드 후 사운드 프리로드
+        window.addEventListener('load', preloadSounds);
+    </script>
+    
+    <!-- 원래 앱 JavaScript -->
     <script src="/user/js/app/App-SP-index.js"></script>
-    <script src="/vendors/swiper/swiper-bundle.min.js"></script>
-
-  
-
-</body></html>
+</body>
+</html>

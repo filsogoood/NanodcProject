@@ -1,27 +1,219 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<footer class="footer position-absolute" th:fragment="BottomBar" style="background-color: #303030; height:12vh;">
-    <div class="swiper-theme-container" style="height:100%;">
-        <div class="swiper-container theme-slider" data-swiper='{"autoplay":false,"spaceBetween":5,"loop":true,"loopedSlides":5,"slideToClickedSlide":true}' style="height:100%;">
-            <div class="swiper-wrapper align-items-center">
-                <th:block th:each="group : ${dividedList}">
-			    <div class="swiper-slide">
-			        <div class="row d-flex justify-content-center">
-			            <th:block th:each="product : ${group}">
-							<div class="col-4 m-0">
-			                	<img 
-								    style="width:100%; height:10vh;visibility:hidden; background-color: #ffffff;" 
-								    class="me-0 mb-1 bottomProductBtn" 
-								    th:src="@{'/assets/img/filmountain/nanodc/' + ${product.hw_product_id}+'.png'}" 
-								    alt="" 
-								    th:data-product-id="${product.hw_product_id}" >
-			            	</div>
-			            </th:block>
-			        </div>
-			    </div>
-			</th:block>
-            </div>
-        </div>
+<footer class="footer bottom-bar" th:fragment="BottomBar">
+    <style>
+        /* 모바일 웹뷰 최적화 하단바 스타일 - 더보기 없음 */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: #1e293b;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            height: 60px;
+            padding: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .product-tabs {
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 8px;
+        }
+
+        .product-tab {
+            flex: 1;
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            border-radius: 8px;
+            position: relative;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+
+        .product-tab:active {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .product-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 4px;
+        }
+
+        .product-icon img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-label {
+            font-size: 10px;
+            color: rgba(248, 250, 252, 0.7);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        /* 선택된 탭 스타일 */
+        .product-tab.active {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .product-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background: linear-gradient(135deg, #3b82f6, #2dd4bf);
+            border-radius: 3px;
+        }
+
+        .product-tab.active .product-label {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+    </style>
+
+    <!-- 고정 하단 탭 바 -->
+    <div class="product-tabs">
+        <!-- 최대 5개의 제품 탭 표시 -->
+        <th:block th:with="mainProducts=${dividedList.size() > 0 ? dividedList.get(0) : null}">
+            <th:block th:each="product, stat : ${mainProducts}" th:if="${stat.index < 5}">
+                <div class="product-tab bottomProductBtn" 
+                     th:data-product-id="${product.hw_product_id}"
+                     th:classappend="${product.hw_product_id == loginVO.userInfoVO.hw_product_id ? 'active' : ''}">
+                    <div class="product-icon">
+                        <img th:src="@{'/assets/img/filmountain/nanodc/' + ${product.hw_product_id}+'.png'}" 
+                             alt="Product" 
+                             th:data-product-id="${product.hw_product_id}">
+                    </div>
+                    <div class="product-label" th:text="${product.hw_product_id}">HW ID</div>
+                </div>
+            </th:block>
+        </th:block>
     </div>
+
+    <script>
+        // 모바일 최적화 하단바 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            // 제품 선택 이벤트 설정
+            setupProductSelection();
+        });
+        
+        // 제품 선택 이벤트 설정
+        function setupProductSelection() {
+            const productTabs = document.querySelectorAll('.product-tab.bottomProductBtn');
+            
+            productTabs.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    if (!productId) return;
+                    
+                    // 버튼 사운드 재생
+                    const buttonSound = document.getElementById('buttonSound');
+                    if (buttonSound) {
+                        buttonSound.currentTime = 0;
+                        buttonSound.play().catch(err => console.warn('오디오 재생 실패:', err));
+                    }
+                    
+                    // 현재 선택된 제품 표시 업데이트
+                    updateActiveProduct(productId);
+                    
+                    // 서버에 제품 데이터 요청
+                    requestProductData(productId);
+                });
+            });
+        }
+        
+        // 액티브 제품 업데이트
+        function updateActiveProduct(productId) {
+            // 모든 탭에서 active 클래스 제거
+            const productTabs = document.querySelectorAll('.product-tab.bottomProductBtn');
+            productTabs.forEach(tab => {
+                tab.classList.remove('active');
+                
+                // 선택된 제품에 active 클래스 추가
+                if (tab.getAttribute('data-product-id') === productId) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+        
+        // 제품 데이터 요청
+        function requestProductData(productId) {
+            // 서버에 요청할 데이터 준비
+            const payload = {
+                hw_product_id: productId
+            };
+            
+            // 서버에 요청
+            fetch('/userAppMainInfoBuilder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 세션 종료 확인
+                if (data.error && data.error === 'session closed') {
+                    window.location.href = '/login';
+                    return;
+                }
+                
+                // 데이터로 UI 업데이트
+                updateDashboardUI(data);
+            })
+            .catch(error => {
+                console.error('제품 데이터 요청 오류:', error);
+            });
+        }
+        
+        // 대시보드 UI 업데이트
+        function updateDashboardUI(data) {
+            // 총 투자 금액 업데이트
+            const investmentAmount = document.getElementById('total_investment_fil_main');
+            if (investmentAmount && data.investDetailForHw && data.investDetailForHw.total_investment_fil) {
+                investmentAmount.textContent = `${Math.floor(data.investDetailForHw.total_investment_fil)} 원`;
+            }
+            
+            // 총 리워드 업데이트
+            const rewardAmount = document.getElementById('total_reward_fil_main');
+            if (rewardAmount && data.investDetailForHw && data.investDetailForHw.total_reward_fil) {
+                rewardAmount.textContent = data.investDetailForHw.total_reward_fil;
+            }
+            
+            // 캐시 업데이트
+            const cashAmount = document.getElementById('paid_fil_main');
+            if (cashAmount && data.investDetailForHw && data.investDetailForHw.total_reward_fil) {
+                cashAmount.textContent = data.investDetailForHw.total_reward_fil;
+            }
+            
+            // 서버 변경 사운드 재생
+            const serverSound = document.getElementById('serverOnSound');
+            if (serverSound) {
+                serverSound.currentTime = 0;
+                serverSound.play().catch(err => console.warn('오디오 재생 실패:', err));
+            }
+        }
+    </script>
 </footer>
 </html>
