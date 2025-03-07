@@ -112,8 +112,8 @@
         }
 
         .monthly-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            display: flex;
+            flex-direction: column;
             gap: 8px;
         }
 
@@ -124,6 +124,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
         }
 
         .month-label {
@@ -138,7 +139,7 @@
         }
 
         .status-badge {
-            display: inline-block;
+            display: none; /* 상태 배지 숨김 */
             font-size: 12px;
             padding: 4px 8px;
             border-radius: 6px;
@@ -164,31 +165,22 @@
             display: none;
         }
         
-        /* 토큰 뱃지 */
+        /* 토큰 뱃지 - Liquidity만 표시 */
         .token-badge {
+            display: none; /* 기본적으로 모든 토큰 뱃지 숨김 */
+        }
+        
+        /* Liquidity 태그만 표시 */
+        .token-badge.liquidity {
             display: inline-flex;
             align-items: center;
             padding: 2px 6px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 500;
-            margin-left: 8px;
-        }
-        
-        .token-badge.fil {
-            background-color: rgba(59, 130, 246, 0.15);
-            color: #3b82f6;
-        }
-        
-        .token-badge.ath {
-            background-color: rgba(139, 92, 246, 0.15);
-            color: #8b5cf6;
-        }
-        
-        .token-badge img {
-            width: 12px;
-            height: 12px;
-            margin-right: 4px;
+            margin-left: 4px;
+            background-color: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
         }
         
         .loading-indicator {
@@ -228,12 +220,9 @@
                                     <h3 class="investment-title">
                                         <span th:text="${#strings.replace(investment.hw_product_name, 'Liquidity', '')}">제품명</span>
                                         <span class="status-badge" th:text="${investment.hw_status == 'active' ? '활성' : '비활성'}">활성</span>
-                                        <span th:if="${investment.token}" class="token-badge" th:classappend="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'fil') ? 'fil' : 'ath'}">
-                                            <img th:if="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'fil')}" src="/assets/img/thumb/fil.png" alt="FIL">
-                                            <img th:if="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'ae') || #strings.contains(#strings.toLowerCase(investment.token ?: ''), 'ath')}" src="/assets/img/thumb/aethir.png" alt="ATH">
-                                            <span th:text="${#strings.replace(investment.token, 'Liquidity', '')}">FIL</span>
-                                        </span>
-                                        <span th:if="${#strings.contains(investment.hw_product_name, 'Liquidity') || #strings.contains(investment.token ?: '', 'Liquidity')}" class="token-badge" style="background-color: rgba(245, 158, 11, 0.15); color: #f59e0b; margin-left: 4px; font-size: 10px;">
+                                        
+                                        <!-- FIL이나 ATH 태그는 제거하고 Liquidity 태그만 표시 -->
+                                        <span th:if="${#strings.contains(investment.hw_product_name, 'Liquidity') || #strings.contains(investment.token ?: '', 'Liquidity')}" class="token-badge liquidity">
                                             Liquidity
                                         </span>
                                     </h3>
