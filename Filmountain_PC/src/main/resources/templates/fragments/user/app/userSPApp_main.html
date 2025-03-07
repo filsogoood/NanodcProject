@@ -163,269 +163,113 @@
         .audio-elements {
             display: none;
         }
+        
+        /* 토큰 뱃지 */
+        .token-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+        
+        .token-badge.fil {
+            background-color: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+        
+        .token-badge.ath {
+            background-color: rgba(139, 92, 246, 0.15);
+            color: #8b5cf6;
+        }
+        
+        .token-badge img {
+            width: 12px;
+            height: 12px;
+            margin-right: 4px;
+        }
+        
+        .loading-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+        
+        .loading-spinner {
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #3b82f6;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 
     <div class="container-fluid app-container" id="userApp_view" style="visibility:hidden;">
         <div class="dashboard-wrapper">
-            <!-- 투자 리스트 -->
-<!-- 투자 리스트 -->
-<div class="investment-list">
-    <!-- 투자 항목 1 -->
-    <div class="investment-card" id="investment_item_1">
-        <div class="investment-header" onclick="toggleContent('investment_content_1')">
-            <div class="investment-title-section">
-                <div class="investment-icon">
-                    <img src="/assets/img/thumb/fil.png" alt="Fil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-                </div>
-                <div class="investment-details">
-                    <h3 class="investment-title">
-                        NanoDC 4pib
-                        <span class="status-badge">활성</span>
-                    </h3>
-                    <div class="investment-summary">
-                        <span class="investment-amount">600 FIL</span>
-                        <span class="investment-type"> - Reward</span>
+            <div class="investment-list" th:if="${not #lists.isEmpty(investmentList)}">
+                <th:block th:each="investment, iter : ${investmentList}">
+                    <div class="investment-card" th:id="${'investment_item_' + iter.index}">
+                        <div class="investment-header" th:onclick="'toggleContent(\'investment_content_' + ${iter.index} + '\')'">
+                            <div class="investment-title-section">
+                                <div class="investment-icon">
+                                    <img th:if="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'fil') || investment.token == null}" src="/assets/img/thumb/fil.png" alt="Fil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                    <img th:if="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'ae') || #strings.contains(#strings.toLowerCase(investment.token ?: ''), 'ath')}" src="/assets/img/thumb/aethir.png" alt="Aethir" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                </div>
+                                <div class="investment-details">
+                                    <h3 class="investment-title">
+                                        <span th:text="${#strings.replace(investment.hw_product_name, 'Liquidity', '')}">제품명</span>
+                                        <span class="status-badge" th:text="${investment.hw_status == 'active' ? '활성' : '비활성'}">활성</span>
+                                        <span th:if="${investment.token}" class="token-badge" th:classappend="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'fil') ? 'fil' : 'ath'}">
+                                            <img th:if="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'fil')}" src="/assets/img/thumb/fil.png" alt="FIL">
+                                            <img th:if="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'ae') || #strings.contains(#strings.toLowerCase(investment.token ?: ''), 'ath')}" src="/assets/img/thumb/aethir.png" alt="ATH">
+                                            <span th:text="${#strings.replace(investment.token, 'Liquidity', '')}">FIL</span>
+                                        </span>
+                                        <span th:if="${#strings.contains(investment.hw_product_name, 'Liquidity') || #strings.contains(investment.token ?: '', 'Liquidity')}" class="token-badge" style="background-color: rgba(245, 158, 11, 0.15); color: #f59e0b; margin-left: 4px; font-size: 10px;">
+                                            Liquidity
+                                        </span>
+                                    </h3>
+                                    <div class="investment-summary">
+                                        <span class="investment-amount">
+                                            <span th:text="${investment.hw_invest_fil}">0</span>
+                                            <span th:text="${#strings.replace(investment.token ?: 'FIL', 'Liquidity', '')}">FIL</span>
+                                        </span>
+                                        <span class="investment-type"> - 투자금액</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down toggle-icon" th:id="${'toggle_icon_' + iter.index}"></i>
+                        </div>
+                        <div class="investment-content" th:id="${'investment_content_' + iter.index}">
+                            <!-- 해당 투자에 대한 보상 내역 -->
+                            <div class="monthly-list">
+                                <th:block th:each="reward : ${rewardDetailList}" th:if="${reward.hw_product_id == investment.hw_product_id}">
+                                    <div class="monthly-item">
+                                        <span class="month-label" th:text="${#dates.format(reward.regdate, 'yyyy년 MM월')}">2023년 01월</span>
+                                        <span class="month-value" th:text="${#numbers.formatDecimal(reward.reward_fil, 1, 2) + ' ' + #strings.replace(investment.token ?: 'FIL', 'Liquidity', '')}">0.00 FIL</span>
+                                    </div>
+                                </th:block>
+                                <!-- 보상 내역이 없을 경우 -->
+                                <div class="monthly-item" th:if="${#lists.isEmpty(rewardDetailList) || !#lists.contains(rewardDetailList.![hw_product_id], investment.hw_product_id)}">
+                                    <span class="month-label">보상 내역 없음</span>
+                                    <span class="month-value">0.00 FIL</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </th:block>
             </div>
-            <i class="fas fa-chevron-down toggle-icon" id="toggle_icon_1"></i>
-        </div>
-        <div class="investment-content" id="investment_content_1">
-            <div class="monthly-list">
-                <div class="monthly-item">
-                    <span class="month-label">2025년 1월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-    
-    <!-- 투자 항목 2 -->
-    <div class="investment-card" id="investment_item_2">
-        <div class="investment-header" onclick="toggleContent('investment_content_2')">
-            <div class="investment-title-section">
-                <div class="investment-icon">
-                    <img src="/assets/img/thumb/fil.png" alt="Fil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-                </div>
-                <div class="investment-details">
-                    <h3 class="investment-title">
-                        Liqidity
-                        <span class="status-badge">활성</span>
-                    </h3>
-                    <div class="investment-summary">
-                        <span class="investment-amount">850 FIL</span>
-                        <span class="investment-type"> - Reward</span>
-                    </div>
-                </div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon" id="toggle_icon_2"></i>
-        </div>
-        <div class="investment-content" id="investment_content_2">
-            <div class="monthly-list">
-                <div class="monthly-item">
-                    <span class="month-label">2025년 1월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 2월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 3월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 4월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 5월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 6월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 7월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 8월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 9월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 10월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 11월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 12월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 투자 항목 3 -->
-    <div class="investment-card" id="investment_item_3">
-        <div class="investment-header" onclick="toggleContent('investment_content_3')">
-            <div class="investment-title-section">
-                <div class="investment-icon">
-                    <img src="/assets/img/thumb/aethir.png" alt="Aethir" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-                </div>
-                <div class="investment-details">
-                    <h3 class="investment-title">
-                        3090 X 2
-                        <span class="status-badge">활성</span>
-                    </h3>
-                    <div class="investment-summary">
-                        <span class="investment-amount">1200 FIL</span>
-                        <span class="investment-type"> - Reward</span>
-                    </div>
-                </div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon" id="toggle_icon_3"></i>
-        </div>
-        <div class="investment-content" id="investment_content_3">
-            <div class="monthly-list">
-                <div class="monthly-item">
-                    <span class="month-label">2025년 1월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 2월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 3월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 4월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 5월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 6월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 7월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 8월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 9월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 10월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 11월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 12월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 투자 항목 4 -->
-    <div class="investment-card" id="investment_item_4">
-        <div class="investment-header" onclick="toggleContent('investment_content_4')">
-            <div class="investment-title-section">
-                <div class="investment-icon">
-                    <img src="/assets/img/thumb/aethir.png" alt="Aethir" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-                </div>
-                <div class="investment-details">
-                    <h3 class="investment-title">
-                        Liqidity
-                        <span class="status-badge">활성</span>
-                    </h3>
-                    <div class="investment-summary">
-                        <span class="investment-amount">720 FIL</span>
-                        <span class="investment-type"> - Reward</span>
-                    </div>
-                </div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon" id="toggle_icon_4"></i>
-        </div>
-        <div class="investment-content" id="investment_content_4">
-            <div class="monthly-list">
-                <div class="monthly-item">
-                    <span class="month-label">2025년 1월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 2월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 3월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 4월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 5월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 6월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 7월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 8월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 9월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 10월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 11월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-                <div class="monthly-item">
-                    <span class="month-label">2025년 12월</span>
-                    <span class="month-value">100 FIL</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
             
-            <!-- 에러 메시지 -->
-            <div class="error-message" id="error-message">
+            <!-- 투자 내역이 없을 경우 -->
+            <div class="error-message" id="error-message" th:style="${#lists.isEmpty(investmentList) ? 'display: block;' : 'display: none;'}">
                 투자 정보를 찾을 수 없습니다. 관리자에게 문의하세요.
             </div>
             
@@ -447,6 +291,9 @@
             
             // 에러 확인
             checkForErrors();
+            
+            // 차트 제거됨
+            
         });
         
         // 대시보드 표시 애니메이션
