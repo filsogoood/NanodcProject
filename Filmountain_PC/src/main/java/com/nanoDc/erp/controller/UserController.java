@@ -105,7 +105,7 @@ public class UserController {
 		        ModelAndView mav = new ModelAndView();
 		        HttpSession session = request.getSession();
 		        if(userService.checkSession(request)==true) {
-		        	mav.setViewName("redirect:/StorageProvider");
+		        	mav.setViewName("redirect:/main");
 		            return mav;
 		        }
 		            mav.setViewName("views/user/app/app_Login");
@@ -121,7 +121,7 @@ public class UserController {
 		        ModelAndView mav = new ModelAndView();
 		        HttpSession session = request.getSession();
 		        if(userService.checkSession(request)==true) {
-		        	mav.setViewName("redirect:/StorageProvider");
+		        	mav.setViewName("redirect:/main");
 		            return mav;
 		        }
 		            mav.setViewName("views/user/userSignup");
@@ -291,7 +291,7 @@ public class UserController {
 		            // return "redirect:/StorageProvider";
 		            
 		            // 수정된 코드: 플랫폼 선택 페이지로 리다이렉트
-		            return "redirect:/platform-choice";
+		            return "redirect:/main";
 		        }
 		    }
 		    
@@ -338,8 +338,8 @@ public class UserController {
 		
 		
 		 
-		 @GetMapping(value={"/StorageProvider"})
-		    public ModelAndView StorageProvider(HttpServletRequest request,@RequestParam(required = false) Integer hw_product_id) {
+		 @GetMapping(value={"/main"})
+		    public ModelAndView StorageProvider(HttpServletRequest request) {
 			 	
 		        ModelAndView mav = new ModelAndView();
 		        HttpSession session = request.getSession();
@@ -349,11 +349,9 @@ public class UserController {
 		        }
 		        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 		       
-		        MainIndexMapper mainIndexMapper = userService.userAppMainInfoBuilder(request, hw_product_id);
+		   
 		        String error="";
-		        if(mainIndexMapper.getError().equals("No Investment")) {
-		        	error="No Investment";
-		        }
+		     
 		        if (loginVO != null) {
 		            try {
 		                // loginVO 안의 userInfoVO 객체에 직접 접근하여 값 변경
@@ -363,14 +361,44 @@ public class UserController {
 		                // 필요한 경우 예외 처리
 		            }
 		        }
+		        List<HardwareInvestmentVO> investmentList = this.userService.selectInvestmentListForUser(loginVO.getUserInfoVO());
+		        
+		        HardwareProductVO product_detail = hardwareProductMapper.getProductById(loginVO.getUserInfoVO().getHw_product_id()); 
+		        List<HardwareRewardSharingDetailVO> rewardDetailList = userService.selectRewardSharingDetailListByUser(loginVO.getUserInfoVO().getUser_id());
+		        
+		        Date lastRewardDate = new Date();
+		        Date firstRewardDate= new Date();
+		        long  interval =0;
+		        List<Double> dataList = new ArrayList<Double>();
+		        if(!rewardDetailList.isEmpty()) {
+		        lastRewardDate = rewardDetailList.get(0).getRegdate();
+		        firstRewardDate = rewardDetailList.get(rewardDetailList.size()-1).getRegdate();
+		        interval = (lastRewardDate.getTime() - firstRewardDate.getTime())/30;
+		        for(long i= firstRewardDate.getTime() + interval;i<lastRewardDate.getTime()+interval;i += interval) {
+		        	double data=0;
+			        for(int j = rewardDetailList.size()-1;j>=0;j--) {
+			        	if(rewardDetailList.get(j).getRegdate().getTime()<=i) {
+			        		data += rewardDetailList.get(j).getReward_fil();
+			        		if(j==0) {
+			        			dataList.add(data);
+				        		break;
+			        		}
+			        	}else {
+			        		dataList.add(data);
+			        		break;
+			        	}
+			        }
+		        }
+
+		        }
 		        mav.addObject("error",error);
-		        mav.addObject("main_bg_src",mainIndexMapper.getMain_bg_src());
-		        mav.addObject("progress_src",mainIndexMapper.getProgress_src());
-		        mav.addObject("dividedList",mainIndexMapper.getDividedList());
-		        mav.addObject("investDetailForHw",mainIndexMapper.getInvestDetailForHw());
+		     
 		        mav.addObject("last", filPriceMapper.getLatestFilPrice().getFil_last());
+		        mav.addObject("investmentList",investmentList);
+		        mav.addObject("product_detail",product_detail);
+		        mav.addObject("rewardDetailList",rewardDetailList);
 		        mav.addObject("ath_last", athPriceMapper.getLatestAthPrice().getAth_last());
-		        mav.addObject("loginVO", mainIndexMapper.getLoginVO());
+		        mav.addObject("loginVO", loginVO);
 		        mav.setViewName("views/user/app/userSPApp_index");
 		        return mav;
 		    }

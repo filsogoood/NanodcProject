@@ -1,3 +1,5 @@
+
+
 package com.nanoDc.erp.vo;
 
 import java.util.Date;
@@ -17,6 +19,7 @@ public class HardwareProductVO {
 	private String details;
 	private String picture_url;
 	private String miner_id;
+	private String token;
 	
 	
 	
@@ -86,5 +89,11 @@ public class HardwareProductVO {
 	}
 	public void setMiner_id(String miner_id) {
 		this.miner_id = miner_id;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
 	}
 }
