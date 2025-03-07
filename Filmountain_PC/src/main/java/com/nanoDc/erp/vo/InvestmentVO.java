@@ -25,6 +25,7 @@ public class InvestmentVO {
     private boolean is_getting_paid;
 	private int cateogry_fil_per_tb;
 	private float fil_invested;
+	private String token;
 	
 
 	public float getFil_invested() {
@@ -142,6 +143,14 @@ public class InvestmentVO {
     	String memo = "Title:" + title + ",date:" +simpleDateFormat.format(date)+",type:tib,amount:"+purchase_size+",status:active";
     	return memo;
     }
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
     
 }
 

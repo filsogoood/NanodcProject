@@ -20,6 +20,7 @@ public class HardwareInvestmentVO {
 	private String hw_product_status;
 	private String invest_percent;
 	private String picture_url;
+	private String token;
 	
 	
 	
@@ -105,6 +106,16 @@ public class HardwareInvestmentVO {
 	}
 	public void setHw_invest_fil(int hw_invest_fil) {
 		this.hw_invest_fil = hw_invest_fil;
+	}
+
+
+	public String getToken() {
+		return token;
+	}
+
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 	
 	
