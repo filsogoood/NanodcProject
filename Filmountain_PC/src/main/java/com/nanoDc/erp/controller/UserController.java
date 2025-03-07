@@ -393,10 +393,11 @@ public class UserController {
 		        }
 		        mav.addObject("error",error);
 		     
-		        mav.addObject("last", filPriceMapper.getLatestFilPrice().getFil_last());
+		       
 		        mav.addObject("investmentList",investmentList);
 		        mav.addObject("product_detail",product_detail);
 		        mav.addObject("rewardDetailList",rewardDetailList);
+		        mav.addObject("last", filPriceMapper.getLatestFilPrice().getFil_last());
 		        mav.addObject("ath_last", athPriceMapper.getLatestAthPrice().getAth_last());
 		        mav.addObject("loginVO", loginVO);
 		        mav.setViewName("views/user/app/userSPApp_index");
@@ -435,6 +436,8 @@ public class UserController {
 	            mav.addObject("withLoginOptions", true);
 	            mav.addObject("userInfoVO", userInfoVO);
 	            mav.addObject("loginVO", loginVO);
+	            mav.addObject("last", filPriceMapper.getLatestFilPrice().getFil_last());
+		        mav.addObject("ath_last", athPriceMapper.getLatestAthPrice().getAth_last());
 	        } else {
 	            mav.addObject("withLoginOptions", false);
 	        }
