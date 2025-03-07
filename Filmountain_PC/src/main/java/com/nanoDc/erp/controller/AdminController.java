@@ -540,6 +540,7 @@ public class AdminController {
 		   String details = request.getParameter("details");
 		   int total_budget_fil = Integer.parseInt(request.getParameter("total_budget_fil"));
 		   String hw_product_status = request.getParameter("hw_product_status");
+		   String token = request.getParameter("token");
 		   int hw_product_id = Integer.parseInt(request.getParameter("hw_product_id"));
 		   
 		   MultipartFile file = request.getFile("file");
@@ -580,6 +581,7 @@ public class AdminController {
 		   hardwareProductVO.setHw_product_status(hw_product_status);
 		   hardwareProductVO.setPicture_url(filePathString);
 		   hardwareProductVO.setHw_product_name(hw_product_name);
+		   hardwareProductVO.setToken(token);
 		   
 		   return adminService.updateProduct(hardwareProductVO, request);
 	 }
@@ -597,6 +599,7 @@ public class AdminController {
 		   String details = request.getParameter("details");
 		   int total_budget_fil = Integer.parseInt(request.getParameter("total_budget_fil"));
 		   String hw_product_status = request.getParameter("hw_product_status");
+		   String token = request.getParameter("token");
 
 		   HardwareProductVO hardwareProductVO = new HardwareProductVO();
 		   hardwareProductVO.setCity(city);
@@ -610,6 +613,7 @@ public class AdminController {
 		   hardwareProductVO.setTotal_budget_fil(total_budget_fil);
 		   hardwareProductVO.setHw_product_status(hw_product_status);
 		   hardwareProductVO.setHw_product_name(hw_product_name);
+		   hardwareProductVO.setToken(token);
 		   
 		   return adminService.addProduct(hardwareProductVO, request);
 	 }

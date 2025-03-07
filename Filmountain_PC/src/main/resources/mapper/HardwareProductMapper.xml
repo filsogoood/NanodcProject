@@ -12,7 +12,8 @@
 			   total_budget_fil,
 			   city,
 			   details,
-			   picture_url
+			   picture_url,
+			   token
 		FROM nanodc.hw_product
 		ORDER BY
     	recruitment_start_date DESC;
@@ -28,7 +29,8 @@
 			   product.city,
 			   product.details,
 			   product.picture_url,
-			   product.miner_id
+			   product.miner_id,
+			   product.token
 		FROM nanodc.hw_product product
 		INNER JOIN hw_investment investment ON investment.hw_product_id = product.hw_product_id
 		where investment.user_id = #{user_id}
@@ -39,6 +41,7 @@
 		  <set>
 		    <if test="hw_product_name != null">hw_product_name = #{hw_product_name},</if>
 		    <if test="hw_product_status != null">hw_product_status = #{hw_product_status},</if>
+		    <if test="token != null">token = #{token},</if>
   			<if test="total_budget_fil != null">total_budget_fil = #{total_budget_fil},</if>
   			<if test="city != null">city = #{city},</if>
   			<if test="details != null">details = #{details},</if>
@@ -63,7 +66,8 @@
 		    picture_url,
 		    recruitment_start_date,
 		    service_start_date,
-		    service_end_date
+		    service_end_date,
+		    token
 		  )
 		  VALUES (
 		    #{hw_product_name},
@@ -74,7 +78,8 @@
 		    #{picture_url},
 		    NOW(),
 		    #{service_start_date},
-		    #{service_end_date}
+		    #{service_end_date},
+		    #{token}
 		  )
 	</insert>
 	<select id="getProductById" parameterType="integer" resultType="com.nanoDc.erp.vo.HardwareProductVO">
@@ -88,7 +93,8 @@
 			   product.city,
 			   product.details,
 			   product.picture_url,
-			   product.miner_id
+			   product.miner_id, 
+			   product.token
 		FROM nanodc.hw_product product
 		where product.hw_product_id = #{hw_product_id}
 	</select>

@@ -27,6 +27,7 @@ $(document).ready(function() {
 			$('#total_budget_fil').val(clickedButton.find('.total_budget_fil').text());
 			$('#update_product_confirm').val($(this).val());
 			$('#picture_update').attr('src', '/uploads'+$(this).attr('data-pictureUrl'));
+			$('#hw_product_token').val(clickedButton.find('.hw_product_token').text());
 			if($(this).attr('data-details') !=undefined){
 				window.tinymce.get(0).setContent($(this).attr('data-details'));	
 			}else{
@@ -69,6 +70,7 @@ $(document).ready(function() {
 					var hw_product_name = $('#hw_product_name_add').val();
 					var city = $('#city_add').val();
 					var hw_product_status = $('#hw_product_status_add').val();
+					var hw_product_token = $('#hw_product_token_add').val();
 					var total_budget_fil = $('#total_budget_fil_add').val();
 					var details = window.tinymce.get(1).getContent();
 					var recruitment_start_date ="";
@@ -96,6 +98,7 @@ $(document).ready(function() {
 					formData.append('details',details);
 					formData.append('total_budget_fil',total_budget_fil);
 					formData.append('hw_product_status',hw_product_status);
+					formData.append('token',hw_product_token);
             $.ajax({
 								type: "POST",
 							    url: "/admin/addProduct",
@@ -103,8 +106,9 @@ $(document).ready(function() {
 							    contentType: false,
 							    processData: false,
 							    success: function (data) {
-									$("#detail_product_modal").modal('hide');	 
+									$("#add_product_modal").modal('hide');	 
 									if(data=='success'){
+	
 										$('#success_alert_title').text('제품수정 성공!');
 										$('#success_alert').modal('show');
 			                        }
@@ -123,6 +127,7 @@ $(document).ready(function() {
 					var hw_product_name = $('#hw_product_name').val();
 					var city = $('#city').val();
 					var hw_product_status = $('#hw_product_status').val();
+					var hw_product_token = $('#hw_product_token_add').val();
 					var user_name = $('#user_name').val(); 
 					var fileInput = $('#fileInput_update')[0].files[0];
 					var total_budget_fil = $('#total_budget_fil').val();
@@ -154,6 +159,7 @@ $(document).ready(function() {
 					formData.append('details',details);
 					formData.append('total_budget_fil',total_budget_fil);
 					formData.append('hw_product_status',hw_product_status);
+					formData.append('token',hw_product_token);
 				
 					if(fileInput!=undefined){
 						formData.append('file', fileInput);

@@ -58,6 +58,15 @@
 					    <input class="form-control" id="hw_product_name" type="text" placeholder="ex) NanoDC 001" />
 					  </div>
 					  <div class="mb-2">
+					    <label class="form-label fs-9" for="product_category">체인</label>
+					    <select class="form-select" id="token">
+					        <option value="Filecoin">Filecoin</option>
+					        <option value="Filecoin Liquidity">Filecoin Liquidity</option>
+					        <option value="Aethier">Aethier</option>
+					        <option value="Aethier Liquidity">Aethier Liquidity</option>
+					    </select>
+					</div>
+					  <div class="mb-2">
 					
 					    <label class="form-label fs-9" for="basic-form-name">도시</label>
 					
@@ -139,6 +148,17 @@
 					
 					    <input class="form-control" id="hw_product_name_add" type="text" placeholder="ex) NanoDC 001" />
 					  </div>
+					   <div class="mb-2">
+
+                          <label class="form-label fs-9" for="hw_product_token_add">체인</label>
+
+                          <select class="form-select" id="hw_product_token_add" aria-label="Default select example">
+                            <option value="FileCoin">FileCoin</option>
+                            <option value="FileCoin Liquidity">FileCoin Liquidity</option>
+                            <option value="Aethir">Aethir</option>
+                            <option value="Aethir Liquidity">Aethir Liquidity</option>
+                          </select>
+                        </div>
 					  <div class="mb-2">
 					
 					    <label class="form-label fs-9" for="basic-form-name">도시</label>
@@ -181,7 +201,8 @@
 							    <label class="form-label fs-9" for="basic-form-textarea">상세 설명</label>
 							    <textarea class="tinymce" name="content" data-tinymce="{}"></textarea>
 							  </div>
-							   <button class="btn btn-primary" id="add_product_confirm" >등록</button>
+							  <button class="btn btn-primary" id="add_product_confirm" type="button">등록</button>
+
 </form>
             </div>
         </div>
@@ -227,8 +248,9 @@
                   <thead>
                     <tr>
                       <th class="fs-9 align-middle py-3 order align-middle white-space-nowrap py-0" scope="col" data-sort="recruitment_start_date" style="width:10%;">상품 등록일</th>
+                      <th class="sort align-middle" scope="col" data-sort="hw_product_name" style="width:8%;">체인</th>
                       <th class="sort align-middle" scope="col" data-sort="hw_product_name" style="width:8%;">상품명</th>
-                      <th class="sort align-middle pe-3" scope="col" data-sort="hw_product_status" style="width:7%;">상태</th>
+                      <th class="sort align-middle pe-3" scope="col" data-sort="token" style="width:7%;">상태</th>
                      
                       <th class="sort align-middle pe-3" scope="col" data-sort="service_start_date" style="width:10%;">서비스 시작일</th>
                       <th class="sort align-middle pe-3" scope="col" data-sort="service_end_date" style="width:10%;">서비스 종료일</th>
@@ -240,6 +262,7 @@
                   <tbody class="list" id="order-table-body">
 					 <tr th:each="product : ${productList}"  class="hover-actions-trigger btn-reveal-trigger position-static">
                       <td th:text="${#dates.format(product.recruitment_start_date, 'yyyy-MM-dd')}" class=" recruitment_start_date fs-9 align-middle py-3 order align-middle white-space-nowrap py-0"></td>
+                       <td th:text="${product.token}" class="hw_product_token total align-middle fw-semibold text-body-highlight"></td>
                       <td th:text="${product.hw_product_name}" class="hw_product_name total align-middle fw-semibold text-body-highlight"></td>
                       <td th:text="${product.hw_product_status}" class="hw_product_status total align-middle fw-semibold text-body-highlight"></td>
                      
