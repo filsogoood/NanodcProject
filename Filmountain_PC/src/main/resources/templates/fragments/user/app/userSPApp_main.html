@@ -240,7 +240,8 @@
                                     <div class="investment-summary">
                                         <span class="investment-amount">
                                             <span th:text="${investment.hw_invest_fil}">0</span>
-                                            <span th:text="${#strings.replace(investment.token ?: 'FIL', 'Liquidity', '')}">FIL</span>
+                                            <span th:if="${#strings.contains(investment.hw_product_name, 'Liquidity') || #strings.contains(investment.token ?: '', 'Liquidity')}" th:text="${#strings.replace(investment.token ?: 'FIL', 'Liquidity', '')}">FIL</span>
+                                            <span th:unless="${#strings.contains(investment.hw_product_name, 'Liquidity') || #strings.contains(investment.token ?: '', 'Liquidity')}">원</span>
                                         </span>
                                         <span class="investment-type"> - 투자금액</span>
                                     </div>
