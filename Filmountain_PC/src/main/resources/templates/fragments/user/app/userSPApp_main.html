@@ -160,10 +160,7 @@
             font-size: 14px;
         }
 
-        /* 오디오 요소 - 기능은 유지하되 화면에서 숨김 */
-        .audio-elements {
-            display: none;
-        }
+
         
         /* 토큰 뱃지 - Liquidity만 표시 */
         .token-badge {
@@ -227,12 +224,10 @@
                                         </span>
                                     </h3>
                                     <div class="investment-summary">
-                                        <span class="investment-amount">
-                                            <span th:text="${investment.hw_invest_fil}">0</span>
-                                            <span th:if="${#strings.contains(investment.hw_product_name, 'Liquidity') || #strings.contains(investment.token ?: '', 'Liquidity')}" th:text="${#strings.replace(investment.token ?: 'FIL', 'Liquidity', '')}">FIL</span>
-                                            <span th:unless="${#strings.contains(investment.hw_product_name, 'Liquidity') || #strings.contains(investment.token ?: '', 'Liquidity')}">원</span>
+                                        <span class="investment-amount" th:id="${'total_reward_' + investment.hw_product_id}">
+                                            <span>계산 중...</span>
                                         </span>
-                                        <span class="investment-type"> - 투자금액</span>
+                                        <span class="investment-type"> - 총 받은 리워드</span>
                                     </div>
                                 </div>
                             </div>
@@ -240,9 +235,9 @@
                         </div>
                         <div class="investment-content" th:id="${'investment_content_' + iter.index}">
                             <!-- 해당 투자에 대한 보상 내역 -->
-                            <div class="monthly-list">
+                            <div class="monthly-list" th:id="${'reward_list_' + investment.hw_product_id}">
                                 <th:block th:each="reward : ${rewardDetailList}" th:if="${reward.hw_product_id == investment.hw_product_id}">
-                                    <div class="monthly-item">
+                                    <div class="monthly-item" th:attr="data-reward=${reward.reward_fil}">
                                         <span class="month-label" th:text="${#dates.format(reward.regdate, 'yyyy년 MM월')}">2023년 01월</span>
                                         <span class="month-value" th:text="${#numbers.formatDecimal(reward.reward_fil, 1, 2) + ' ' + #strings.replace(investment.token ?: 'FIL', 'Liquidity', '')}">0.00 FIL</span>
                                     </div>
@@ -267,10 +262,7 @@
             <input type="hidden" th:value="${error}" id="main_error" class="hidden">
         </div>
         
-        <!-- 오디오 요소 -->
-        <div class="audio-elements">
-            <audio id="buttonSound" src="/assets/bgm/buttonsound1.wav" preload="auto"></audio>
-        </div>
+
     </div>
 
     <script>
@@ -282,8 +274,8 @@
             // 에러 확인
             checkForErrors();
             
-            // 차트 제거됨
-            
+            // 각 투자 항목의 총 리워드 계산
+            calculateTotalRewards();
         });
         
         // 대시보드 표시 애니메이션
@@ -306,9 +298,6 @@
             const iconId = 'toggle_icon_' + contentId.split('_').pop();
             const icon = document.getElementById(iconId);
             
-            // 버튼 사운드 재생
-            playButtonSound();
-            
             // 콘텐츠 토글
             if (content.classList.contains('open')) {
                 content.classList.remove('open');
@@ -319,14 +308,7 @@
             }
         }
         
-        // 버튼 사운드 재생
-        function playButtonSound() {
-            const buttonSound = document.getElementById('buttonSound');
-            if (buttonSound) {
-                buttonSound.currentTime = 0;
-                buttonSound.play().catch(err => console.warn('오디오 재생 실패:', err));
-            }
-        }
+
         
         // 에러 확인
         function checkForErrors() {
@@ -342,6 +324,48 @@
                     window.location.href = '/login';
                 }
             }
+        }
+        
+        // 각 투자의 총 리워드 계산 함수
+        function calculateTotalRewards() {
+            // 모든 투자 상품에 대해 처리
+            const investmentCards = document.querySelectorAll('.investment-card');
+            
+            investmentCards.forEach(card => {
+                // 상품 ID 추출
+                const rewardListId = card.querySelector('.monthly-list').id;
+                const productId = rewardListId.replace('reward_list_', '');
+                
+                // 해당 상품의 모든 월별 리워드 항목 가져오기
+                const rewardItems = card.querySelectorAll('.monthly-item[data-reward]');
+                
+                // 총 리워드 계산
+                let totalReward = 0;
+                rewardItems.forEach(item => {
+                    const rewardValue = parseFloat(item.getAttribute('data-reward')) || 0;
+                    totalReward += rewardValue;
+                });
+                
+                // 총 리워드 표시
+                const totalRewardElement = document.getElementById('total_reward_' + productId);
+                if (totalRewardElement) {
+                    // 토큰 타입 추출 (현재 카드에서 사용 중인 코인 명칭)
+                    let tokenType = 'FIL';
+                    const monthValue = card.querySelector('.monthly-item .month-value');
+                    if (monthValue) {
+                        const valueText = monthValue.textContent.trim();
+                        // 숫자와 공백 이후의 문자열을 코인 명칭으로 추출
+                        const match = valueText.match(/[\d\.\s]+(.*)/);
+                        if (match && match[1]) {
+                            tokenType = match[1].trim();
+                        }
+                    }
+                    
+                    // 소수점 2자리까지 표시
+                    totalRewardElement.innerHTML = 
+                        `<span>${totalReward.toFixed(2)}</span> <span>${tokenType}</span>`;
+                }
+            });
         }
     </script>
 </div>
