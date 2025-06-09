@@ -3,11 +3,24 @@
 		
 <div class="content main-content" th:fragment="MainContent">
     <style>
+        /* 컬러 팔레트 */
+        :root {
+            --color-bg-main: #121218; /* 어두운 배경 */
+            --color-bg-card: #1a1a22; /* 카드 배경 */
+            --color-accent-pink: #e12788; /* 분홍색 액센트 */
+            --color-accent-yellow: #ede93c; /* 노란색 액센트 */
+            --color-accent-teal: #65c2c6; /* 청록색 액센트 */
+            --color-text-primary: #ffffff; /* 기본 텍스트 */
+            --color-text-secondary: rgba(255, 255, 255, 0.7); /* 보조 텍스트 */
+            --gradient-card: linear-gradient(145deg, #1a1a22, #222230); /* 그레이디언트 카드 배경 */
+        }
+
         /* 모바일 웹뷰 최적화 메인 콘텐츠 스타일 */
         .main-content {
             padding: 70px 0 70px 0; /* 상단바와 하단바 고려한 패딩 */
-            background-color: #0f172a;
+            background-color: var(--color-bg-main);
             min-height: 100vh;
+            color: var(--color-text-primary);
         }
 
         .dashboard-wrapper {
@@ -23,16 +36,26 @@
         }
 
         .investment-card {
-            background-color: #1e293b;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: var(--gradient-card);
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        /* FIL 코인용 카드 스타일 */
+        .investment-card.coin-fil {
+            border-left: 3px solid var(--color-accent-teal);
+        }
+        
+        /* ATH 코인용 카드 스타일 */
+        .investment-card.coin-ath {
+            border-left: 3px solid var(--color-accent-yellow);
         }
 
         .investment-card:active {
             transform: scale(0.98);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .investment-header {
@@ -48,17 +71,17 @@
         }
 
         .investment-icon {
-            width: 40px;
-            height: 40px;
-            min-width: 40px;
-            border-radius: 10px;
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
             margin-right: 16px;
-            background-color: rgba(59, 130, 246, 0.15);
-            color: #3b82f6;
+            background-color: rgba(26, 26, 34, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .investment-details {
@@ -68,7 +91,7 @@
         .investment-title {
             font-size: 16px;
             font-weight: 600;
-            color: #f8fafc;
+            color: var(--color-text-primary);
             margin: 0 0 8px 0;
             display: flex;
             align-items: center;
@@ -78,22 +101,31 @@
             display: flex;
             align-items: center;
             font-size: 14px;
-            color: rgba(248, 250, 252, 0.7);
+            color: var(--color-text-secondary);
         }
 
+        /* 기본 금액 스타일 - FIL 기본값 */
         .investment-amount {
-            font-weight: 500;
-            color: #3b82f6;
+            font-weight: 600;
+            color: var(--color-accent-teal);
+            text-shadow: 0 0 5px rgba(101, 194, 198, 0.3);
+        }
+        
+        /* ATH 금액 스타일 */
+        .investment-amount.ath {
+            color: var(--color-accent-yellow);
+            text-shadow: 0 0 5px rgba(237, 233, 60, 0.3);
         }
 
         .toggle-icon {
-            color: #f8fafc;
+            color: var(--color-text-primary);
             font-size: 18px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, color 0.3s ease;
         }
 
         .toggle-icon.open {
             transform: rotate(180deg);
+            color: var(--color-accent-pink);
         }
 
         .investment-content {
@@ -108,7 +140,7 @@
             max-height: 500px; /* 충분히 큰 값으로 설정 */
             padding-top: 16px;
             margin-top: 8px;
-            border-top: 1px solid rgba(248, 250, 252, 0.1);
+            border-top: 1px solid rgba(225, 39, 136, 0.2);
         }
 
         .monthly-list {
@@ -118,49 +150,80 @@
         }
 
         .monthly-item {
-            background-color: rgba(15, 23, 42, 0.5);
-            border-radius: 8px;
-            padding: 10px;
+            background-color: rgba(18, 18, 24, 0.7);
+            border-radius: 10px;
+            padding: 12px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .monthly-item:hover {
+            background-color: rgba(101, 194, 198, 0.1);
+            transform: translateX(2px);
         }
 
         .month-label {
             font-size: 14px;
-            color: rgba(248, 250, 252, 0.8);
+            color: var(--color-text-secondary);
         }
 
+        /* 월별 금액 스타일 - FIL 기본값 */
         .month-value {
-            font-weight: 500;
-            color: #3b82f6;
+            font-weight: 600;
+            color: var(--color-accent-teal);
             font-size: 14px;
+        }
+        
+        /* ATH 월별 금액 스타일 */
+        .month-value.ath {
+            color: var(--color-accent-yellow); 
+        }
+        
+        .month-value .coin-name {
+            font-weight: 800; /* 더 굵은 Bold 처리 */
+            margin-left: 4px;
+            padding: 2px 8px; /* 패딩 추가 */
+            border-radius: 6px; /* 모서리 둥글게 */
+            font-size: 13px; /* 글씨 크기 살짝 작게 */
+            letter-spacing: 0.5px; /* 자간 추가 */
+        }
+        
+        /* FIL 코인명 스타일 */
+        .month-value .coin-name.fil {
+            color: var(--color-accent-teal);
+            background-color: rgba(101, 194, 198, 0.1);
+        }
+        
+        /* ATH 코인명 스타일 */
+        .month-value .coin-name.ath {
+            color: var(--color-accent-yellow);
+            background-color: rgba(237, 233, 60, 0.1);
         }
 
         .status-badge {
-            display: none; /* 상태 배지 숨김 */
+            display: inline-flex; /* 상태 배지 표시 */
             font-size: 12px;
             padding: 4px 8px;
             border-radius: 6px;
             font-weight: 500;
-            background-color: rgba(16, 185, 129, 0.15);
-            color: #10b981;
+            background-color: rgba(101, 194, 198, 0.15);
+            color: var(--color-accent-teal);
             margin-left: 10px;
         }
 
         .error-message {
-            display: none;
-            background-color: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
-            padding: 12px;
-            border-radius: 8px;
+            background-color: rgba(225, 39, 136, 0.15);
+            color: var(--color-accent-pink);
+            padding: 16px;
+            border-radius: 12px;
             margin-top: 16px;
             text-align: center;
             font-size: 14px;
+            border: 1px solid rgba(225, 39, 136, 0.3);
         }
-
-
         
         /* 토큰 뱃지 - Liquidity만 표시 */
         .token-badge {
@@ -171,13 +234,15 @@
         .token-badge.liquidity {
             display: inline-flex;
             align-items: center;
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 3px 8px;
+            border-radius: 6px;
             font-size: 10px;
-            font-weight: 500;
-            margin-left: 4px;
-            background-color: rgba(245, 158, 11, 0.15);
-            color: #f59e0b;
+            font-weight: 600;
+            margin-left: 6px;
+            background-color: rgba(237, 233, 60, 0.15);
+            color: var(--color-accent-yellow);
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(237, 233, 60, 0.3);
         }
         
         .loading-indicator {
@@ -188,12 +253,35 @@
         }
         
         .loading-spinner {
-            border: 3px solid rgba(59, 130, 246, 0.3);
+            border: 3px solid rgba(101, 194, 198, 0.2);
             border-radius: 50%;
-            border-top: 3px solid #3b82f6;
-            width: 24px;
-            height: 24px;
+            border-top: 3px solid var(--color-accent-teal);
+            width: 28px;
+            height: 28px;
             animation: spin 1s linear infinite;
+        }
+        
+        /* 배너 스타일 */
+        .nanodc-banner {
+            margin-top: 24px;
+            padding: 8px;
+            text-align: center;
+            border-radius: 16px;
+            overflow: hidden;
+            background: linear-gradient(145deg, rgba(101, 194, 198, 0.05), rgba(225, 39, 136, 0.05));
+            border: 1px solid rgba(101, 194, 198, 0.2);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .nanodc-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nanodc-banner img {
+            max-width: 100%;
+            border-radius: 12px;
         }
         
         @keyframes spin {
@@ -206,16 +294,16 @@
         <div class="dashboard-wrapper">
             <div class="investment-list" th:if="${not #lists.isEmpty(investmentList)}">
                 <th:block th:each="investment, iter : ${investmentList}">
-                    <div class="investment-card" th:id="${'investment_item_' + iter.index}">
+                    <div th:class="${'investment-card ' + (#strings.containsIgnoreCase(investment.token ?: '', 'fil') || investment.token == null ? 'coin-fil' : (#strings.containsIgnoreCase(investment.token ?: '', 'ath') || #strings.containsIgnoreCase(investment.token ?: '', 'ae') ? 'coin-ath' : 'coin-fil'))}" th:id="${'investment_item_' + iter.index}">
                         <div class="investment-header" th:onclick="'toggleContent(\'investment_content_' + ${iter.index} + '\')'">
                             <div class="investment-title-section">
                                 <div class="investment-icon">
-                                    <img th:if="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'fil') || investment.token == null}" src="/assets/img/thumb/fil.png" alt="Fil" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-                                    <img th:if="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'ae') || #strings.contains(#strings.toLowerCase(investment.token ?: ''), 'ath')}" src="/assets/img/thumb/aethir.png" alt="Aethir" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                    <img th:if="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'fil') || investment.token == null}" src="/assets/img/thumb/fil.png" alt="FIL" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                    <img th:if="${#strings.contains(#strings.toLowerCase(investment.token ?: ''), 'ae') || #strings.contains(#strings.toLowerCase(investment.token ?: ''), 'ath')}" src="/assets/img/thumb/aethir.png" alt="ATH" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div class="investment-details">
                                     <h3 class="investment-title">
-                                        <span th:text="${#strings.replace(investment.hw_product_name, 'Liquidity', '')}">제품명</span>
+                                        <span th:text="${#strings.replace(#strings.replace(#strings.replace(investment.hw_product_name, 'Liquidity', ''), 'Filecoin', 'FIL'), 'Aethir', 'ATH')}">제품명</span>
                                         <span class="status-badge" th:text="${investment.hw_status == 'active' ? '활성' : '비활성'}">활성</span>
                                         
                                         <!-- FIL이나 ATH 태그는 제거하고 Liquidity 태그만 표시 -->
@@ -224,10 +312,13 @@
                                         </span>
                                     </h3>
                                     <div class="investment-summary">
-                                        <span class="investment-amount" th:id="${'total_reward_' + investment.hw_product_id}">
+                                        <span th:with="tokenName=${investment.token ?: 'FIL'}, 
+                                              isAth=${#strings.containsIgnoreCase(tokenName, 'aethir') || #strings.containsIgnoreCase(tokenName, 'ath')}"
+                                              th:class="${'investment-amount ' + (isAth ? 'ath' : '')}" 
+                                              th:id="${'total_reward_' + investment.hw_product_id}">
                                             <span>계산 중...</span>
                                         </span>
-                                        <span class="investment-type"> - 총 받은 리워드</span>
+                                        <span class="investment-type">&nbsp;&nbsp;Total Reward</span>
                                     </div>
                                 </div>
                             </div>
@@ -238,14 +329,38 @@
                             <div class="monthly-list" th:id="${'reward_list_' + investment.hw_product_id}">
                                 <th:block th:each="reward : ${rewardDetailList}" th:if="${reward.hw_product_id == investment.hw_product_id}">
                                     <div class="monthly-item" th:attr="data-reward=${reward.reward_fil}">
-                                        <span class="month-label" th:text="${#dates.format(reward.regdate, 'yyyy년 MM월')}">2023년 01월</span>
-                                        <span class="month-value" th:text="${#numbers.formatDecimal(reward.reward_fil, 1, 2) + ' ' + #strings.replace(investment.token ?: 'FIL', 'Liquidity', '')}">0.00 FIL</span>
+                                        <span class="month-label" th:text="${#dates.format(reward.regdate, 'yyyy년 MM월')} + ' Reward'">2023년 01월 Reward</span>
+                                        <span th:with="tokenName=${investment.token ?: 'FIL'}, 
+                                              isAth=${#strings.containsIgnoreCase(tokenName, 'aethir') || #strings.containsIgnoreCase(tokenName, 'ath')}"
+                                              th:class="${'month-value ' + (isAth ? 'ath' : '')}">
+                                            <span th:text="${#numbers.formatDecimal(reward.reward_fil, 1, 2)}">0.00</span>
+                                            <span th:with="isFil=${#strings.containsIgnoreCase(tokenName, 'filecoin') || #strings.containsIgnoreCase(tokenName, 'fil')},
+                                                  isAth=${#strings.containsIgnoreCase(tokenName, 'aethir') || #strings.containsIgnoreCase(tokenName, 'ath')}"
+                                                th:class="${'coin-name ' + (isFil ? 'fil' : (isAth ? 'ath' : 'fil'))}"
+                                                th:text="${
+                                                    isFil ? 'FIL' : 
+                                                    isAth ? 'ATH' : 
+                                                    #strings.replace(tokenName, 'Liquidity', '')
+                                                }">FIL</span>
+                                        </span>
                                     </div>
                                 </th:block>
                                 <!-- 보상 내역이 없을 경우 -->
                                 <div class="monthly-item" th:if="${#lists.isEmpty(rewardDetailList) || !#lists.contains(rewardDetailList.![hw_product_id], investment.hw_product_id)}">
                                     <span class="month-label">보상 내역 없음</span>
-                                    <span class="month-value">0.00 FIL</span>
+                                    <span th:with="tokenName=${investment.token ?: 'FIL'}, 
+                                          isAth=${#strings.containsIgnoreCase(tokenName, 'aethir') || #strings.containsIgnoreCase(tokenName, 'ath')}"
+                                          th:class="${'month-value ' + (isAth ? 'ath' : '')}">
+                                        <span>0.00</span>
+                                        <span th:with="isFil=${#strings.containsIgnoreCase(tokenName, 'filecoin') || #strings.containsIgnoreCase(tokenName, 'fil')},
+                                              isAth=${#strings.containsIgnoreCase(tokenName, 'aethir') || #strings.containsIgnoreCase(tokenName, 'ath')}"
+                                          th:class="${'coin-name ' + (isFil ? 'fil' : (isAth ? 'ath' : 'fil'))}"
+                                          th:text="${
+                                              isFil ? 'FIL' : 
+                                              isAth ? 'ATH' : 
+                                              #strings.replace(tokenName, 'Liquidity', '')
+                                          }">FIL</span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -258,11 +373,14 @@
                 투자 정보를 찾을 수 없습니다. 관리자에게 문의하세요.
             </div>
             
+            <!-- NANODC 배너 추가 -->
+            <div class="nanodc-banner">
+                <img src="/assets/img/nanodc-banner.jpg" alt="NANODC 데이터센터 솔루션">
+            </div>
+            
             <!-- 오류 상태 히든 필드 -->
             <input type="hidden" th:value="${error}" id="main_error" class="hidden">
         </div>
-        
-
     </div>
 
     <script>
@@ -286,7 +404,7 @@
                 dashboard.style.opacity = '0';
                 
                 setTimeout(() => {
-                    dashboard.style.transition = 'opacity 0.3s ease';
+                    dashboard.style.transition = 'opacity 0.4s ease';
                     dashboard.style.opacity = '1';
                 }, 100);
             }
@@ -307,8 +425,6 @@
                 icon.classList.add('open');
             }
         }
-        
-
         
         // 에러 확인
         function checkForErrors() {
@@ -349,21 +465,39 @@
                 // 총 리워드 표시
                 const totalRewardElement = document.getElementById('total_reward_' + productId);
                 if (totalRewardElement) {
-                    // 토큰 타입 추출 (현재 카드에서 사용 중인 코인 명칭)
                     let tokenType = 'FIL';
                     const monthValue = card.querySelector('.monthly-item .month-value');
                     if (monthValue) {
                         const valueText = monthValue.textContent.trim();
-                        // 숫자와 공백 이후의 문자열을 코인 명칭으로 추출
                         const match = valueText.match(/[\d\.\s]+(.*)/);
                         if (match && match[1]) {
                             tokenType = match[1].trim();
                         }
                     }
                     
-                    // 소수점 2자리까지 표시
+                    let displayTokenType = tokenType;
+                    
+                    if (/filecoin/i.test(displayTokenType)) {
+                        displayTokenType = 'FIL';
+                    }
+                    else if (/aethir/i.test(displayTokenType)) {
+                        displayTokenType = 'ATH';
+                    }
+                    else if (/fil/i.test(displayTokenType)) {
+                        displayTokenType = 'FIL';
+                    }
+                    else if (/ath/i.test(displayTokenType)) {
+                        displayTokenType = 'ATH';
+                    }
+                    
+                    // JavaScript에서 코인 타입별 클래스 추가
+                    const isAth = displayTokenType === 'ATH';
+                    const coinClass = isAth ? 'ath' : 'fil';
+                    totalRewardElement.className = `investment-amount ${isAth ? 'ath' : ''}`;
+                    
+                    // 소수점 2자리까지 표시, 코인명은 스타일 적용된 형태로
                     totalRewardElement.innerHTML = 
-                        `<span>${totalReward.toFixed(2)}</span> <span>${tokenType}</span>`;
+                        `<span>${totalReward.toFixed(2)}</span> <span class="coin-name ${coinClass}">${displayTokenType}</span>`;
                 }
             });
         }

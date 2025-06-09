@@ -97,21 +97,99 @@ public class UserController {
 	    private String uploadDirectory2;
 	 	
 	 
-		@GetMapping(value={"/login"})
-		  public ModelAndView Applogin(@ModelAttribute("loginError") String loginError,
-		    		@ModelAttribute LoginVO loginVO,
-		    	
-		            HttpServletRequest request) {
-		        ModelAndView mav = new ModelAndView();
-		        HttpSession session = request.getSession();
-		        if(userService.checkSession(request)==true) {
-		        	mav.setViewName("redirect:/main");
-		            return mav;
-		        }
-		            mav.setViewName("views/user/app/app_Login");
-		            mav.addObject("loginError", loginError);
-		            return mav;
-		}
+//		@GetMapping(value={"/login"})
+//		  public ModelAndView Applogin(@ModelAttribute("loginError") String loginError,
+//		    		@ModelAttribute LoginVO loginVO,
+//		    	
+//		            HttpServletRequest request) {
+//		        ModelAndView mav = new ModelAndView();
+//		        HttpSession session = request.getSession();
+//		        if(userService.checkSession(request)==true) {
+//		        	mav.setViewName("redirect:/main");
+//		            return mav;
+//		        }
+//		            mav.setViewName("views/user/app/app_Login");
+//		            mav.addObject("loginError", loginError);
+//		            return mav;
+//		}
+	 
+	 @GetMapping(value={"/login"})
+	 public ModelAndView Applogin(@ModelAttribute("loginError") String loginError,
+	                             @ModelAttribute LoginVO loginVO,
+	                             HttpServletRequest request,
+	                             HttpServletResponse response) {
+	     ModelAndView mav = new ModelAndView();
+	     HttpSession session = request.getSession();
+	     
+	     // 이미 세션이 있는 경우 리다이렉트
+	     if(userService.checkSession(request)==true) {
+	         mav.setViewName("redirect:/main");
+	         return mav;
+	     }
+	     
+	     // 자동 로그인 쿠키 확인
+	     Cookie[] cookies = request.getCookies();
+	     if (cookies != null) {
+	         String userId = null;
+	         boolean autoLogin = false;
+	         
+	         System.out.println("쿠키 확인 중...");
+	         
+	         for (Cookie cookie : cookies) {
+	             System.out.println("쿠키 이름: " + cookie.getName() + ", 값: " + cookie.getValue());
+	             if ("nanodc_userApp".equals(cookie.getName())) {
+	                 userId = cookie.getValue();
+	             }
+	             if ("nanodc_autoLogin".equals(cookie.getName()) && "true".equals(cookie.getValue())) {
+	                 autoLogin = true;
+	             }
+	         }
+	         
+	         System.out.println("userId: " + userId + ", autoLogin: " + autoLogin);
+	         
+	         // 자동 로그인 조건 충족 시 자동 로그인 처리
+	         if (userId != null && autoLogin) {
+	             try {
+	                 System.out.println("자동 로그인 처리 시작...");
+	                 // 유저 정보 조회
+	                 UserInfoVO userInfoVO = new UserInfoVO();
+	                 userInfoVO.setUser_id(Integer.parseInt(userId));
+	                 userInfoVO = userInfoMapper.selectDetailUserInfoByUserId(Integer.parseInt(userId));
+	                 
+	                 if (userInfoVO != null && !"inactive".equals(userInfoVO.getUser_status())) {
+	                     System.out.println("사용자 찾음: " + userInfoVO.getUser_name());
+	                     // 세션에 사용자 정보 저장
+	                     LoginVO lvo = new LoginVO();
+	                     lvo.setId(userInfoVO.getUser_name());
+	                     lvo.setUserInfoVO(userInfoVO);
+	                     lvo.setLevel(userInfoVO.getLevel());
+	                     lvo.setPassword("");
+	                     
+	                     session.setAttribute("user", lvo);
+	                     
+	                     mav.setViewName("redirect:/main");
+	                     return mav;
+	                 } else {
+	                     System.out.println("사용자 정보가 없거나 비활성 상태입니다.");
+	                 }
+	             } catch (Exception e) {
+	                 System.out.println("자동 로그인 처리 중 오류 발생: " + e.getMessage());
+	                 e.printStackTrace();
+	                 // 자동 로그인 실패 시 쿠키 삭제
+	                 Cookie autoLoginCookie = new Cookie("nanodc_autoLogin", null);
+	                 autoLoginCookie.setMaxAge(0);
+	                 autoLoginCookie.setPath("/");
+	                 response.addCookie(autoLoginCookie);
+	             }
+	         }
+	     } else {
+	         System.out.println("쿠키가 없습니다.");
+	     }
+	     
+	     mav.setViewName("views/user/app/app_Login");
+	     mav.addObject("loginError", loginError);
+	     return mav;
+	 }
 	
 		@GetMapping(value={"/app/Signup"})
 		  public ModelAndView AppSignup(@ModelAttribute("loginError") String loginError,
@@ -178,22 +256,23 @@ public class UserController {
 		
 		
 		@GetMapping(value={"/app/logout"})
-	    public String Applogout(HttpServletRequest request, HttpServletResponse response) {
-	        HttpSession session = request.getSession();
-	        session.invalidate();
-	        
-	       /* Cookie[] cookies = request.getCookies();
-	        if (cookies != null) {
-	            for (Cookie cookie : cookies) {
-	                if ("nanodc_userApp".equals(cookie.getName())) {
-	                    cookie.setMaxAge(0);
-	                    response.addCookie(cookie);
-	                    break;
-	                }
-	            }
-	        }*/
-	        return "redirect:/login";
-	    }
+		public String Applogout(HttpServletRequest request, HttpServletResponse response) {
+		    HttpSession session = request.getSession();
+		    session.invalidate();
+		    
+		    Cookie[] cookies = request.getCookies();
+		    if (cookies != null) {
+		        for (Cookie cookie : cookies) {
+		            if ("nanodc_userApp".equals(cookie.getName()) || "nanodc_autoLogin".equals(cookie.getName())) {
+		                cookie.setValue(null);
+		                cookie.setPath("/");
+		                cookie.setMaxAge(0);
+		                response.addCookie(cookie);
+		            }
+		        }
+		    }
+		    return "redirect:/login";
+		}
 		
 		
 		 
@@ -248,7 +327,12 @@ public class UserController {
 //		    }
 				 
 		@PostMapping(value={"/app/login.do"})
-		private String doAppLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		private String doAppLogin(LoginVO loginVO, 
+		                         @RequestParam(value = "rememberMe", required = false) String rememberMe,
+		                         BindingResult result, 
+		                         RedirectAttributes redirect, 
+		                         HttpServletRequest request, 
+		                         HttpServletResponse response) throws Exception {
 		    LoginVO lvo = new LoginVO();
 		    UserInfoVO userInfoVO = new UserInfoVO(); 
 		    try {
@@ -281,16 +365,40 @@ public class UserController {
 		        String value = pwEncoder.encode(rawPw);
 		        if (this.pwEncoder.matches((CharSequence)rawPw, encodePw = userInfoMapper.getUserPassword(userInfoVO.getUser_id()))) {
 		            lvo.setPassword("");
+		            
+		            // 디버깅 로그 추가
+		            System.out.println("로그인 성공: " + userInfoVO.getUser_name());
+		            System.out.println("자동 로그인 파라미터: " + rememberMe);
+		            
+		            // 쿠키 생성
 		            Cookie rememberMeCookie = new Cookie("nanodc_userApp", String.valueOf(userInfoVO.getUser_id()));
-		            rememberMeCookie.setMaxAge(7 * 24 * 60 * 60); // 7일
+		            
+		            // 자동 로그인 체크된 경우
+		            if (rememberMe != null) {
+		                System.out.println("자동 로그인 활성화");
+		                // 쿠키 유효기간을 30일로 설정
+		                rememberMeCookie.setMaxAge(30 * 24 * 60 * 60);
+		                
+		                // 자동 로그인 상태 표시 쿠키 추가
+		                Cookie autoLoginCookie = new Cookie("nanodc_autoLogin", "true");
+		                autoLoginCookie.setMaxAge(30 * 24 * 60 * 60);
+		                autoLoginCookie.setPath("/");
+		                autoLoginCookie.setHttpOnly(false); // 자바스크립트에서 접근 가능하게
+		                autoLoginCookie.setSecure(request.isSecure()); // HTTPS인 경우만 Secure 설정
+		                response.addCookie(autoLoginCookie);
+		            } else {
+		                System.out.println("일반 로그인 (자동 로그인 비활성화)");
+		                // 기존 설정대로 7일 유지
+		                rememberMeCookie.setMaxAge(7 * 24 * 60 * 60);
+		            }
+		            
+		            rememberMeCookie.setPath("/");
+		            rememberMeCookie.setHttpOnly(false); // 자바스크립트에서 접근 가능하게
+		            rememberMeCookie.setSecure(request.isSecure()); // HTTPS인 경우만 Secure 설정
 		            response.addCookie(rememberMeCookie);
 		            
 		            session.setAttribute("user", (Object)lvo);
 		            
-		            // 기존 코드:
-		            // return "redirect:/StorageProvider";
-		            
-		            // 수정된 코드: 플랫폼 선택 페이지로 리다이렉트
 		            return "redirect:/main";
 		        }
 		    }
@@ -299,45 +407,6 @@ public class UserController {
 		    return "redirect:/login";
 		}
 
-		// 추가: 플랫폼 선택 페이지 매핑
-		@GetMapping(value={"/platform-choice"})
-		public ModelAndView platformChoice(HttpServletRequest request) {
-		    ModelAndView mav = new ModelAndView();
-		    HttpSession session = request.getSession();
-		    
-		    if(!userService.checkSession(request)) {
-		        mav.setViewName("redirect:/login");
-		        return mav;
-		    }
-		    
-		    LoginVO loginVO = (LoginVO)session.getAttribute("user");
-		    mav.addObject("loginVO", loginVO);
-		    mav.setViewName("views/user/app/platform_choice");
-		    return mav;
-		}
-
-		// Aethir 플랫폼 페이지 매핑 (기본 골격)
-		@GetMapping(value={"/aethir"})
-		public ModelAndView aethirPlatform(HttpServletRequest request) {
-		    ModelAndView mav = new ModelAndView();
-		    HttpSession session = request.getSession();
-		    
-		    if(!userService.checkSession(request)) {
-		        mav.setViewName("redirect:/login");
-		        return mav;
-		    }
-		    
-		    LoginVO loginVO = (LoginVO)session.getAttribute("user");
-		    mav.addObject("loginVO", loginVO);
-		    
-		    // 아직 Aethir 플랫폼 페이지가 없으므로 임시로 공통 페이지로 연결
-		    // 추후 Aethir 전용 대시보드 페이지를 만들면 해당 뷰로 변경
-		    mav.setViewName("views/user/app/aethir_dashboard");
-		    return mav;
-		}
-		
-		
-		 
 		 @GetMapping(value={"/main"})
 		    public ModelAndView StorageProvider(HttpServletRequest request) {
 			 	
