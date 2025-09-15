@@ -11,7 +11,7 @@ NanoDC is an integrated platform for **Storage Provider (SP)** that offers purch
 
 ### 📱 APP
 - **SP Rewards**: Check reward details in real-time based on storage provision.
-- **Equipment Information**: View and manage details of owned equipment directly through the app.
+- **Equipment Information**: View detailed information about the equipment you have invested in directly through the app.
 
 ---
 
