@@ -1,6 +1,6 @@
 # NanoDC
 
-NanoDC is an integrated platform for **Storage Providers (SPs)** that offers purchase applications, electronic contracts, rewards, and equipment monitoring features.
+NanoDC is an integrated platform for **Storage Provider (SP)** that offers purchase applications, electronic contracts, rewards, and equipment monitoring features.
 
 ## 📌 Branch Overview
 
