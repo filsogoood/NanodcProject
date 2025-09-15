@@ -15,5 +15,5 @@ NanoDC is an integrated platform for **Storage Provider (SP)** that offers purch
 
 ---
 
-👉 The **Web branch** focuses on **applications, contracts, and dashboards**,  
-👉 while the **App** focuses on **rewards and equipment management**.
+👉 The **Main branch** focuses on **applications, contracts, and dashboards**,  
+👉 while the **App Branch** focuses on **rewards and equipment management**.
